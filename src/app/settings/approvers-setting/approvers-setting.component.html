@@ -1,0 +1,60 @@
+<div class="approvers-settings">
+    <mat-tab-group>
+      <mat-tab label="Update/Delete" active>
+        <div class="update-approver">
+          <div *ngFor="let approver of approvers">
+            <div class="approver-name">
+              <mat-form-field>
+                <input matInput
+                type="email"
+                placeholder="" name="email" [disabled]="!approver.edit" [(ngModel)]="approver.email" #emailInput="ngModel" required email>
+                <mat-error *ngIf="emailInput.invalid"> Please provide email </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="approver-zone">
+              <mat-form-field>
+                <!-- <mat-label></mat-label> -->
+                <mat-select name="zone" [disabled]="!approver.edit" [(ngModel)]="approver.zone" #zoneInput="ngModel" required>
+                  <mat-option *ngFor="let zone of zones" [value]="zone.name">
+                    {{zone.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="approver-actions">
+              <button mat-raised-button *ngIf="!approver.edit" (click)="approver.edit = true">Edit</button>
+              <button mat-raised-button *ngIf="approver.edit" (click)="editApprover(approver._id, approver.email, approver.zone);approver.edit = false">Save</button>
+              <button mat-raised-button (click)="deleteApprover(approver._id);">Delete</button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Add">
+        <div class="add-approver">
+          <mat-card>
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+            <form (submit)="onSubmit(addApproverForm)" *ngIf="!isLoading" #addApproverForm="ngForm">
+              <mat-form-field>
+                <input matInput
+                type="email"
+                placeholder="Email Id" name="email" ngModel #emailInput="ngModel" required email>
+                <mat-error *ngIf="emailInput.invalid"> Please provide email </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Zone</mat-label>
+                <mat-select name="zone" ngModel #zoneInput="ngModel" required>
+                  <mat-option *ngFor="let zone of zones" [value]="zone.name">
+                    {{zone.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+                </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="addApproverForm.invalid" type="Submit" *ngIf="!isLoading">Add</button>
+            </form>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  

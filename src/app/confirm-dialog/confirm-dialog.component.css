@@ -1,0 +1,11 @@
+mat-form-field {
+    width: 100%
+}
+.mat-dialog-content {
+    font-size: 1.4rem !important;
+    font-family: 'Raleway', sans-serif;
+}
+.mat-dialog-actions {
+    justify-content: center !important;
+}
+  

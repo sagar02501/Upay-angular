@@ -1,0 +1,89 @@
+mat-form-field {
+    width: 100%
+  }
+  
+  mat-spinner {
+    margin: auto;
+  }
+  
+  mat-card {
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    padding-top: 3rem;
+    background-color: #eff2f7;
+  }
+  @media only screen and (max-width: 900px) {
+    mat-card {
+      width: 70%;
+    }
+  }
+.add-approver {
+    height: 75vh;
+}
+
+::ng-deep .approvers-settings .mat-tab-header {
+    background-color: #eff2f7;
+}
+
+.update-approver {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    height: 75vh;
+}
+.update-approver > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eff2f7;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+.update-approver > div + div {
+    margin-top: 10px;
+}
+.approver-actions > button {
+    visibility: hidden;
+}
+.update-approver > div:hover .approver-actions > button {
+    visibility: visible;
+}
+
+.approver-actions > button + button {
+    margin-left: 10px;
+}
+
+@media only screen and (max-width: 700px) {
+    .update-approver > div {
+      flex-direction: column;
+    }
+    .approver-actions > button {
+        visibility: visible;
+    }
+  }
+  
+  h1 {
+    padding: 3rem;
+    font-family: 'Raleway', sans-serif;
+    color: #3f51b5;
+    text-shadow: 1px 2px #aaaaaa;
+    letter-spacing: 1px;
+  }
+  mat-hint {
+    color: #f03434 !important;
+  }
+  
+  ::ng-deep .success {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  ::ng-deep .failure {
+    background-color: #f03434;
+    color: #fff;
+  }
+  

@@ -1,0 +1,132 @@
+<div class="approval-form">
+  <a href="https://www.upay.org.in/"><img src="../../assets/images/upay-logo.png" alt="Upay Logo"></a>
+  <mat-tab-group [color]="'primary'">
+    <mat-tab label="Normal Form" aria-selected="true">
+        <mat-card>
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+            <form (submit)="onSubmit(approvalForm)" *ngIf="!isLoading" #approvalForm="ngForm" >
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Name" name="name" ngModel #nameInput="ngModel" required>
+                <mat-error *ngIf="nameInput.invalid"> Please provide name </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Zone</mat-label>
+                <mat-select name="zone" ngModel #zoneInput="ngModel" required>
+                  <mat-option *ngFor="let zone of zones" [value]="zone.name">
+                    {{zone.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="email"
+                placeholder="Email Id" name="email" ngModel #emailInput="ngModel" required email>
+                <mat-error *ngIf="emailInput.invalid"> Please provide email </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Designation" name="designation" ngModel #designationInput="ngModel" required>
+                <mat-error *ngIf="designationInput.invalid"> Please provide designation </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="number" matInput
+                placeholder="Contact" name="contact" ngModel #contactInput="ngModel" required>
+                <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error>
+              </mat-form-field>
+              <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1" [ngClass]="{'disabled': contactInput.value == ''}" [disabled]="contactInput.value == ''" (click)="sendOTP(contactInput.value)">Verify Contact</button>
+              <div *ngIf="isOTP && isOTPVerified != 1">
+                <mat-form-field>
+                  <input matInput placeholder="OTP" type="number" #otp name="otp" ngModel class="form-control" required>
+                </mat-form-field>
+                <button mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
+              </div>
+                <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p>
+              <mat-form-field>
+                <input matInput
+                type="number"
+                placeholder="Amount" name="amount" ngModel #amountInput="ngModel" required>
+                <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required>
+                <mat-error *ngIf="subjectInput.invalid"> Please provide subject </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput
+                placeholder="Request Body" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
+                <mat-error *ngIf="bodyInput.invalid"> Please provide body (min character 20)</mat-error>
+              </mat-form-field>
+            <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid}" type="Submit" *ngIf="!isLoading">Submit</button>
+            </form>
+          </mat-card>
+    </mat-tab>
+    <mat-tab label="Advance Form">
+        <mat-card>
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+            <form (submit)="onSubmit(approvalForm)" *ngIf="!isLoading" #approvalForm="ngForm" >
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Name" name="name" ngModel #nameInput="ngModel" required>
+                <mat-error *ngIf="nameInput.invalid"> Please provide name </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Zone" name="zone" ngModel #zoneInput="ngModel" required>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="email"
+                placeholder="Email Id" name="email" ngModel #emailInput="ngModel" required email>
+                <mat-error *ngIf="emailInput.invalid"> Please provide email </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Designation" name="designation" ngModel #designationInput="ngModel" required>
+                <mat-error *ngIf="designationInput.invalid"> Please provide designation </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input type="number" matInput
+                placeholder="Contact" name="contact" ngModel #contactInput="ngModel" required>
+                <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error>
+              </mat-form-field>
+              <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1" [ngClass]="{'disabled': contactInput.value == ''}" [disabled]="contactInput.value == ''" (click)="sendOTP(contactInput.value)">Verify</button>
+              <div *ngIf="isOTP && isOTPVerified != 1">
+                <mat-form-field>
+                  <input matInput placeholder="OTP" type="number" #otp name="otp" ngModel class="form-control" required>
+                </mat-form-field>
+                <button mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
+              </div>
+              <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p>
+              <mat-form-field>
+                <input matInput
+                type="number"
+                placeholder="Amount" name="amount" ngModel #amountInput="ngModel" required>
+                <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required>
+                <mat-error *ngIf="subjectInput.invalid"> Please provide subject </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <textarea matInput
+                placeholder="Request Body" name="body" ngModel #bodyInput="ngModel" required></textarea>
+                <mat-error *ngIf="bodyInput.invalid"> Please provide body </mat-error>
+              </mat-form-field>
+            <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Signup</button>
+            </form>
+          </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>

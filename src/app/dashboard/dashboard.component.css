@@ -1,0 +1,154 @@
+/*.approvals-list{
+  padding: 20px;
+  font-family: 'Raleway', sans-serif;
+}
+.approval {
+  border: 1px solid gray;
+  display: flex;
+  font-size: 1.4rem;
+  padding: 5px;
+}
+.approval div:nth-child(1) {
+  width: 5%;
+}
+.approval div:nth-child(2) {
+  width: 65%;
+  margin-right: 10px;
+}
+.approval div:nth-child(3) {
+  width: 10%;
+}
+.approval div:nth-child(4) {
+  width: 10%;
+}
+.approval div:nth-child(5) {
+  width: 10%;
+}
+.approval__header {
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 5px;
+  background: rgba(65, 131, 215, 1);
+}
+.approval__header div:nth-child(1) {
+  width: 5%;
+}
+.approval__header div:nth-child(2) {
+  width: 65%;
+  margin-right: 10px;
+}
+.approval__header div:nth-child(3) {
+  width: 10%;
+}
+.approval__header div:nth-child(4) {
+  width: 10%;
+}
+.approval__header div:nth-child(5) {
+  width: 10%;
+}
+.approval__approve {
+  cursor: pointer;
+}
+.disabled {
+  cursor: not-allowed;
+  color: gray;
+}
+.approval-email-popup {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: scale(0) translate(-50%, -50%);
+  transform-origin: left;
+  transition: all 0.2s;
+  z-index: 100;
+  background: rgba(65, 131, 215, 1);
+  border-radius: 3px;
+  box-shadow: 0 11px 15px -7px rgba(0,0,0,.2), 0 24px 38px 3px rgba(0,0,0,.14), 0 9px 46px 8px rgba(0,0,0,.12);
+  height: 150px;
+  width: 30vw;
+}
+.approval-email-popup-backdrop {
+  transform: scale(0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.2);
+}
+.open-backdrop {
+  transform: scale(1) !important;
+}
+.open-popup {
+  transform: scale(1) translate(-50%, -50%) !important;
+}
+.email-input {
+  width: 60%;
+}
+.email-input + p {
+  font-size: 1.2rem;
+  color: #fff;
+}
+.email-input input {
+  width: 100%;
+  height: 30px;
+  border-radius: 3px;
+  padding: 2px 5px;
+  border-style: none;
+  outline: none;
+  box-shadow: none;
+}
+.action-buttons button {
+  width: 70px;
+  height: 30px;
+  color: #fff;
+  background: rgba(37, 116, 169, 0.7);
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.action-buttons button:hover {
+  background: #fff;
+  color: rgba(37, 116, 169, 1);
+}
+button + button {
+  margin-left: 10px;
+}
+.status-new {
+  color: #4183d7;
+}
+.status-pending {
+  color: #f4d03f;
+}
+.status-approved {
+  color: #3fc380;
+}
+.status-rejected {
+  color: #f03434;
+}
+*/
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+::ng-deep .success {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+::ng-deep .failure {
+  background-color: #f03434;
+  color: #fff;
+}
+

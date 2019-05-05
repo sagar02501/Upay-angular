@@ -1,0 +1,33 @@
+.header {
+  background: rgba(65, 131, 215, 1);
+  padding: 20px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header ul {
+  list-style: none;
+  color: #fff;
+  font-size: 1.6rem;
+  font-family: 'Raleway', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header ul li {
+  padding: 5px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.header ul li + li {
+  margin-left: 10px;
+}
+.header a, img {
+  height: 40px;
+}
+.active {
+  background: #fff;
+  color: rgba(65, 131, 215, 1);
+}

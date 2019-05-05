@@ -1,0 +1,40 @@
+<div class="zones-settings">
+    <mat-tab-group>
+      <mat-tab label="Update/Delete" active>
+        <div class="update-zone">
+          <div *ngFor="let zone of zones">
+            <div class="zone-name">
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="" name="zone" [disabled]="!zone.edit" [(ngModel)]="zone.name" #zoneInput="ngModel" required>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="zone-actions">
+              <button mat-raised-button *ngIf="!zone.edit" (click)="zone.edit = true">Edit</button>
+              <button mat-raised-button *ngIf="zone.edit" (click)="editZone(zone._id, zone.name);zone.edit = false;">Save</button>
+              <button mat-raised-button (click)="deleteZone(zone._id);">Delete</button>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Add">
+        <div class="add-zone">
+          <mat-card>
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+            <form (submit)="onSubmit(addZoneForm)" *ngIf="!isLoading" #addZoneForm="ngForm">
+              <mat-form-field>
+                <input matInput
+                type="text"
+                placeholder="Zone Name" name="zone" ngModel #zoneInput="ngModel" required>
+                <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
+              </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="addZoneForm.invalid" type="Submit" *ngIf="!isLoading">Add</button>
+            </form>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  
