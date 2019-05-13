@@ -2,7 +2,7 @@
   <a href="https://www.upay.org.in/"><img src="../../assets/images/upay-logo.png" alt="Upay Logo"></a>
   <ul>
     <li routerLink="/dashboard" routerLinkActive="active">Dashboard</li>
-    <li routerLink="/settings" routerLinkActive="active">Settings</li>
+    <li *ngIf="showSettings" routerLink="/settings" routerLinkActive="active">Settings</li>
     <li (click)="onLogout()">Logout</li>
   </ul>
 </div>

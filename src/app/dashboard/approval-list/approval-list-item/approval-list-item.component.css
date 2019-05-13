@@ -8,6 +8,9 @@
     font-size: 1.2rem;
     border-bottom: 1px solid #e6e6e6;
 }
+.approvals-list__item > div {
+  word-break: break-all;
+}
 .approval-body-item {
   padding: 1rem 7rem;
   border-bottom: 1px solid #e6e6e6;
@@ -55,4 +58,10 @@
   background-color: black;
   -webkit-clip-path: polygon(0% 20%, 38% 20%, 38% 0, 100% 50%, 38% 100%, 38% 80%, 0% 80%);
   clip-path: polygon(0% 20%, 38% 20%, 38% 0, 100% 50%, 38% 100%, 38% 80%, 0% 80%);
+}
+.approved {
+  color: #4caf50;
+}
+.rejected {
+  color: #f03434;
 }

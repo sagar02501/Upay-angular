@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Select the zonal finance approver or pass to central</h1>
+<h1 mat-dialog-title>Select the zonal finance approver or send to central</h1>
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Approver</mat-label>
@@ -17,6 +17,6 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value}" cdkFocusInitial>Send</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="2">Pass to Central Level Approver</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="2">Send to {{zone}} Level Approver</button>
   <button mat-button [mat-dialog-close]="0">Cancel</button>
 </div>

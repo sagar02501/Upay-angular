@@ -36,7 +36,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password, zone: '' };
-    this.http.post<{token: string, expiresIn: number, userId: string}>(this.url + 'login', authData)
+    this.http.post<{token: string, expiresIn: number, userId: string, zone: string}>(this.url + 'login', authData)
       .subscribe(response => {
         this.token = response.token;
         if (this.token) {
@@ -91,8 +91,17 @@ export class AuthService {
     return this.token;
   }
 
-  getUserId() {
-    return this.userId;
+  getUserZone() {
+    return this.parseJwt(this.token).zone;
+  }
+
+  parseJwt(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = decodeURIComponent(atob(base64Url).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(base64);
   }
 
   getUsersListener() {

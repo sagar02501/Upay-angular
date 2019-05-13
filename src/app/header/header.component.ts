@@ -9,8 +9,13 @@ import { AuthService } from './../service/auth.service';
 export class HeaderComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
+  showSettings = false;
 
   ngOnInit() {
+    const userZone = this.authService.getUserZone();
+    if (userZone === 'admin') {
+      this.showSettings = true;
+    }
   }
 
   onLogout() {

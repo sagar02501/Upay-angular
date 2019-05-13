@@ -32,11 +32,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       if (typeof(res) !== 'string') {
         this.approvalList = res;
       } else {
-        if (res === 'sentToCenralTrue') {
+        if (res === 'sentToCentralTrue') {
           this.success = true;
           this.openSnackBar('Approval sent to Central Zone');
           this.approvalFormService.getApproval();
-        } else if (res === 'sentToCenralFalse') {
+        } else if (res === 'sentToCentralFalse') {
           this.success = false;
           this.openSnackBar('Approval could not be send to Central Zone');
         } else if (res === 'sentToApproverTrue') {

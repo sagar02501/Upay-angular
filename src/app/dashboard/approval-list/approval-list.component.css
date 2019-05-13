@@ -1,13 +1,21 @@
-.agents-summary__header {
+.approvals-list__header {
     display: flex;
     margin: 20px;
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
     font-family: 'Raleway', sans-serif;
     font-size: 1.4rem;
 }
-
-.agents-table {
+.approvals-list__header--print {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  letter-spacing: 1px;
+  background: rgba(65, 131, 215, 1);
+  color: #fff;
+  border-radius: 3px;
+  align-self: flex-end;
+}
+.approvals-table {
   display: flex;
   margin: 20px;
   min-width: 1000px;
@@ -19,7 +27,7 @@
   font-family: 'Raleway', sans-serif;
 }
 
-.agents-table__header {
+.approvals-table__header {
     height: 40px;
     width: 100%;
     display: grid;
@@ -31,15 +39,15 @@
     font-weight: 700;
 }
 
-    .agents-table__header div {
+    .approvals-table__header div {
       cursor: pointer;
     }
 
-    .agents-table__header div:hover i {
+    .approvals-table__header div:hover i {
       opacity: 1;
     }
 
-    .agents-table__header  i {
+    .approvals-table__header  i {
       font-size: 7px;
       display: inline-block;
       opacity: 0;
@@ -47,7 +55,7 @@
       transition: opacity 0.2s, transform 0.5s ease-in-out;
     }
 
-  .agents-table__body {
+  .approvals-table__body {
     max-height: 75vh;
     background: #fff;
     width: 100%;
@@ -55,7 +63,7 @@
     border-bottom: 2px solid #e6e6e6;
   }
 
-  .agents-table__footer {
+  .approvals-table__footer {
     height: 75px;
     display: flex;
     justify-content: flex-end;

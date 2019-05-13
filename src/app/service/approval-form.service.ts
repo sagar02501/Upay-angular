@@ -49,11 +49,11 @@ export class ApprovalFormService {
 
   sendToCentral(data) {
     this.http.post(this.url + '/approve/central', data).subscribe((res) => {
-      this.approvalSubject.next('sentToCenralTrue');
+      this.approvalSubject.next('sentToCentralTrue');
     },
     (err) => {
       console.log(err);
-      this.approvalSubject.next('sentToCenralFalse');
+      this.approvalSubject.next('sentToCentralFalse');
     }
     );
   }
