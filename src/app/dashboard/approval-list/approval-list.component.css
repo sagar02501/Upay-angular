@@ -3,7 +3,7 @@
     margin: 20px;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Rubik', sans-serif;
     font-size: 1.4rem;
 }
 .approvals-list__header--print {
@@ -24,7 +24,7 @@
   align-items: center;
   background-color: #fff;
   box-shadow: 1px 1px 10px 0 #cfd8dc;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Rubik', sans-serif;
 }
 
 .approvals-table__header {
@@ -36,7 +36,7 @@
     justify-items: center;
     font-size: 1.2rem;
     background-color: #eff2f7;
-    font-weight: 700;
+    font-weight: 400;
 }
 
     .approvals-table__header div {

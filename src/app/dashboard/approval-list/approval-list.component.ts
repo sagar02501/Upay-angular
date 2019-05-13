@@ -44,7 +44,7 @@ export class ApprovalListComponent implements OnInit {
       align-items: center;
       background-color: #fff;
       box-shadow: 1px 1px 10px 0 #cfd8dc;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'Rubik', sans-serif;
     }
     .approvals-table__header {
         height: 40px;
