@@ -37,14 +37,14 @@
                 placeholder="Contact" name="contact" ngModel #contactInput="ngModel" required>
                 <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error>
               </mat-form-field>
-              <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1" [ngClass]="{'disabled': contactInput.value == ''}" [disabled]="contactInput.value == ''" (click)="sendOTP(contactInput.value)">Verify Contact</button>
+              <!-- <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1" [ngClass]="{'disabled': contactInput.value == ''}" [disabled]="contactInput.value == ''" (click)="sendOTP(contactInput.value)">Verify Contact</button>
               <div *ngIf="isOTP && isOTPVerified != 1">
                 <mat-form-field>
                   <input matInput placeholder="OTP" type="number" #otp name="otp" ngModel class="form-control" required>
                 </mat-form-field>
                 <button mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
               </div>
-                <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p>
+                <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p> -->
               <mat-form-field>
                 <input matInput
                 type="number"

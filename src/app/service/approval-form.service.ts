@@ -28,8 +28,8 @@ export class ApprovalFormService {
     );
   }
 
-  getApproval() {
-    this.http.get(this.url).subscribe((res) => {
+  getApproval(search?, sort?, order = 1) {
+    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
     (err) => {console.log(err); }

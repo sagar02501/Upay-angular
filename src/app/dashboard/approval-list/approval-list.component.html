@@ -2,6 +2,9 @@
     <div class="approvals-list__header--title">
       Approvals List
     </div>
+    <div class="approval-search">
+      <input type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchApproval()"/>
+    </div>
     <div class="approvals-list__header--print" (click)="openBodyAndCreatePdf()">
       Print
     </div>
@@ -11,43 +14,35 @@
     <div class="approvals-table__header">
       <div class="approval-name">
         Name
-        <!-- <i [ngClass]="{'i-rotate': sortAgentName}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-email">
         Email
-        <!-- <i [ngClass]="{'i-rotate': sortAgentStatus}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-body">
         Body
-        <!-- <i [ngClass]="{'i-rotate': sortOpen}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-designation">
         Designation
-        <!-- <i [ngClass]="{'i-rotate': sortPending}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-contact">
         Contact
-        <!-- <i [ngClass]="{'i-rotate': sortAwaiting}" class="icon-arrow-down"></i> -->
       </div>
-      <div class="approval-createdAt">
+      <div class="approval-createdAt" (click)="sortApproval('date')">
         Created At
-        <!-- <i [ngClass]="{'i-rotate': sortAwaiting}" class="icon-arrow-down"></i> -->
+        <div [ngClass]="{'i-rotate': sortDateAsc}" class="arrow-icon"></div>
       </div>
-      <div class="approval-amount">
+      <div class="approval-amount" (click)="sortApproval('amount')">
         Amount
-        <!-- <i [ngClass]="{'i-rotate': sortWorked}" class="icon-arrow-down"></i> -->
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-zone">
         Zone
-        <!-- <i [ngClass]="{'i-rotate': sortResolved}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-status">
         Status
-        <!-- <i [ngClass]="{'i-rotate': sortResolved}" class="icon-arrow-down"></i> -->
       </div>
       <div class="approval-action">
         Action
-        <!-- <i [ngClass]="{'i-rotate': sortResolved}" class="icon-arrow-down"></i> -->
       </div>
     </div>
     <div class="approvals-table__body">

@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   openPopup = false;
   success = false;
   emailId;
+  sortOrder = 1;
 
   ngOnInit() {
     this.approvalFormService.getApproval();
@@ -55,9 +56,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  sortApproval(searchText?, sortBy?) {
+    this.sortOrder === 1 ? this.sortOrder = -1 : this.sortOrder = 1;
+    this.approvalFormService.getApproval(searchText, sortBy, this.sortOrder);
+  }
+
   handleEvent(e) {
     if (e.send) {
       this.sendForApproval(e);
+    }
+    if (e.searchText || e.searchText === '' || e.sortBy) {
+      this.sortApproval(e.searchText, e.sortBy);
     }
   }
 

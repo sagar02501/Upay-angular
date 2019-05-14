@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-approval-list',
@@ -11,13 +13,34 @@ export class ApprovalListComponent implements OnInit {
   @Input() approvalList;
   @Input() approverList;
   openBody = false;
+  searchText;
+  sortAmountAsc = true;
+  sortDateAsc = true;
+  approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter();
 
   ngOnInit() {
+    this.approvalSearchSubject.pipe(debounceTime(500)).subscribe((e) => {
+      this.sortApproval();
+    });
   }
 
   handleEvent(e) {
     this.actionOccured.emit(e);
+  }
+
+  searchApproval() {
+    this.approvalSearchSubject.next();
+  }
+
+  sortApproval(sortBy?) {
+    if (sortBy === 'date') {
+      this.sortDateAsc ? this.sortDateAsc = false : this.sortDateAsc = true;
+    }
+    if (sortBy === 'amount') {
+      this.sortAmountAsc ? this.sortAmountAsc = false : this.sortAmountAsc = true;
+    }
+    this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy});
   }
 
   openBodyAndCreatePdf() {
