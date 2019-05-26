@@ -15,10 +15,10 @@ export class ConfirmDialogComponent implements OnInit {
   buttonTextSecondary = 'No';
 
   ngOnInit() {
-    this.data.header ? this.header = this.data.header : '';
-    this.data.message ? this.message = this.data.message : '';
-    this.data.buttonTextPrimary ? this.buttonTextPrimary = this.data.buttonTextPrimary : '';
-    this.data.buttonTextSecondary ? this.buttonTextSecondary = this.data.buttonTextSecondary: '';
+    this.header = this.data.header || '';
+    this.message = this.data.message || '';
+    this.buttonTextPrimary = this.data.buttonTextPrimary || '';
+    this.buttonTextSecondary = this.data.buttonTextSecondary || '';
   }
 
 }

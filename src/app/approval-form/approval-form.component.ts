@@ -45,7 +45,7 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   onSubmit(approvalForm) {
-    if (approvalForm.invalid) {
+    if (approvalForm.invalid || this.isOTPVerified !== 1) {
       return;
     }
     this.approvalForm = approvalForm;

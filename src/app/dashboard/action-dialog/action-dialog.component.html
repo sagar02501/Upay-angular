@@ -1,7 +1,7 @@
-<h1 mat-dialog-title>Select the zonal finance approver or send to central</h1>
+<h2 mat-dialog-title>{{title}}</h2>
 <div mat-dialog-content>
   <mat-form-field>
-    <mat-label>Approver</mat-label>
+    <mat-label>{{to}}</mat-label>
     <mat-select name="approver" ngModel #approverInput="ngModel" required>
       <mat-option *ngFor="let approver of approverList" [value]="approver.email">
         {{approver.email}}
@@ -17,6 +17,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="0">Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="2">Send to {{zone}}</button>
   <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value}" cdkFocusInitial>Send</button>
 </div>

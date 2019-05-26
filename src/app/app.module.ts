@@ -14,7 +14,8 @@ import { MatInputModule,
   MatSnackBarModule,
   MatSelectModule,
   MatDialogModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatMenuModule
  } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -66,7 +67,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatSelectModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatMenuModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

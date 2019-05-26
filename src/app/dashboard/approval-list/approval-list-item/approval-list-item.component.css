@@ -7,6 +7,7 @@
     justify-items: center;
     font-size: 1.2rem;
     border-bottom: 1px solid #e6e6e6;
+    background-color: inherit;
 }
 .approvals-list__item > div {
   word-break: break-all;
@@ -33,6 +34,7 @@
 .approval-status {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .remarks-icon {
   height: 12px;
@@ -50,15 +52,22 @@
 .icon-rotate {
   transform: rotateX(180deg);
 }
-.action-icon {
+.approval-action {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin-left: 2px;
-  background-color: black;
-  -webkit-clip-path: polygon(0% 20%, 38% 20%, 38% 0, 100% 50%, 38% 100%, 38% 80%, 0% 80%);
-  clip-path: polygon(0% 20%, 38% 20%, 38% 0, 100% 50%, 38% 100%, 38% 80%, 0% 80%);
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+.approval-action:hover {
+  box-shadow: 1px 1px 10px 0 #cfd8dc;
+}
+.action-icon:after {
+  content: '\2807';
+  font-size: 2rem;
+  }
 .approved {
   color: #4caf50;
 }

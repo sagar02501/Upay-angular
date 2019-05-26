@@ -58,6 +58,17 @@ export class ApprovalFormService {
     );
   }
 
+  notifyInitiator(data) {
+    this.http.post(this.url + '/approve/notify', data).subscribe((res) => {
+      this.approvalSubject.next('notifyTrue');
+    },
+    (err) => {
+      console.log(err);
+      this.approvalSubject.next('notifyFalse');
+    }
+    );
+  }
+
   sendOTP(data) {
     this.http.get(this.url + `/otp/send/${data}`).subscribe((res: {uri: string}) => {
       this.otpURI = res.uri;

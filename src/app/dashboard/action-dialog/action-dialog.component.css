@@ -4,10 +4,6 @@ mat-form-field {
 .mat-dialog-actions {
   justify-content: space-around !important;
 }
-
-@media only screen and (max-width: 430px) {
-  .mat-raised-button {
-    order: 1;
-    margin-top: 1.2rem;
-  }
+.mat-dialog-title {
+  font-size: 1.6rem;
 }

@@ -11,11 +11,14 @@ export class ActionDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   approverList = [];
-  zone;
+  title = '';
+  to;
 
   ngOnInit() {
+    console.log(this.data.approverList);
     this.approverList = this.data.approverList;
-    this.zone = this.data.zone;
+    this.title = this.data.title;
+    this.to = this.data.to || 'Approver';
   }
 
 }

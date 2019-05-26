@@ -24,15 +24,21 @@
   <div class="approval-zone">
       {{approval.zone}}
   </div>
-  <div [ngClass]="{'approved': approval.status == 'approved', 'rejected': approval.status == 'rejected'}" class="approval-status">
+  <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
-      <div *ngIf="approval.status != 'new'" class="remarks-icon" [matTooltip]="approval.mediator_remarks">?</div>
+      <div *ngIf="approval.status != 'new' && approval.mediator_remarks" class="remarks-icon" [matTooltip]="approval.mediator_remarks">?</div>
   </div>
-  <div class="approval-action" (click)="onAction()">
-    <div class="action-icon"></div>
+  <div class="approval-action">
+    <div class="action-icon" [matMenuTriggerFor]="actionMenu"></div>
   </div>
 </div>
 <div class="approval-body-item" *ngIf="openBody">
   <p><strong>Subject: </strong>{{approval.subject}}</p><br>
   <p><strong>Body: </strong>{{approval.body}}</p>
 </div>
+<mat-menu #actionMenu="matMenu">
+    <button mat-menu-item (click)="sendToApprover()">Send to Approver</button>
+    <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
+    <button mat-menu-item (click)="notifyInitiator()">Notify Initiator</button>
+    <button mat-menu-item (click)="printApproval()">Print</button>
+</mat-menu>

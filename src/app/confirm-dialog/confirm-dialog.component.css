@@ -8,4 +8,6 @@ mat-form-field {
 .mat-dialog-actions {
     justify-content: center !important;
 }
-  
+pre {
+    font-family: 'Rubik', sans-serif;
+}

@@ -48,12 +48,13 @@
     align-items: center;
     justify-items: center;
     font-size: 1.2rem;
-    background-color: #eff2f7;
+    background-color: rgba(65, 131, 215, 1);
     font-weight: 400;
 }
 
     .approvals-table__header div {
       cursor: pointer;
+      color: #fff;
     }
 
     .approvals-table__header div:hover i {
@@ -70,10 +71,13 @@
 
   .approvals-table__body {
     max-height: 75vh;
-    background: #fff;
+    background-color: #eff2f7;
     width: 100%;
     overflow-y: scroll;
     border-bottom: 2px solid #e6e6e6;
+  }
+  app-approval-list-item:nth-of-type(odd) {
+    background-color: #fff;
   }
 
   .approvals-table__footer {

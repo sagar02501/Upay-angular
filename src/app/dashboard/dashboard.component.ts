@@ -36,18 +36,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (res === 'sentToCentralTrue') {
           this.success = true;
           this.openSnackBar('Approval sent to Central Zone');
-          this.approvalFormService.getApproval();
         } else if (res === 'sentToCentralFalse') {
           this.success = false;
           this.openSnackBar('Approval could not be send to Central Zone');
         } else if (res === 'sentToApproverTrue') {
           this.success = true;
           this.openSnackBar('Approval sent to Zonal Approver');
-          this.approvalFormService.getApproval();
         } else if (res === 'sentToApproverFalse') {
           this.success = false;
           this.openSnackBar('Approval could not be send to Zonal Approver');
+        } else if (res === 'notifyTrue') {
+          this.success = true;
+          this.openSnackBar('Initiator Notified!');
+        } else if (res === 'notifyFalse') {
+          this.success = false;
+          this.openSnackBar('Initiator could not be Notified!');
         }
+        setTimeout(() => { this.approvalFormService.getApproval(); }, 500);
       }
     });
 
@@ -65,6 +70,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (e.send) {
       this.sendForApproval(e);
     }
+    if (e.notify) {
+      this.notifyInitiator(e);
+    }
     if (e.searchText || e.searchText === '' || e.sortBy) {
       this.sortApproval(e.searchText, e.sortBy);
     }
@@ -76,7 +84,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.approvalFormService.sendApproval(e);
     }
+  }
 
+  notifyInitiator(e) {
+      this.approvalFormService.notifyInitiator(e);
   }
 
   openSnackBar(message) {
