@@ -98,3 +98,6 @@ mat-spinner {
   cursor: not-allowed;
   background: rgba(25, 181, 254, 0.5);
 }
+input[type="file"] {
+  align-self: flex-start;
+}

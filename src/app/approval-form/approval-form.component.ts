@@ -21,6 +21,7 @@ export class ApprovalFormComponent implements OnInit {
   private formSubmitSubscription: Subscription;
   private zoneSubscription: Subscription;
   zones = [];
+  approvalFile;
 
   ngOnInit() {
     this.settingsService.getZoneList();
@@ -49,7 +50,7 @@ export class ApprovalFormComponent implements OnInit {
       return;
     }
     this.approvalForm = approvalForm;
-    this.approvalFormService.submitForm(approvalForm.value);
+    this.approvalFormService.submitForm(approvalForm.value, this.approvalFile);
   }
 
   sendOTP(phone) {
@@ -58,6 +59,10 @@ export class ApprovalFormComponent implements OnInit {
   }
   verifyOTP(otp) {
     this.approvalFormService.verifyOTP(otp);
+  }
+
+  onImagePicked(event: Event) {
+    this.approvalFile = (event.target as HTMLInputElement).files[0];
   }
 
   openSnackBar(message) {

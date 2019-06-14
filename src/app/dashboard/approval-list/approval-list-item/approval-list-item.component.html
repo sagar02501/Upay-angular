@@ -24,6 +24,10 @@
   <div class="approval-zone">
       {{approval.zone}}
   </div>
+  <div class="approval-file">
+    <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+    <span *ngIf="!approval.filePath">-</span>
+  </div>
   <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
       <div *ngIf="approval.status != 'new' && approval.mediator_remarks" class="remarks-icon" [matTooltip]="approval.mediator_remarks">?</div>

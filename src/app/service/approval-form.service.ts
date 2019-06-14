@@ -16,9 +16,20 @@ export class ApprovalFormService {
   constructor(public http: HttpClient) { }
   url = environment.backendURL + 'api/approvals';
 
-  submitForm(data) {
-    console.log(data);
-    this.http.post(this.url, data).subscribe((res) => {
+  submitForm(data, file) {
+    console.log(data, file);
+    const postData = new FormData();
+    postData.append('name', data.name);
+    postData.append('zone', data.zone);
+    postData.append('designation', data.designation);
+    postData.append('contact', data.contact);
+    postData.append('email', data.email);
+    postData.append('amount', data.amount);
+    postData.append('subject', data.subject);
+    postData.append('body', data.body);
+    postData.append('file', file, data.name);
+
+    this.http.post(this.url, postData).subscribe((res) => {
       this.formSubmitSubject.next(1);
     },
     (err) => {
