@@ -43,6 +43,23 @@ export class UsersSettingComponent implements OnInit, OnDestroy {
     this.authService.createUser(form.value.email, form.value.password, form.value.zone);
   }
 
+  resetPwd(id) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        header: 'Reset Password',
+        message: '',
+        resetPwd: true,
+        buttonTextPrimary: 'Reset',
+        buttonTextSecondary: 'Cancel'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.resetPwd(id, result);
+      }
+    });
+  }
+
   editUser(id, email, zone) {
     this.authService.editUser(id, email, zone);
   }

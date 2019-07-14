@@ -9,16 +9,19 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 export class ConfirmDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
-  header = 'Confirm';
-  message = 'Default';
-  buttonTextPrimary = 'Yes';
-  buttonTextSecondary = 'No';
+  header;
+  message;
+  buttonTextPrimary;
+  buttonTextSecondary;
+  resetPwd;
 
   ngOnInit() {
-    this.header = this.data.header || '';
-    this.message = this.data.message || '';
-    this.buttonTextPrimary = this.data.buttonTextPrimary || '';
-    this.buttonTextSecondary = this.data.buttonTextSecondary || '';
+    this.header = this.data.header || 'Confirm';
+    this.message = this.data.message || 'Default';
+    this.buttonTextPrimary = this.data.buttonTextPrimary || 'Yes';
+    this.buttonTextSecondary = this.data.buttonTextSecondary || 'No';
+    this.resetPwd = this.data.resetPwd || false;
+    console.log(this.resetPwd);
   }
 
 }

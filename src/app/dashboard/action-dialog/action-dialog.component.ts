@@ -10,15 +10,23 @@ export class ActionDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  approverList = [];
-  title = '';
+  approverList;
+  title;
   to;
+  isFundTransfer;
+  placeholder;
 
   ngOnInit() {
     console.log(this.data.approverList);
-    this.approverList = this.data.approverList;
-    this.title = this.data.title;
+    this.approverList = this.data.approverList || [];
+    this.title = this.data.title || '';
     this.to = this.data.to || 'Approver';
+    this.isFundTransfer = this.data.isFundTransfer || false;
+    if (this.data.to) {
+      this.placeholder = 'Remarks';
+    } else {
+      this.placeholder = 'Remarks/DOP Clause';
+    }
   }
 
 }

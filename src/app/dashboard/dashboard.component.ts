@@ -69,11 +69,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   handleEvent(e) {
     if (e.send) {
       this.sendForApproval(e);
-    }
-    if (e.notify) {
+    } else if (e.notify) {
       this.notifyInitiator(e);
-    }
-    if (e.searchText || e.searchText === '' || e.sortBy) {
+    } else if (e.fundTransfer) {
+      this.fundtransfer(e);
+    } else if (e.delete) {
+      this.deleteApproval(e);
+    } else if (e.searchText || e.searchText === '' || e.sortBy) {
       this.sortApproval(e.searchText, e.sortBy);
     }
   }
@@ -88,6 +90,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   notifyInitiator(e) {
       this.approvalFormService.notifyInitiator(e);
+  }
+
+  fundtransfer(e) {
+    this.approvalFormService.fundTransfer(e);
+  }
+
+  deleteApproval(e) {
+    this.approvalFormService.deleteApproval(e);
   }
 
   openSnackBar(message) {

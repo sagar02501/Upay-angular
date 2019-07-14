@@ -9,18 +9,19 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './approval-form.component.html',
   styleUrls: ['./approval-form.component.css']
 })
-export class ApprovalFormComponent implements OnInit {
+export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
   isOTP = false;
   isOTPVerified = 0;
-  isSubmitted = 0;
+  isSubmitted;
   isLoading = false;
   approvalForm;
   private otpVerificationSubscription: Subscription;
   private formSubmitSubscription: Subscription;
   private zoneSubscription: Subscription;
   zones = [];
+  approvals = [];
   approvalFile;
 
   ngOnInit() {
@@ -32,25 +33,37 @@ export class ApprovalFormComponent implements OnInit {
     this.formSubmitSubscription = this.approvalFormService.getFormSubmitListener()
       .subscribe((res) => {
         this.isSubmitted = res as any;
-        if (res === 1) {
+        if (res && this.isSubmitted.approvalId) {
           this.approvalForm.reset();
           this.openSnackBar('Approval sent successfully');
+          this.isLoading = false;
         } else if (res === 2) {
           this.openSnackBar('Approval could not be submitted');
+          this.isLoading = false;
         }
       });
 
       this.zoneSubscription = this.settingsService.getZoneSubjectListener().subscribe((res) => {
         this.zones = res as any;
       });
+
+      this.approvals.push({name: 'In Principle or Admin Approval', value: 0});
+      this.approvals.push({name: 'Advance or Imprest', value: 1});
+      this.approvals.push({name: 'Claim against advance', value: 2});
+      this.approvals.push({name: 'Claim', value: 3});
   }
 
   onSubmit(approvalForm) {
     if (approvalForm.invalid || this.isOTPVerified !== 1) {
       return;
     }
+    this.isLoading = true;
     this.approvalForm = approvalForm;
-    this.approvalFormService.submitForm(approvalForm.value, this.approvalFile);
+    this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+  }
+
+  onImagePicked(event: Event) {
+    this.approvalFile = (event.target as HTMLInputElement).files[0];
   }
 
   sendOTP(phone) {
@@ -61,19 +74,15 @@ export class ApprovalFormComponent implements OnInit {
     this.approvalFormService.verifyOTP(otp);
   }
 
-  onImagePicked(event: Event) {
-    this.approvalFile = (event.target as HTMLInputElement).files[0];
-  }
-
   openSnackBar(message) {
     this.snackBar.open(message, null, {
       duration: 5000,
       verticalPosition: 'top',
-      panelClass: this.isSubmitted === 1 ? 'success' : 'failure'
+      panelClass: this.isSubmitted.approvalId ? 'success' : 'failure'
     });
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
     this.formSubmitSubscription.unsubscribe();
     this.otpVerificationSubscription.unsubscribe();
     this.zoneSubscription.unsubscribe();

@@ -23,6 +23,7 @@
               </mat-form-field>
           </div>
           <div class="user-actions">
+            <button mat-raised-button *ngIf="!user.edit" (click)="resetPwd(user._id)">Reset Pwd</button>
             <button mat-raised-button *ngIf="!user.edit" (click)="user.edit = true">Edit</button>
             <button mat-raised-button *ngIf="user.edit" (click)="editUser(user._id, user.email, user.zone);user.edit = false">Save</button>
             <button mat-raised-button (click)="deleteUser(user._id);">Delete</button>

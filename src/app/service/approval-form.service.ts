@@ -16,7 +16,7 @@ export class ApprovalFormService {
   constructor(public http: HttpClient) { }
   url = environment.backendURL + 'api/approvals';
 
-  submitForm(data, file) {
+  submitForm(data, file, approvalTypes) {
     console.log(data, file);
     const postData = new FormData();
     postData.append('name', data.name);
@@ -27,10 +27,21 @@ export class ApprovalFormService {
     postData.append('amount', data.amount);
     postData.append('subject', data.subject);
     postData.append('body', data.body);
-    postData.append('file', file, data.name);
+    if (approvalTypes[data.approval]) {
+      postData.append('type', approvalTypes[data.approval].name);
+    }
+    if (data.advanceDetails) {
+      postData.append('advanceDetails', data.advanceDetails);
+    }
+    if (data.paymentDetails) {
+      postData.append('paymentDetails', data.paymentDetails);
+    }
+    if (file) {
+      postData.append('file', file, data.name);
+    }
 
     this.http.post(this.url, postData).subscribe((res) => {
-      this.formSubmitSubject.next(1);
+      this.formSubmitSubject.next(res);
     },
     (err) => {
       console.log(err);
@@ -76,6 +87,28 @@ export class ApprovalFormService {
     (err) => {
       console.log(err);
       this.approvalSubject.next('notifyFalse');
+    }
+    );
+  }
+
+  fundTransfer(data) {
+    this.http.post(this.url + '/approve/fundTransfer', data).subscribe((res) => {
+      this.approvalSubject.next('fundTransferTrue');
+    },
+    (err) => {
+      console.log(err);
+      this.approvalSubject.next('fundTransferFalse');
+    }
+    );
+  }
+
+  deleteApproval(data) {
+    this.http.delete(this.url + '/' + data.approvalId).subscribe((res) => {
+      this.approvalSubject.next('deleteTrue');
+    },
+    (err) => {
+      console.log(err);
+      this.approvalSubject.next('deleteFalse');
     }
     );
   }

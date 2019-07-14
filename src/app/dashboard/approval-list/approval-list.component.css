@@ -31,7 +31,8 @@
 .approvals-table {
   display: flex;
   margin: 20px;
-  min-width: 1000px;
+  min-width: 100%;
+  width: 2200px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -44,7 +45,7 @@
     height: 40px;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
     align-items: center;
     justify-items: center;
     font-size: 1.2rem;

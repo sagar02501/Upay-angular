@@ -2,7 +2,7 @@
     height: 35px;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
     align-items: center;
     justify-items: center;
     font-size: 1.2rem;

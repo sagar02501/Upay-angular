@@ -58,7 +58,6 @@ export class ApprovalListItemComponent implements OnInit {
   }
 
   notifyInitiator() {
-    console.log(this.approval.email);
     const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
       approverList: [{email: this.approval.email}],
       title: 'Notify Initiator',
@@ -68,6 +67,38 @@ export class ApprovalListItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.actionOccured.emit({notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
+      }
+    });
+  }
+
+  fundTransfer() {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
+      title: 'Fund Transfer',
+      isFundTransfer: true
+    }});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
+           transactionId: result.transactionId, transferredAmount: result.transferredAmount});
+      }
+    });
+  }
+
+  deleteApproval() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        header: 'Confirm',
+        message: `Are you sure you want to delete this approval?`,
+        buttonTextPrimary: 'Yes',
+        buttonTextSecondary: 'No'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.actionOccured.emit({delete: true, approvalId: this.approval._id});
       }
     });
   }

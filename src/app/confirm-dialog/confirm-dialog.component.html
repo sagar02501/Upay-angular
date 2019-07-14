@@ -1,8 +1,22 @@
 <h1 mat-dialog-title>{{header}}</h1>
 <div mat-dialog-content>
   <pre>{{message}}</pre>
+  <form *ngIf="resetPwd">
+    <mat-form-field>
+      <input matInput
+      type="password"
+      placeholder="Password" name="password" ngModel #pwd="ngModel" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+      type="password"
+      placeholder="Confirm Password" name="cpassword" ngModel #cpwd="ngModel" required>
+    </mat-form-field>
+    <mat-error *ngIf="resetPwd && pwd.value && pwd.value !== cpwd.value"> Passwords do not match </mat-error>
+  <button mat-button [disabled]="pwd.invalid || cpwd.invalid" [mat-dialog-close]="pwd.value" cdkFocusInitial>{{buttonTextPrimary}}</button>
+  </form>
 </div>
-<div mat-dialog-actions>
+<div *ngIf="!resetPwd" mat-dialog-actions>
   <button mat-button [mat-dialog-close]="0">{{buttonTextSecondary}}</button>
   <button mat-button [mat-dialog-close]="1" cdkFocusInitial>{{buttonTextPrimary}}</button>
 </div>

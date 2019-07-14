@@ -1,10 +1,11 @@
 <div class="approval-form">
-  <a href="https://www.upay.org.in/"><img src="../../assets/images/upay-logo.png" alt="Upay Logo"></a>
+  <a href="https://www.upay.org.in/"><img class="upay-logo" src="../../assets/images/upay-logo.png" alt="Upay Logo"></a>
   <mat-tab-group [color]="'primary'">
-    <mat-tab label="Normal Form" aria-selected="true">
+    <mat-tab label="Approval Form" aria-selected="true">
         <mat-card>
             <mat-spinner *ngIf="isLoading"></mat-spinner>
-            <form (submit)="onSubmit(approvalForm)" *ngIf="!isLoading" #approvalForm="ngForm" >
+            <div *ngIf="isSubmitted && isSubmitted.approvalId">Please note down your submitted approval Id: <strong>{{isSubmitted.approvalId}}</strong> for future reference.</div>
+            <form (submit)="onSubmit(approvalForm)" *ngIf="!isLoading && (!isSubmitted || isSubmitted == 2)" #approvalForm="ngForm" >
               <mat-form-field>
                 <input matInput
                 type="text"
@@ -52,6 +53,25 @@
                 <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error>
               </mat-form-field>
               <mat-form-field>
+                <mat-label>Approval Type</mat-label>
+                <mat-select name="approval" ngModel #approvalInput="ngModel" required>
+                  <mat-option *ngFor="let approval of approvals" [value]="approval.value">
+                    {{approval.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="approvalInput.invalid"> Please provide type of Approval </mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value == 2">
+                <textarea matInput
+                placeholder="Please provide Advance amount, doc no, date" name="advanceDetails" ngModel #advanceDetailsInput="ngModel" required minlength="20"></textarea>
+                <mat-error *ngIf="advanceDetailsInput.invalid"> Please provide Advance Details (min character 20)</mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value != 0">
+                <textarea matInput
+                placeholder="Please provide Payee name, account no, bank name and IFSC code" name="paymentDetails" ngModel #paymentDetailsInput="ngModel" required minlength="20"></textarea>
+                <mat-error *ngIf="paymentDetailsInput.invalid"> Please provide Payment Details (min character 20)</mat-error>
+              </mat-form-field>
+              <mat-form-field>
                 <input matInput
                 type="text"
                 placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required>
@@ -59,11 +79,17 @@
               </mat-form-field>
               <mat-form-field>
                 <textarea matInput
-                placeholder="Request Body" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
-                <mat-error *ngIf="bodyInput.invalid"> Please provide body (min character 20)</mat-error>
+                placeholder="Approval/Utilization Details (Item, Amount, Vendor and Bill Details)" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
+                <mat-error *ngIf="bodyInput.invalid"> Please provide Approval/Utilization Details (min character 20)</mat-error>
               </mat-form-field>
-              <input type="file" (change)="onImagePicked($event)">
-            <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>
+              <div class="file-input">
+                <input type="file" #fileInput (change)="onImagePicked($event)">
+                <button mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()">Upload File</button>
+                <p>Upload bills/quotations/utilization (if any)<br>Supported formats - pdf/jpg/jpeg/png</p>
+              </div>
+              <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
+              <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>
+            <!-- <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading">Submit</button> -->
             </form>
           </mat-card>
     </mat-tab>

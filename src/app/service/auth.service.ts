@@ -76,6 +76,18 @@ export class AuthService {
    setTimeout(() => this.getUserList(), 1000);
   }
 
+  resetPwd(id, pwd) {
+    const data = {id: id, password: pwd};
+    this.http.post(this.url + 'resetPassword', data).subscribe((res) => {
+      this.openSnackBar((res as any).message, 1);
+    },
+    (err) => {
+      this.openSnackBar(err.error.message, 0);
+    }
+   );
+   setTimeout(() => this.getUserList(), 1000);
+  }
+
   deleteUser(id) {
     this.http.delete(this.url + id).subscribe((res) => {
       this.openSnackBar((res as any).message, 1);
