@@ -9,6 +9,7 @@ import { environment } from './../../environments/environment';
 export class ApprovalFormService {
 
   private approvalSubject = new Subject();
+  private approvalStatusSubject = new Subject();
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
   otpURI = '';
@@ -53,6 +54,14 @@ export class ApprovalFormService {
   getApproval(search?, sort?, order = 1) {
     this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}`).subscribe((res) => {
       this.approvalSubject.next(res);
+    },
+    (err) => {console.log(err); }
+    );
+  }
+
+  getApprovalStatusData() {
+    this.http.get(this.url + '/approvalStatusData').subscribe((res) => {
+      this.approvalStatusSubject.next(res);
     },
     (err) => {console.log(err); }
     );
@@ -135,6 +144,9 @@ export class ApprovalFormService {
 
   getApprovalListener() {
     return this.approvalSubject.asObservable();
+  }
+  getApprovalStatusListener() {
+    return this.approvalStatusSubject.asObservable();
   }
   getOTPVerificationListener() {
     return this.otpVerificationSubject.asObservable();

@@ -122,12 +122,20 @@ export class ApprovalListItemComponent implements OnInit {
     `<h3>Approval Data</h3>
       <div class="print-approval">
       <div>
+      <label>Approval Id</label>
+      <span>${this.approval.approvalId}</span>
+      </div>
+      <div>
       <label>Name</label>
       <span>${this.approval.name}</span>
       </div>
       <div>
       <label>Email</label>
       <span>${this.approval.email}</span>
+      </div>
+      <div>
+      <label>Approval Type</label>
+      <span>${this.approval.approval_type}</span>
       </div>
       <div>
       <label>Designation</label>
@@ -154,16 +162,24 @@ export class ApprovalListItemComponent implements OnInit {
       <span>${this.approval.status}</span>
       </div>
       <div class="row">
-      <label>Subject</label>
+      <label>Approval Subject</label>
       <span>${this.approval.subject}</span>
       </div>
       <div class="row">
-      <label>Body</label>
-      <span>${this.approval.body}</span>
+      <label>Approval Details</label>
+      <span><pre>${this.approval.body}</pre></span>
+      </div>
+      <div class="row">
+      <label>Payment Details</label>
+      <span><pre>${this.approval.payment_details}</pre></span>
+      </div>
+      <div class="row">
+      <label>Advance Details</label>
+      <span><pre>${this.approval.advance_details}</pre></span>
       </div>
       <div class="row">
       <label>Timeline</label>
-      <span>${this.approval.timeline}</span>
+      <span><pre>${this.approval.timeline}</pre></span>
       </div>
     </div>`;
 

@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
   private approvalSubscription: Subscription;
+  private approvalStatusSubscription: Subscription;
   private approverSubscription: Subscription;
   approvalList;
   approverList;
@@ -23,10 +24,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   success = false;
   emailId;
   sortOrder = 1;
+  count;
 
   ngOnInit() {
+    this.approvalFormService.getApprovalStatusData();
     this.approvalFormService.getApproval();
     this.settingsService.getApproverList();
+
+    this.approvalStatusSubscription = this.approvalFormService.getApprovalStatusListener()
+    .subscribe((res) => {
+      if (res) {
+        this.count = res;
+        this.count = this.count.count;
+      }
+    });
 
     this.approvalSubscription = this.approvalFormService.getApprovalListener()
     .subscribe((res) => {
@@ -52,7 +63,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.success = false;
           this.openSnackBar('Initiator could not be Notified!');
         }
-        setTimeout(() => { this.approvalFormService.getApproval(); }, 500);
+        setTimeout(() => { this.approvalFormService.getApproval();
+                      this.approvalFormService.getApprovalStatusData();
+                    }, 500);
       }
     });
 

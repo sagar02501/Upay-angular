@@ -44,7 +44,7 @@
 </div>
 <div class="approval-body-item" *ngIf="openBody">
   <p><strong>Approval Subject: </strong>{{approval.subject}}</p><br>
-  <p><strong>Approval Details: </strong>{{approval.body}}</p><br>
+  <p><strong>Approval Details: </strong><pre>{{approval.body}}</pre><br>
   <p *ngIf="approval.payment_details"><strong>Payment Details: </strong><pre>{{approval.payment_details}}</pre><br>
   <p *ngIf="approval.advance_details"><strong>Advance Details: </strong><pre>{{approval.advance_details}}</pre>
 </div>

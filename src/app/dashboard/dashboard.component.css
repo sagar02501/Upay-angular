@@ -1,16 +1,45 @@
-/* table {
+.approval-overview {
+  display: flex;
   width: 100%;
+  height: 120px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
-
-th.mat-sort-header-sorted {
-  color: black;
+.approval-overview > div {
+  width: 20%;
+  height: 100%;
+  border: 1px solid #cfd8dc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 1.6rem;
+  font-family: 'Rubik', sans-serif;
+  text-transform: uppercase;
+  border-radius: 3px;
+  box-shadow: 1px 1px 10px 0 #cfd8dc;
 }
-::ng-deep .success {
-  background-color: #4caf50;
-  color: #fff;
+.approval-overview > div > span {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #999;
 }
-
-::ng-deep .failure {
-  background-color: #f03434;
-  color: #fff;
-} */
+.approval-overview > div + div {
+  margin-left: 10px;
+}
+.transferred > label {
+  color: #4caf50;
+}
+.approved > label {
+  color: #3CBA7A;
+}
+.rejected > label {
+  color: #F65932;
+}
+.pending > label {
+  color: #FBBC3A;
+}
+.new > label {
+  color: #2AA3EC;
+}

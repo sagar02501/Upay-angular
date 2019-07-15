@@ -1,2 +1,24 @@
 <app-header></app-header>
+<div class="approval-overview">
+    <div class="new">
+        <label for="">New</label>
+        <span>{{count?.new}}</span>
+    </div>
+    <div class="pending">
+        <label for="">Pending</label>
+        <span>{{count?.pending}}</span>
+    </div>
+    <div class="rejected">
+        <label for="">Rejected</label>
+        <span>{{count?.rejected}}</span>
+    </div>
+    <div class="approved">
+        <label for="">Approved</label>
+        <span>{{count?.approved}}</span>
+    </div>
+    <div class="transferred">
+        <label for="">Transferred</label>
+        <span>{{count?.transferred}}</span>
+    </div>
+</div>
 <app-approval-list [approvalList]="approvalList" [approverList]="approverList" (actionOccured)="handleEvent($event)"></app-approval-list>
