@@ -51,7 +51,8 @@ export class ApprovalFormService {
     );
   }
 
-  getApproval(search?, sort?, order = 1) {
+  getApproval(search?, sort?, order = -1) {
+    sort = sort || 'date';
     this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
