@@ -1,0 +1,42 @@
+<div class="approval">
+  <div class="approval__search" *ngIf="!token">
+    <mat-form-field>
+      <input matInput
+      type="text"
+      [placeholder]="'Track with Approval Id'" name="remarks" [(ngModel)]="trackId" #remarksInput="ngModel" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="trackById()">Search</button>
+  </div>
+  <div class="approval__body" *ngIf="approval">
+    <h3>Approval Details</h3><br>
+    <div><label>Id: </label><span>{{approval?.approvalId}}</span></div>
+    <div [ngClass]="{'bold': !token}"><label>Status: </label><span>{{approval?.status}}</span></div>
+    <div><label>Name: </label><span>{{approval?.name}}</span></div>
+    <div><label>Email: </label><span>{{approval?.email}}</span></div>
+    <div><label>Date: </label><span>{{approvalCreatedDate}}</span></div>
+    <div><label>Contact: </label><span>{{approval?.contact}}</span></div>
+    <div><label>Designation: </label><span>{{approval?.designation}}</span></div>
+    <div><label>Approval Type: </label><span>{{approval?.approval_type}}</span></div>
+    <div><label>Subject: </label><span>{{approval?.subject}}</span></div>
+    <div><label>Approval Details: </label><span>{{approval?.body}}</span></div>
+    <div><label>Payment Details: </label><span>{{approval?.payment_details}}</span></div>
+    <div><label>Amount: </label><span>{{approval?.amount}}</span></div>
+    <div><label>Remarks by mediator: </label><span>{{approval?.mediator_remarks}}</span></div>
+    <div *ngIf="approval?.approver_remarks"><label>Remarks by approver: </label><span>{{approval?.approver_remarks}}</span></div>
+  </div>
+  <div class="approval__actions" *ngIf="approval && token">
+    <mat-form-field>
+      <input matInput
+      type="text"
+      [placeholder]="'Remarks'" name="remarks" ngModel #remarksInput="ngModel">
+    </mat-form-field>
+    <div>
+      <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Approve', remarksInput.value)" cdkFocusInitial>Approve</button>
+      <button mat-raised-button (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
+    </div>
+  </div>
+  <div class="timeline" *ngIf="!token && trackId && approval">
+    <label><strong>Timeline: </strong></label>
+    <pre>{{approval?.timeline}}</pre>
+  </div>
+</div>

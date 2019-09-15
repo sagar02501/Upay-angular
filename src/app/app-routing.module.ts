@@ -5,10 +5,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ApprovalFormComponent } from './approval-form/approval-form.component';
 import { AuthGuard } from './service/auth.guard';
+import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
 
 const routes: Routes = [
   { path: '', component: ApprovalFormComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'track', component: GetSingleApprovalComponent},
+  { path: 'approve', component: GetSingleApprovalComponent},
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: '**', component: LoginComponent},

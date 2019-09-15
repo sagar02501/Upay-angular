@@ -1,0 +1,9 @@
+::ng-deep .success {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+::ng-deep .failure {
+    background-color: #f03434;
+    color: #fff;
+}

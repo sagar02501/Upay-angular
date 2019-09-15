@@ -60,6 +60,32 @@ export class ApprovalFormService {
     );
   }
 
+  getSingleApproval(id) {
+    this.http.get(this.url + `/getSingleApproval/${id}`).subscribe((res) => {
+      this.approvalSubject.next(res);
+    },
+    (err) => { this.approvalSubject.next(err.error); }
+    );
+  }
+
+  approveApproval(token, remarks) {
+    const data = {remarks: remarks};
+    this.http.post(this.url + `/confirmation/approved/${token}`, data).subscribe((res) => {
+      this.approvalSubject.next(res);
+    },
+    (err) => {console.log(err); }
+    );
+  }
+
+  rejectApproval(token, remarks) {
+    const data = {remarks};
+    this.http.post(this.url + `/confirmation/rejected/${token}`, data).subscribe((res) => {
+      this.approvalSubject.next(res);
+    },
+    (err) => {console.log(err); }
+    );
+  }
+
   getApprovalStatusData() {
     this.http.get(this.url + '/approvalStatusData').subscribe((res) => {
       this.approvalStatusSubject.next(res);

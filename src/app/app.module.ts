@@ -32,6 +32,7 @@ import { UsersSettingComponent } from './settings/users-setting/users-setting.co
 import { ZonesSettingComponent } from './settings/zones-setting/zones-setting.component';
 import { ApproversSettingComponent } from './settings/approvers-setting/approvers-setting.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ZonesSettingComponent,
     ApproversSettingComponent,
     ConfirmDialogComponent,
+    GetSingleApprovalComponent,
   ],
   imports: [
     BrowserModule,
