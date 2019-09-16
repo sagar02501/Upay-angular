@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>{{header}}</h1>
 <div mat-dialog-content>
   <ul *ngIf="timeline">
-    <li *ngFor="let item of message">{{item}}</li>
+    <li *ngFor="let item of message">{{item.split('GMT')[0]}}</li>
   </ul>
   <p *ngIf="!timeline">{{message}}</p>
   <form *ngIf="resetPwd">
