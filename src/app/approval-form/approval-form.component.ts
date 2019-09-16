@@ -17,6 +17,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   isSubmitted;
   isLoading = false;
   approvalForm;
+  approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
   private otpVerificationSubscription: Subscription;
   private formSubmitSubscription: Subscription;
   private zoneSubscription: Subscription;
@@ -51,6 +52,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.approvals.push({name: 'Advance or Imprest', value: 1});
       this.approvals.push({name: 'Claim against advance', value: 2});
       this.approvals.push({name: 'Claim', value: 3});
+      this.approvals.push({name: 'Award Approval', value: 4});
   }
 
   onSubmit(approvalForm) {
@@ -64,6 +66,15 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   onImagePicked(event: Event) {
     this.approvalFile = (event.target as HTMLInputElement).files[0];
+  }
+
+  approvalChanged(value) {
+    if (value === 4) {
+      this.approvalPlaceholder = 'Vendors Details with account number / admin approval Id / price comparison';
+    } else {
+      this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
+    }
+
   }
 
   sendOTP(phone) {
