@@ -17,6 +17,7 @@ export class GetSingleApprovalComponent implements OnInit {
   approval;
   approvalCreatedDate;
   trackId;
+  timeline;
   err = false;
   private approvalSubscription: Subscription;
 
@@ -46,6 +47,7 @@ export class GetSingleApprovalComponent implements OnInit {
       console.log(res);
       if (this.approval) {
         this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
+        this.timeline = this.approval.timeline.split('\n');
       }
     });
   }

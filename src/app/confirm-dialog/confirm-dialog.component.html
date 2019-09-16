@@ -1,6 +1,9 @@
 <h1 mat-dialog-title>{{header}}</h1>
 <div mat-dialog-content>
-  <pre>{{message}}</pre>
+  <ul *ngIf="timeline">
+    <li *ngFor="let item of message">{{item}}</li>
+  </ul>
+  <p *ngIf="!timeline">{{message}}</p>
   <form *ngIf="resetPwd">
     <mat-form-field>
       <input matInput

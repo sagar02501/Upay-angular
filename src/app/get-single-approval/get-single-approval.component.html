@@ -37,6 +37,8 @@
   </div>
   <div class="timeline" *ngIf="!token && trackId && approval">
     <label><strong>Timeline: </strong></label>
-    <pre>{{approval?.timeline}}</pre>
+    <ul>
+      <li *ngFor="let item of timeline">{{item}}</li>
+    </ul>
   </div>
 </div>

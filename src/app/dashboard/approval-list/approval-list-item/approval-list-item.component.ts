@@ -33,9 +33,10 @@ export class ApprovalListItemComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         header: 'Approval Timeline',
-        message: this.approval.timeline,
+        message: this.approval.timeline.split('\n'),
         buttonTextPrimary: 'OK',
-        buttonTextSecondary: 'Cancel'
+        buttonTextSecondary: 'Cancel',
+        timeline: true
       }
     });
   }

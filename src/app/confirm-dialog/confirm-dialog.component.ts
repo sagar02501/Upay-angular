@@ -14,6 +14,7 @@ export class ConfirmDialogComponent implements OnInit {
   buttonTextPrimary;
   buttonTextSecondary;
   resetPwd;
+  timeline;
 
   ngOnInit() {
     this.header = this.data.header || 'Confirm';
@@ -21,7 +22,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.buttonTextPrimary = this.data.buttonTextPrimary || 'Yes';
     this.buttonTextSecondary = this.data.buttonTextSecondary || 'No';
     this.resetPwd = this.data.resetPwd || false;
-    console.log(this.resetPwd);
+    this.timeline = this.data.timeline || false;
   }
 
 }
