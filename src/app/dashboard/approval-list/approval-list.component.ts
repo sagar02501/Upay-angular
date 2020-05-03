@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-
 @Component({
   selector: 'app-approval-list',
   templateUrl: './approval-list.component.html',
@@ -17,7 +16,7 @@ export class ApprovalListComponent implements OnInit {
   sortAmountAsc = true;
   sortDateAsc = true;
   approvalSearchSubject = new Subject();
-  @Output() actionOccured: EventEmitter<any> = new EventEmitter();
+  @Output() actionOccured: EventEmitter<any> = new EventEmitter()
 
   ngOnInit() {
     this.approvalSearchSubject.pipe(debounceTime(500)).subscribe((e) => {
@@ -96,7 +95,7 @@ export class ApprovalListComponent implements OnInit {
       .approvals-table__body {
         background: #fff;
         width: 100%;
-        overflow-y: scroll;
+        overflow-y: auto;
         border-bottom: 2px solid #e6e6e6;
       }
       .approvals-table__footer {

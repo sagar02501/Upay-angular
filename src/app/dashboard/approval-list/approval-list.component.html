@@ -57,8 +57,5 @@
     <div class="approvals-table__body">
       <app-approval-list-item *ngFor="let approval of approvalList" [approval]="approval" [approverList]="approverList" [openBody]="openBody" (actionOccured)="handleEvent($event)"></app-approval-list-item>
     </div>
-    <!-- <div class="agents-table__footer"> -->
-        <!-- <p-paginator [rows]="5" [totalRecords]="20" [pageLinkSize]="5" [first]="1" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator> -->
-    <!-- </div> -->
   </section>
 </div>

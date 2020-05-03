@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import {MatTableModule, MatSortModule} from '@angular/material';
+import { MatTableModule, MatSortModule } from '@angular/material';
 import { MatInputModule,
   MatCardModule,
   MatButtonModule,
@@ -17,6 +17,7 @@ import { MatInputModule,
   MatTooltipModule,
   MatMenuModule
  } from '@angular/material';
+ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -70,7 +71,8 @@ import { GetSingleApprovalComponent } from './get-single-approval/get-single-app
     MatProgressSpinnerModule,
     MatDialogModule,
     MatTooltipModule,
-    MatMenuModule
+    MatMenuModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

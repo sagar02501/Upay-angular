@@ -11,7 +11,3 @@ html {
   font-size: 62.5%;
   font-weight: 300;
 }
-
-::-webkit-scrollbar { 
-  display: none; 
-}

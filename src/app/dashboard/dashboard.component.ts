@@ -3,6 +3,7 @@ import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +15,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;;
   private approvalSubscription: Subscription;
   private approvalStatusSubscription: Subscription;
   private approverSubscription: Subscription;
@@ -23,8 +25,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   openPopup = false;
   success = false;
   emailId;
-  sortOrder = 1;
+  sortOrder = -1;
   count;
+  searchText;
+  sortBy;
+  pageSize = 10;
 
   ngOnInit() {
     this.approvalFormService.getApprovalStatusData();
@@ -74,9 +79,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  sortApproval(searchText?, sortBy?) {
+  sortApproval(searchText?, sortBy?, pageSize?) {
     this.sortOrder === 1 ? this.sortOrder = -1 : this.sortOrder = 1;
-    this.approvalFormService.getApproval(searchText, sortBy, this.sortOrder);
+    this.searchText = searchText;
+    this.sortBy = sortBy;
+    this.paginator.pageIndex = 0;
+    this.approvalFormService.getApproval(searchText, sortBy, this.sortOrder, pageSize);
   }
 
   handleEvent(e) {
@@ -89,8 +97,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else if (e.delete) {
       this.deleteApproval(e);
     } else if (e.searchText || e.searchText === '' || e.sortBy) {
-      this.sortApproval(e.searchText, e.sortBy);
+      this.sortApproval(e.searchText, e.sortBy, this.pageSize);
     }
+  }
+
+  pageChanged(e) {
+    if (e.pageSize != this.pageSize) {
+      this.paginator.pageIndex = 0;
+      this.pageSize = e.pageSize;
+    }
+    this.approvalFormService.getApproval(this.searchText, this.sortBy, this.sortOrder, e.pageSize, e.pageIndex);
   }
 
   sendForApproval(e) {
