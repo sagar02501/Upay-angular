@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { environment } from './../../environments/environment';
 
@@ -129,11 +129,10 @@ export class ApprovalFormService {
 
   fundTransfer(data) {
     this.http.post(this.url + '/approve/fundTransfer', data).subscribe((res) => {
-      this.approvalSubject.next('fundTransferTrue');
+      this.approvalSubject.next(res);
     },
     (err) => {
-      console.log(err);
-      this.approvalSubject.next('fundTransferFalse');
+      this.approvalSubject.next(err.error);
     }
     );
   }

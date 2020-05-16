@@ -1,9 +1,30 @@
 mat-form-field {
-  width: 100%
+  width: 50%;
 }
+.fund mat-form-field {
+  width: 90vw;
+}
+::ng-deep .mat-dialog-container {
+  position: relative;
+}
+.switch {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+@media only screen and (min-width: 600px) {
+  .fund mat-form-field {
+    width: 50vw;
+  }
+}
+
 .mat-dialog-actions {
   justify-content: space-around !important;
 }
 .mat-dialog-title {
   font-size: 1.6rem;
+}
+::ng-deep .mat-form-field-infix {
+  font-size: 1.4rem;
 }

@@ -77,12 +77,36 @@ export class ApprovalListItemComponent implements OnInit {
       title: 'Fund Transfer',
       isFundTransfer: true
     }});
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
+      if (result && !result.transactionId) {
+        const cnf = confirm("You are going to transfer Rs." + result.transferredAmount + " to contact Id " + result.fundAccountIdInput);
+        if (cnf) {
+          this.actionOccured.emit({
+            fundTransfer: true,
+            approvalData: this.approval,
+            fund_account_id: result.fundAccountIdInput,
+            transferredAmount: result.transferredAmount,
+            amount: result.transferredAmount * 100,       // for razorpay payout integration
+            mode: result.modeInput,
+            reference_id: result.referenceIdInput,
+            narration: result.narrationInput,
+            purpose: result.payoutTypeInput,
+            notes: {
+              billed_amount: result.billedAmountInput,
+              advance_amount: result.advanceAmountInput,
+              centre: result.centreInput,
+              budget_head: result.budgetHeadInput,
+              budget_subhead: result.budgetSubHeadInput,
+              expenditure_code: result.expCodeInput,
+              invoice_id: result.invoiceInput,
+              approval_id: this.approval.approvalId,
+              approval_type: this.approval.approval_type
+            }
+          });
+        }
+      } else if(result && result.transactionId) {
         this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
-           transactionId: result.transactionId, transferredAmount: result.transferredAmount});
+          transactionId: result.transactionId, transferredAmount: result.transferredAmount});
       }
     });
   }

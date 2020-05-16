@@ -14,7 +14,26 @@ export class ActionDialogComponent implements OnInit {
   title;
   to;
   isFundTransfer;
+  isNew = true;
   placeholder;
+  modeList = ["NEFT", "RTGS", "IMPS", "UPI"];
+  expCodes = ["Center", "Zonal", "Central"];
+  types = [{
+    name: "Salary/Stipened",
+    value: "salary"
+  },
+  {
+    name: "Vendor Bill",
+    value: "vendor bill"
+  },
+  {
+    name: "Utility Bill",
+    value: "utility bill"
+  },
+  {
+    name: "Refund",
+    value: "refund"
+  }];
 
   ngOnInit() {
     console.log(this.data.approverList);
@@ -27,6 +46,9 @@ export class ActionDialogComponent implements OnInit {
     } else {
       this.placeholder = 'Remarks/DOP Clause';
     }
+  }
+  openPaymentDashboard() {
+    window.open('https://x.razorpay.com/contacts', '_blank')
   }
 
 }

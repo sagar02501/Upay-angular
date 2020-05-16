@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.approvalSubscription = this.approvalFormService.getApprovalListener()
     .subscribe((res) => {
-      if (typeof(res) !== 'string') {
+      if (typeof(res) !== 'string' && (res as any).isSuccess == undefined) {
         this.approvalList = res;
       } else {
         if (res === 'sentToCentralTrue') {
@@ -67,6 +67,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         } else if (res === 'notifyFalse') {
           this.success = false;
           this.openSnackBar('Initiator could not be Notified!');
+        } else {
+          this.success = (res as any).isSuccess;
+          this.openSnackBar((res as any).message);
         }
         setTimeout(() => { this.approvalFormService.getApproval();
                       this.approvalFormService.getApprovalStatusData();
@@ -122,6 +125,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   fundtransfer(e) {
+    console.log(e);
     this.approvalFormService.fundTransfer(e);
   }
 

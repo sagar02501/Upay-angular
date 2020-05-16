@@ -1,4 +1,5 @@
 <h2 mat-dialog-title>{{title}}</h2>
+<button mat-raised-button color="primary" class="switch" *ngIf="isFundTransfer" (click)="isNew = !isNew">{{ isNew ? 'Manual' : 'Auto' }}</button>
 <div *ngIf="!isFundTransfer">
   <div mat-dialog-content>
     <mat-form-field>
@@ -21,7 +22,123 @@
     <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value}" cdkFocusInitial>Send</button>
   </div>
 </div>
-<div *ngIf="isFundTransfer">
+<div *ngIf="isFundTransfer && isNew" class="fund">
+  <mat-chip-list>
+    <mat-chip color="primary" (click)="openPaymentDashboard()">Add Contact / Find Fund Acc Id</mat-chip>
+  </mat-chip-list>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Billed Amount" name="billedAmountId" ngModel #billedAmountInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Advance Amount" name="advanceAmountId" ngModel #advanceAmountInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="number"
+      placeholder="Amount to transfer" name="transAmt" ngModel #transAmtInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Fund Account Id" name="fundAccountId" ngModel #fundAccountIdInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Payout Type</mat-label>
+      <mat-select name="payoutType" ngModel #payoutTypeInput="ngModel" required>
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Invoice/PO/Salary Slip/Voucher number" name="invoiceId" ngModel #invoiceInput="ngModel">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Mode</mat-label>
+      <mat-select name="mode" ngModel #modeInput="ngModel" required>
+        <mat-option *ngFor="let mode of modeList" [value]="mode">
+          {{mode}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Remarks" name="narrationId" ngModel #narrationInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Budget Head" name="budgedHeadId" ngModel #budgetHeadInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Budget Sub Head" name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Expenditure Code</mat-label>
+      <mat-select name="expCode" ngModel #expCodeInput="ngModel" required>
+        <mat-option *ngFor="let expCode of expCodes" [value]="expCode">
+          {{expCode}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput
+      type="text"
+      placeholder="Centre/Zone Name" name="centreId" ngModel #centreInput="ngModel">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="0">Cancel</button>
+    <button mat-button [disabled]="!transAmtInput.value || !fundAccountIdInput.value || !modeInput.value || !narrationInput.value || !billedAmountInput.value || !advanceAmountInput.value || !payoutTypeInput.value || !budgetHeadInput.value || !budgetSubHeadInput.value || !expCodeInput.value"
+    [mat-dialog-close]="{
+      transferredAmount: transAmtInput.value,
+      fundAccountIdInput: fundAccountIdInput.value,
+      modeInput: modeInput.value,
+      narrationInput: narrationInput.value,
+      billedAmountInput: billedAmountInput.value,
+      advanceAmountInput: advanceAmountInput.value,
+      centreInput: centreInput.value,
+      payoutTypeInput: payoutTypeInput.value,
+      budgetHeadInput: budgetHeadInput.value,
+      budgetSubHeadInput: budgetSubHeadInput.value,
+      expCodeInput: expCodeInput.value,
+      invoiceInput: invoiceInput.value
+    }" cdkFocusInitial>Transfer</button>
+  </div>
+</div>
+<div *ngIf="isFundTransfer && !isNew" class="fund">
   <div mat-dialog-content>
     <mat-form-field>
       <input matInput

@@ -15,7 +15,8 @@ import { MatInputModule,
   MatSelectModule,
   MatDialogModule,
   MatTooltipModule,
-  MatMenuModule
+  MatMenuModule,
+  MatChipsModule
  } from '@angular/material';
  import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -72,7 +73,8 @@ import { GetSingleApprovalComponent } from './get-single-approval/get-single-app
     MatDialogModule,
     MatTooltipModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
