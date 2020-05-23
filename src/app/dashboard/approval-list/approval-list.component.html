@@ -25,12 +25,14 @@
         <button mat-button class="approval-status" (click)="selectApproval.open()" >
           Approval Type
           <mat-select class="approval-type1"  #selectApproval [(ngModel)]="selectedApprovalType" multiple (openedChange)="openedChange($event)" >
+            <mat-option  (click)="selectedApprovalType = undefined; selectApproval.open();" >Clear All</mat-option>
             <mat-option value="Claim against advance">Claim against advance</mat-option>
             <mat-option  value="Advance or Imprest">Advance or Imprest</mat-option>
             <mat-option  value="Claim">Claim</mat-option>
             <mat-option  value="In Principle or Admin Approval">In Principle or Admin Approval</mat-option>
           </mat-select>
        </button>
+      
       </div>
       <div class="approval-body">
         Approval Details
@@ -55,6 +57,7 @@
           
             <!-- <mat-label></mat-label> -->
             <mat-select class="approval-zone1" name="zone" [(ngModel)]="selectedZone" #zoneInput  multiple (openedChange)="openedChange($event)">
+              <mat-option  (click)="selectedZone = undefined; zoneInput.open();" >Clear All</mat-option>
               <mat-option *ngFor="let zone of zonesList" [value]="zone.name">
                 {{zone.name}}
               </mat-option>
@@ -70,6 +73,7 @@
         <button mat-button class="approval-status" (click)="selectStatus.open()" >
           Status
           <mat-select class="approval-status1" #selectStatus [(ngModel)]="selectedStatus" multiple (openedChange)="openedChange($event)" >
+            <mat-option  (click)="selectedStatus = undefined; selectStatus.open();" >Clear All</mat-option>
             <mat-option value="new">NEW</mat-option>
             <mat-option  value="pending">PENDING</mat-option>
             <mat-option  value="rejected">REJECTED</mat-option>
