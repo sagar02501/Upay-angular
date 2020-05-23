@@ -51,10 +51,10 @@ export class ApprovalFormService {
     );
   }
  
-  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0,status?, zones?) {
+  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0,status?, zones?,approvaltype?) {
     sort = sort || 'date';
-    console.log(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`)
-    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`).subscribe((res) => {
+    //console.log(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`)
+    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}&approvaltype=${approvaltype}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
     (err) => {console.log(err); }

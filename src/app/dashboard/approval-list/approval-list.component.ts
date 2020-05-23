@@ -17,6 +17,7 @@ export class ApprovalListComponent implements OnInit {
   constructor() { }
   selectedStatus;
   selectedZone;
+  selectedApprovalType;
   @Input() approvalList;
   @Input() approverList;
   @Input() zonesList;
@@ -32,6 +33,7 @@ export class ApprovalListComponent implements OnInit {
   openedChange(opened: boolean) {
     let status ='';
     let zones ='';
+    let approvaltype = '';
     if(opened == true){ console.log('selecting zone or status');}
     else{
       if( (this.selectedStatus instanceof Array ) && this.selectedStatus.length >= 0 )
@@ -44,8 +46,14 @@ export class ApprovalListComponent implements OnInit {
           zones = this.selectedZone.toString();
          // console.log(this.selectedZone.toString())
          } 
+
+         if( (this.selectedApprovalType instanceof Array ) && this.selectedApprovalType.length >= 0 )
+         {
+          approvaltype = this.selectedApprovalType.toString();
+         // console.log(this.selectedZone.toString())
+         } 
          //console.log(zones + ' , '+ status)
-         this.filterApproval(zones,status);
+         this.filterApproval(zones,status,approvaltype);
      }
     
  }
@@ -74,9 +82,9 @@ export class ApprovalListComponent implements OnInit {
     this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy,status: this.selectedStatus instanceof Array  ? this.selectedStatus.toString():'', zones:  this.selectedZone instanceof Array ? this.selectedZone.toString():''});
   }
 
-  filterApproval(zone?,status?) {
+  filterApproval(zone?,status?,approvaltype?) {
    // console.log('filterEmit', zone, status)
-    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'' ,status: status, zones: zone});
+    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'' ,status: status, zones: zone,approvaltype:approvaltype});
   }
 
   openBodyAndCreatePdf() {

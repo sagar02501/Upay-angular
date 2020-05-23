@@ -117,3 +117,6 @@
 .approval-status-selected{
   color:white;
 }
+.approval-status1, .approval-zone1, .approval-type1{
+  width:10px;
+}
