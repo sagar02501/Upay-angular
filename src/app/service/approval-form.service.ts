@@ -16,7 +16,7 @@ export class ApprovalFormService {
 
   constructor(public http: HttpClient) { }
   url = environment.backendURL + 'api/approvals';
-
+  
   submitForm(data, file, approvalTypes) {
     console.log(data, file);
     const postData = new FormData();
@@ -50,10 +50,11 @@ export class ApprovalFormService {
     }
     );
   }
-
-  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0) {
+ 
+  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0,status?, zones?) {
     sort = sort || 'date';
-    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}`).subscribe((res) => {
+    console.log(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`)
+    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
     (err) => {console.log(err); }
