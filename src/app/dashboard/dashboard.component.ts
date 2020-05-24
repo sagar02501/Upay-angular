@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private approvalSubscription: Subscription;
   private approvalStatusSubscription: Subscription;
   private approverSubscription: Subscription;
+  private zoneSub: Subscription;
   approvalList;
   approverList;
   selectedApprovalData;
@@ -30,12 +31,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
   searchText;
   sortBy;
   pageSize = 10;
+  zonesList = [];
+  zonefilters;
+  statusfilters;
+  approvaltypefilters;
 
   ngOnInit() {
     this.approvalFormService.getApprovalStatusData();
     this.approvalFormService.getApproval();
     this.settingsService.getApproverList();
-
+    this.settingsService.getZoneList();
+    
     this.approvalStatusSubscription = this.approvalFormService.getApprovalStatusListener()
     .subscribe((res) => {
       if (res) {
@@ -43,7 +49,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.count = this.count.count;
       }
     });
-
+    this.zoneSub = this.settingsService.getZoneSubjectListener().subscribe((res) => {
+      this.zonesList = res as any;
+    });
     this.approvalSubscription = this.approvalFormService.getApprovalListener()
     .subscribe((res) => {
       if (typeof(res) !== 'string' && (res as any).isSuccess == undefined) {
@@ -75,6 +83,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                       this.approvalFormService.getApprovalStatusData();
                     }, 500);
       }
+      
     });
 
     this.approverSubscription = this.settingsService.getApproverSubjectListener().subscribe((res) => {
@@ -82,13 +91,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  sortApproval(searchText?, sortBy?, pageSize?) {
+  sortApproval(searchText?, sortBy?,status?, zones?,approvaltype?, pageSize?) {
     this.sortOrder === 1 ? this.sortOrder = -1 : this.sortOrder = 1;
     this.searchText = searchText;
     this.sortBy = sortBy;
+    this.zonefilters = zones;
+    this.statusfilters = status;
+    this.approvaltypefilters =approvaltype;
     this.paginator.pageIndex = 0;
-    this.approvalFormService.getApproval(searchText, sortBy, this.sortOrder, pageSize);
+    //console.log('filtering',status,zones)
+    this.approvalFormService.getApproval(searchText, sortBy, this.sortOrder, pageSize,0,status,zones,approvaltype);
+
+
   }
+
 
   handleEvent(e) {
     if (e.send) {
@@ -99,8 +115,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.fundtransfer(e);
     } else if (e.delete) {
       this.deleteApproval(e);
-    } else if (e.searchText || e.searchText === '' || e.sortBy) {
-      this.sortApproval(e.searchText, e.sortBy, this.pageSize);
+    } else if (e.searchText || e.searchText === '' || e.sortBy || e.status || e.zones || e.status === '' || e.zones ==='' || e.approvaltype || e.approvaltype === '' ) {
+      this.sortApproval(e.searchText, e.sortBy, e.status, e.zones,e.approvaltype , this.pageSize);
     }
   }
 
@@ -109,7 +125,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.paginator.pageIndex = 0;
       this.pageSize = e.pageSize;
     }
-    this.approvalFormService.getApproval(this.searchText, this.sortBy, this.sortOrder, e.pageSize, e.pageIndex);
+    this.approvalFormService.getApproval(this.searchText, this.sortBy, this.sortOrder, e.pageSize, e.pageIndex,this.statusfilters,this.zonefilters,this.approvaltypefilters);
   }
 
   sendForApproval(e) {
@@ -144,5 +160,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.approvalSubscription.unsubscribe();
     this.approverSubscription.unsubscribe();
+    this.zoneSub.unsubscribe();
   }
 }

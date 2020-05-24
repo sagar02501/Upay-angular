@@ -111,3 +111,12 @@
 .approval-createdAt:hover .arrow-icon, .approval-amount:hover .arrow-icon {
   display: block;
 }
+.approval-status, .approval-zone{
+  font-size:12px;
+}
+.approval-status-selected{
+  color:white;
+}
+.approval-status1, .approval-zone1, .approval-type1{
+  width:10px;
+}

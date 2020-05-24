@@ -1,23 +1,62 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { NgForm} from '@angular/forms';
+
+
 @Component({
   selector: 'app-approval-list',
   templateUrl: './approval-list.component.html',
   styleUrls: ['./approval-list.component.css']
 })
-export class ApprovalListComponent implements OnInit {
 
+
+
+export class ApprovalListComponent implements OnInit {
+ 
   constructor() { }
+  selectedStatus;
+  selectedZone;
+  selectedApprovalType;
   @Input() approvalList;
   @Input() approverList;
+  @Input() zonesList;
   openBody = false;
   searchText;
+  sortBy;
   sortAmountAsc = true;
   sortDateAsc = true;
   approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
+  
+  
+  openedChange(opened: boolean) {
+    let status ='';
+    let zones ='';
+    let approvaltype = '';
+    if(opened == true){ console.log('selecting zone or status');}
+    else{
+      if( (this.selectedStatus instanceof Array ) && this.selectedStatus.length >= 0 )
+         {
+          status = this.selectedStatus.toString();
+          //console.log(this.selectedStatus.toString())
+         }
+      if( (this.selectedZone instanceof Array ) && this.selectedZone.length >= 0 )
+         {
+          zones = this.selectedZone.toString();
+         // console.log(this.selectedZone.toString())
+         } 
 
+         if( (this.selectedApprovalType instanceof Array ) && this.selectedApprovalType.length >= 0 )
+         {
+          approvaltype = this.selectedApprovalType.toString();
+         // console.log(this.selectedZone.toString())
+         } 
+         //console.log(zones + ' , '+ status)
+         this.filterApproval(zones,status,approvaltype);
+     }
+    
+ }
   ngOnInit() {
     this.approvalSearchSubject.pipe(debounceTime(500)).subscribe((e) => {
       this.sortApproval();
@@ -33,13 +72,19 @@ export class ApprovalListComponent implements OnInit {
   }
 
   sortApproval(sortBy?) {
+    this.sortBy = sortBy;
     if (sortBy === 'date') {
       this.sortDateAsc ? this.sortDateAsc = false : this.sortDateAsc = true;
     }
     if (sortBy === 'amount') {
       this.sortAmountAsc ? this.sortAmountAsc = false : this.sortAmountAsc = true;
     }
-    this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy});
+    this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy,status: this.selectedStatus instanceof Array  ? this.selectedStatus.toString():'', zones:  this.selectedZone instanceof Array ? this.selectedZone.toString():''});
+  }
+
+  filterApproval(zone?,status?,approvaltype?) {
+   // console.log('filterEmit', zone, status)
+    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'' ,status: status, zones: zone,approvaltype:approvaltype});
   }
 
   openBodyAndCreatePdf() {

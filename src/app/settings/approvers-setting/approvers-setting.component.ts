@@ -13,7 +13,7 @@ import { ConfirmDialogComponent } from './../../confirm-dialog/confirm-dialog.co
 export class ApproversSettingComponent implements OnInit, OnDestroy {
 
   isLoading = false;
-
+  
   private approverSub: Subscription;
   approvers = [];
   private zoneSub: Subscription;
