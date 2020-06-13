@@ -46,6 +46,7 @@
                 <button mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
               </div>
                 <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p>
+              <a  class="cqc" href="../../assets/CQC.xlsx" download>Download DOP</a>
               <mat-form-field>
                 <input matInput
                 type="number"
@@ -115,7 +116,7 @@
               </div>
               <div class="row" #appenHere></div>
                 <div>
-                    <button (click)="addNewComponent()">Append</button>
+                    <button (click)="$event.preventDefault();addNewComponent()">Append</button>
                 </div>
               <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
               <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>

@@ -100,8 +100,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
-  @ViewChild('appenHere') target: ViewContainerRef;
+  @ViewChild('appenHere', {read : ViewContainerRef}) target: ViewContainerRef;
   private componentRef: ComponentRef<any>;
+
 
   addNewComponent() {
     let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);
