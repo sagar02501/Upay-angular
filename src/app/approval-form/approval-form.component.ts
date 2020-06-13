@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UtilizationDetailsComponent } from './../utilization-details/utilization-details.component';
+import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef,AfterViewInit,ViewChild} from '@angular/core';
 import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
@@ -11,7 +12,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class ApprovalFormComponent implements OnInit, OnDestroy {
 
-  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
+  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar,private resolver: ComponentFactoryResolver) { }
   isOTP = false;
   isOTPVerified = 0;
   isSubmitted;
@@ -99,4 +100,11 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
+  @ViewChild('appenHere') target: ViewContainerRef;
+  private componentRef: ComponentRef<any>;
+
+  addNewComponent() {
+    let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);
+    this.componentRef = this.target.createComponent(childComponent); 
+  }  
 }

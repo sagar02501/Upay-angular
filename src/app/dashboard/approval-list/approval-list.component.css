@@ -120,3 +120,7 @@
 .approval-status1, .approval-zone1, .approval-type1{
   width:10px;
 }
+.mat-datepicker-content .mat-calendar {
+  width: 254px!important;
+  height: 314px!important;
+}

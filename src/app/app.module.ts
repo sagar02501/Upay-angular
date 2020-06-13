@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTableModule, MatSortModule } from '@angular/material';
+import { MatTableModule, MatSortModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { MatInputModule,
   MatCardModule,
   MatButtonModule,
@@ -35,6 +35,7 @@ import { ZonesSettingComponent } from './settings/zones-setting/zones-setting.co
 import { ApproversSettingComponent } from './settings/approvers-setting/approvers-setting.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
+import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { GetSingleApprovalComponent } from './get-single-approval/get-single-app
     ApproversSettingComponent,
     ConfirmDialogComponent,
     GetSingleApprovalComponent,
+    UtilizationDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,12 +76,14 @@ import { GetSingleApprovalComponent } from './get-single-approval/get-single-app
     MatTooltipModule,
     MatMenuModule,
     MatPaginatorModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ActionDialogComponent, ConfirmDialogComponent]
+  entryComponents: [ActionDialogComponent, ConfirmDialogComponent,UtilizationDetailsComponent]
 })
 export class AppModule { }

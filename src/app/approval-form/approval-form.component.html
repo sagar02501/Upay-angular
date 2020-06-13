@@ -49,12 +49,13 @@
               <mat-form-field>
                 <input matInput
                 type="number"
-                placeholder="Amount" name="amount" ngModel #amountInput="ngModel" required>
+                placeholder="Requisite amount" name="amount" ngModel #amountInput="ngModel" required>
                 <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Approval Type</mat-label>
                 <mat-select name="approval" ngModel #approvalInput="ngModel" (valueChange)="approvalChanged($event)" required>
+                  <mat-option ng-disabled >Please select approval type</mat-option>
                   <mat-option *ngFor="let approval of approvals" [value]="approval.value">
                     {{approval.name}}
                   </mat-option>
@@ -62,16 +63,39 @@
                 <mat-error *ngIf="approvalInput.invalid"> Please provide type of Approval </mat-error>
               </mat-form-field>
               <a *ngIf="approvalInput.value == 4" class="cqc" href="../../assets/CQC.xlsx" download>Download CQC</a>
-              <mat-form-field *ngIf="approvalInput.value == 2">
+              <!-- <mat-form-field *ngIf="approvalInput.value == 2">
                 <textarea matInput
                 placeholder="Please provide Advance amount, doc no, date" name="advanceDetails" ngModel #advanceDetailsInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="advanceDetailsInput.invalid"> Please provide Advance Details (min character 20)</mat-error>
+              </mat-form-field> -->
+              <mat-form-field *ngIf="approvalInput.value == 2">
+                <input matInput type="number" placeholder="Advance ID" name="advanceId" ngModel #advanceIdInput="ngModel" required>
+                <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value == 2">
+                <input matInput type="number" readonly placeholder="Remaining amount" name="remainingAmount" ngModel #advanceIdInput="ngModel" required>
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
+                <input matInput type="text" placeholder="Payee Name" name="payeeName" ngModel #payeeNameInput="ngModel" required>
+                <mat-error *ngIf="payeeNameInput.invalid"> Please enter your full name </mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
+                <input matInput type="text" placeholder="Account Number" inputmode="numeric" pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18" required>
+                <mat-error *ngIf="accountNumberInput.invalid"> Please provide account number (min character 8)</mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
+                <input matInput type="text" placeholder="Bank Name" name="bankName" ngModel #bankNameInput="ngModel" required>
+                <mat-error *ngIf="bankNameInput.invalid"> Please enter bank name </mat-error>
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
+                <input matInput type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Bank IFSC code" name="bankIfsc" ngModel #bankIfscInput="ngModel" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
+                <mat-error *ngIf="bankIfscInput.invalid"> Please enter a valid IFSC code </mat-error>
+              </mat-form-field>
+              <!-- <mat-form-field>
                 <textarea matInput
                 placeholder="Please provide Payee name, account no, bank name and IFSC code" name="paymentDetails" ngModel #paymentDetailsInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="paymentDetailsInput.invalid"> Please provide Payment Details (min character 20)</mat-error>
-              </mat-form-field>
+              </mat-form-field> -->
               <mat-form-field>
                 <input matInput
                 type="text"
@@ -89,10 +113,15 @@
                 <p *ngIf="approvalInput.value != 4">Upload bills/quotations/utilization (if any)<br>Supported formats - pdf/jpg/jpeg/png</p>
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
+              <div class="row" #appenHere></div>
+                <div>
+                    <button (click)="addNewComponent()">Append</button>
+                </div>
               <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
               <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>
             <!-- <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading">Submit</button> -->
             </form>
+          
           </mat-card>
     </mat-tab>
   </mat-tab-group>
