@@ -115,14 +115,14 @@
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
               <div class="row" #appenHere></div>
-                <div>
-                    <button (click)="$event.preventDefault();addNewComponent()">Append</button>
+                <div style="float:left;">
+                    <button mat-raised-button color="primary"  (click)="$event.preventDefault();addNewComponent()">Add Utilization details</button>
                 </div>
+               <br> 
               <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
               <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>
             <!-- <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading">Submit</button> -->
             </form>
-          
           </mat-card>
     </mat-tab>
   </mat-tab-group>

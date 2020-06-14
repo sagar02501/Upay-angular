@@ -1,1 +1,23 @@
-<p> new-tile works!</p>
+<mat-form-field>
+    <input matInput type="number" placeholder="Bill Number" name="billNumber" ngModel #billNumberInput="ngModel" required>
+    <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
+</mat-form-field>
+<mat-form-field>
+    <input matInput type="number" placeholder="Bill Amount" name="billAmount" ngModel #billAmountInput="ngModel" required>
+    <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
+</mat-form-field>
+<mat-form-field>
+    <input matInput type="text" placeholder="Vendor" name="vendor" ngModel #vendorInput="ngModel" required>
+    <mat-error *ngIf="vendorInput.invalid"> Please enter vendor</mat-error>     
+</mat-form-field>
+<mat-form-field>
+    <textarea matInput
+   placeholder="Discription" name="body" ngModel #DiscriptionInput="ngModel" required minlength="20"></textarea>
+    <mat-error *ngIf="DiscriptionInput.invalid"> Please provide Discription (min character 20)</mat-error>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <input type="file" placeholder="Bill copy" name="billImage" ngModel #billImageInput="ngModel" required>
+    <mat-error *ngIf="billImage.invalid"> Please enter vendor</mat-error>  
+</mat-form-field>
+<br>

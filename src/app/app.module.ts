@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,7 +17,7 @@ import { MatInputModule,
   MatDialogModule,
   MatTooltipModule,
   MatMenuModule,
-  MatChipsModule
+  MatChipsModule,
  } from '@angular/material';
  import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -78,7 +79,7 @@ import { UtilizationDetailsComponent } from './utilization-details/utilization-d
     MatPaginatorModule,
     MatChipsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
