@@ -25,7 +25,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   zones = [];
   approvals = [];
   approvalFile;
-
+  /* no change */
   ngOnInit() {
     this.settingsService.getZoneList();
     this.otpVerificationSubscription = this.approvalFormService.getOTPVerificationListener()
