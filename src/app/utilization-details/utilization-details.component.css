@@ -4,10 +4,13 @@ position:relative;
 }
 
 .sizee{
-    width:135px;
-    margin-right:5px;
+    width:149px;
+    margin-right:10px;
     height:40px;
-    border-bottom: 1px solid grey;
+    border-bottom: 0px solid grey;
+}
+.filebtn{
+    top:10px;
 }
 .sizee1{
     width:80px;
@@ -33,3 +36,21 @@ position:relative;
     transform: rotate(-135deg);
     -webkit-transform: rotate(-135deg);
   }
+  .file-input {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+  }
+  .file-input > p {
+    margin-left: 10px;
+  }
+  .file-input + button {
+    margin-top: 15px;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .filename {
+    align-self: flex-start;
+  }
+  

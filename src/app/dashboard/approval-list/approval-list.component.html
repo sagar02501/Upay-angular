@@ -58,13 +58,28 @@
         <div [ngClass]="{'i-rotate': sortDateAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-amount" (click)="sortApproval('amount')">
-        Amount
+        Requisit Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Approved advance Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Claim Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Utilized Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Unutilized Amount
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-zone">
         <button mat-button class="approval-zone" (click)=zoneInput.open()>
           Zone
-          
             <!-- <mat-label></mat-label> -->
             <mat-select class="approval-zone1" name="zone" [(ngModel)]="selectedZone" #zoneInput  multiple (openedChange)="openedChange($event)">
               <mat-option  (click)="selectedZone = undefined; zoneInput.open();" >Clear All</mat-option>
