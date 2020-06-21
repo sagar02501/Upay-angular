@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "ApprovalSystem"
+  "defaultProject": "ApprovalSystem",
+  "cli": {
+    "analytics": "5b3bbe01-ad02-443a-8885-1a93357d64bd"
+  }
 }
