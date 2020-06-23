@@ -1,6 +1,6 @@
 .approvals-list__item {
     height: 35px;
-    width: 107%;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
     align-items: center;
