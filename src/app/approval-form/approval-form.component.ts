@@ -1,4 +1,4 @@
-import { UtilizationDetailsComponent } from './../utilization-details/utilization-details.component';
+import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
 import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef,AfterViewInit,ViewChild} from '@angular/core';
 import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';

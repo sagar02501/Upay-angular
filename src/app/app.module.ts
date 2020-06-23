@@ -36,7 +36,7 @@ import { ZonesSettingComponent } from './settings/zones-setting/zones-setting.co
 import { ApproversSettingComponent } from './settings/approvers-setting/approvers-setting.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
-import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
+import { UtilizationDetailsComponent } from './approval-form/utilization-details/utilization-details.component';
 
 
 @NgModule({
