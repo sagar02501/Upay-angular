@@ -64,6 +64,7 @@
     <button mat-menu-item (click)="sendToApprover()">Send to Approver</button>
     <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
     <button mat-menu-item (click)="notifyInitiator()">Notify Initiator</button>
+    <button mat-menu-item (click)="printPo()">Generate P.O.</button>
     <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
     <button mat-menu-item (click)="printApproval()">Print</button>
     <button mat-menu-item (click)="deleteApproval()">Delete</button>

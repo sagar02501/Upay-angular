@@ -256,4 +256,272 @@ export class ApprovalListItemComponent implements OnInit {
 
     win.print();
   }
+  printPo() {
+    const approvalData =
+    `<body>
+    <header>
+        <address contenteditable>
+            <h2>Under Privileged Advancement by Youth</h2>
+            <p>C/O PRATIK KAMBLE</p>
+            <p>BANK COLONY, SHIVAJI WARD</p>
+            <p>BHANDARA, MAHARASHTRA, 441904</p>
+            <p><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
+        </address>
+        <span>
+            <img style="text-align: center" alt="" src="https://www.upay.org.in/wp-content/uploads/2020/03/cropped-logo-1.png">
+            <h2 style="color: gray">Purchase Order</h2>
+        </span>
+        <address contenteditable>
+            <h4>The following number must appear on all related correspondence,<br> shipping papers, and invoices:</h4>
+            <p style="font-size: 13px">APPROVAL DOC NUMBER:UPAYCE0920
+                <br>
+                P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/DEL/2020/07</p>
+        </address>
+    </header>
+    <article>
+        <h1>To,</h1>
+        <address style="width: 60%">
+            <p style="width: 40%">Grocers Delight </p>
+            <p style="width: 40%">Account no: 90261010011974</p>
+            <p style="width: 40%">Ifsc code: SYNB0009026</p>
+            <p style="width: 40%">Syndicate Bank</p>
+        </address>
+        <label style="float: right;width: 40%">SHIPPING ADDRESS:</label>
+        <p style="float: right;width: 40%">Special police unit for NE Region,Delhi police, PTS,Police complex, Malviya nagar, New Delhi- 110017</p>
+        <table >
+            <thead>
+            <tr>
+                <th><span contenteditable>P.O. Date</span></th>
+                <th><span contenteditable>Procurer name and contact number</th>
+                <th><span contenteditable>Warranty if any</span></th>
+                <th><span contenteditable>Delivery Schedule</span></th>
+                <th><span contenteditable>Payment Terms</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><span contenteditable>21-05-2020</span></td>
+                <td><span contenteditable>Mithila Malhotra 8447284956</span></td>
+                <td><span contenteditable>NA</span></td>
+                <td><span contenteditable>22-05-2020</span></td>
+                <td><span>Full Payment after delivery</span></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="inventory" >
+            <thead>
+            <tr>
+                <th><span contenteditable>Quantity</span></th>
+                <th><span contenteditable>Unit</span></th>
+                <th><span contenteditable>Description</span></th>
+                <th><span contenteditable>Unit Price</span></th>
+                <th><span contenteditable>Total</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="text-align: center"><span contenteditable>200</span></td>
+                <td style="text-align: center"><span contenteditable>Number</span></td>
+                <td style="text-align: center"><span contenteditable>1 unit of Ration having
+    5 kg Rice, 3kg Atta, 1.5 kg Dal, 0.5 kg jaggery,
+    2 kg poha, 50 gm haldi,
+    50 gm mirchi,, 0.5 lt oil, 1 packet salt and 1 soap</span></td>
+                <td style="text-align: center"><span data-prefix>₹</span><span contenteditable>608.5</span></td>
+                <td style="text-align: center"><span data-prefix>₹</span><span>121700</span></td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="balance">
+            <tr>
+                <th><span contenteditable>Sub Total</span></th>
+                <td><span data-prefix>₹</span><span>600.00</span></td>
+            </tr>
+            <tr>
+                <th><span contenteditable>GST</span></th>
+                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+            </tr>
+            <tr>
+                <th><span contenteditable>Shipping & Handling</span></th>
+                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+            </tr>
+            <tr>
+                <th><span contenteditable>Other</span></th>
+                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+            </tr>
+            <tr>
+                <th><span contenteditable>Grand Total</span></th>
+                <td><span data-prefix>₹</span><span>600.00</span></td>
+            </tr>
+        </table>
+        <p>Notes to us that pertain to your purchase</p>
+    </article>
+    <aside>
+      <p>Authorized By </p>
+       <p>Accepted By Vendor</p>
+        <p>Date </p>
+    </aside>
+    </body>`;
+
+    const style = `<style>
+    {
+      border: 0;
+      box-sizing: content-box;
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      font-style: inherit;
+      font-weight: inherit;
+      line-height: inherit;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      vertical-align: top;
+  }
+
+  /* content editable */
+
+  *[contenteditable] { border-radius: 0.25em; min-width: 1em; outline: 0; }
+
+  *[contenteditable] { cursor: pointer; }
+
+  *[contenteditable]:hover, *[contenteditable]:focus, td:hover *[contenteditable], td:focus *[contenteditable], img.hover { background: #DEF; box-shadow: 0 0 1em 0.5em #DEF; }
+
+  span[contenteditable] { display: inline-block; }
+
+  /* heading */
+
+  h1 { font: bold 100% sans-serif; letter-spacing: 0.5em; text-align: center; text-transform: uppercase; }
+
+  /* table */
+
+  table { font-size: 75%; table-layout: fixed; width: 100%; }
+  table { border-collapse: separate; border-spacing: 0px; }
+  th, td { border-width: 1px; padding: 0.5em; position: relative; text-align: left; }
+  th, td { border-radius: 0px; border-style: solid; }
+  th { border-color: rgba(62, 62, 62, 0.99); }
+  td { border-color: rgba(62, 62, 62, 0.99); }
+
+  /* page */
+
+  html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
+  html { background: #999; cursor: default; }
+
+  body { box-sizing: border-box; height: 11in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
+  body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
+
+  /* header */
+
+  header { margin: 0 0 3em; }
+  header:after { clear: both; content: ""; display: table; }
+
+  header h1 { background: #000; border-radius: 0.25em; color: #FFF; margin: 0 0 1em; padding: 0.5em 0; }
+  header address { float: left; font-size: 50%; font-style: normal; line-height: 1.25; margin: 0 1em 1em 0; }
+  header address p { margin: 0 0 0.25em; }
+  header span, header img { display: block; float: right; }
+  header span { margin: 0 0 1em 1em; max-height: 25%; max-width: 60%; position: relative; }
+  header img { max-height: 100%; max-width: 100%; }
+  header input { cursor: pointer; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; height: 100%; left: 0; opacity: 0; position: absolute; top: 0; width: 100%; }
+
+  /* article */
+
+  article, article address, table.meta, table.inventory { margin: 0 0 3em; }
+  article:after { clear: both; content: ""; display: table; }
+  article h1 { clip: rect(0 0 0 0); position: absolute; }
+
+  article address { float: left; font-size: 81%; font-weight: bold; }
+
+  /* table meta & balance */
+
+  table.meta, table.balance { float: right; width: 36%; }
+  table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
+
+  /* table meta */
+
+  table.meta th { width: 40%; }
+  table.meta td { width: 60%; }
+
+  /* table items */
+
+  table.inventory { clear: both; width: 100%; }
+  table.inventory th { font-weight: bold; text-align: center; }
+
+  table.inventory td:nth-child(1) { width: 26%; }
+  table.inventory td:nth-child(2) { width: 38%; }
+  table.inventory td:nth-child(3) { text-align: right; width: 12%; }
+  table.inventory td:nth-child(4) { text-align: right; width: 12%; }
+  table.inventory td:nth-child(5) { text-align: right; width: 12%; }
+
+  /* table balance */
+
+  table.balance th, table.balance td { width: 50%; }
+  table.balance td { text-align: right; }
+
+  /* aside */
+
+  aside h1 { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
+  aside h1 { border-color: #999; border-bottom-style: solid; }
+
+  /* javascript */
+
+  .add, .cut
+  {
+      border-width: 1px;
+      display: block;
+      font-size: .8rem;
+      padding: 0.25em 0.5em;
+      float: left;
+      text-align: center;
+      width: 0.6em;
+  }
+
+  .add, .cut
+  {
+      background: #9AF;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      background-image: -moz-linear-gradient(#00ADEE 5%, #0078A5 100%);
+      background-image: -webkit-linear-gradient(#00ADEE 5%, #0078A5 100%);
+      border-radius: 0.5em;
+      border-color: #0076A3;
+      color: #FFF;
+      cursor: pointer;
+      font-weight: bold;
+      text-shadow: 0 -1px 2px rgba(0,0,0,0.333);
+  }
+
+  .add { margin: -2.5em 0 0; }
+
+  .add:hover { background: #00ADEE; }
+
+  .cut { opacity: 0; position: absolute; top: 0; left: -1.5em; }
+  .cut { -webkit-transition: opacity 100ms ease-in; }
+
+  tr:hover .cut { opacity: 1; }
+
+  @media print {
+      * { -webkit-print-color-adjust: exact; }
+      html { background: none; padding: 0; }
+      body { box-shadow: none; margin: 0; }
+      span:empty { display: none; }
+      .add, .cut { display: none; }
+  }
+
+  @page { margin: 0; }
+      </style>`;
+
+    const win = window.open('', '', 'height=700,width=700');
+
+    win.document.write('<html><head>');
+    win.document.write('<title>Purchase Order</title>');
+    win.document.write(style);
+    win.document.write('</head>');
+    win.document.write('<body>');
+    win.document.write(approvalData);
+    win.document.write('</body></html>');
+
+    win.document.close();
+
+    win.print();
+  }
 }

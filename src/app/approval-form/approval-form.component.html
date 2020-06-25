@@ -69,6 +69,10 @@
                 placeholder="Please provide Advance amount, doc no, date" name="advanceDetails" ngModel #advanceDetailsInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="advanceDetailsInput.invalid"> Please provide Advance Details (min character 20)</mat-error>
               </mat-form-field> -->
+              <mat-form-field *ngIf="approvalInput.value == 4">
+                <input matInput type="number" placeholder="Award Value" name="awardValue" ngModel #awardValueInput="ngModel" required>
+                <mat-error *ngIf="awardValueInput.invalid"> Please provide award value</mat-error>     
+              </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">
                 <input matInput type="number" placeholder="Advance ID" name="advanceId" ngModel #advanceIdInput="ngModel" required>
                 <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
@@ -92,11 +96,6 @@
                 <input matInput type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Bank IFSC code" name="bankIfsc" ngModel #bankIfscInput="ngModel" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
                 <mat-error *ngIf="bankIfscInput.invalid"> Please enter a valid IFSC code </mat-error>
               </mat-form-field>
-              <!-- <mat-form-field>
-                <textarea matInput
-                placeholder="Please provide Payee name, account no, bank name and IFSC code" name="paymentDetails" ngModel #paymentDetailsInput="ngModel" required minlength="20"></textarea>
-                <mat-error *ngIf="paymentDetailsInput.invalid"> Please provide Payment Details (min character 20)</mat-error>
-              </mat-form-field> -->
               <mat-form-field>
                 <input matInput
                 type="text"
