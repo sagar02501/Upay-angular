@@ -76,7 +76,18 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     } else {
       this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
     }
+    if (value === 4) {
+      this.payeePlaceholder = 'Vendor name';
+      this.accountnoPlaceholder = 'Vendor Account Number';
+      this.banknamePlaceholder = 'Vendor Bank Name';
+      this.ifscPlaceholder = 'Vendor Bank IFSC';
+    } else {
+      this.payeePlaceholder = 'Payee Name';
+      this.accountnoPlaceholder = 'Account Number';
+      this.banknamePlaceholder = 'Bank Name';
+      this.ifscPlaceholder = 'Bank IFSC';
 
+    }
   }
 
   sendOTP(phone) {

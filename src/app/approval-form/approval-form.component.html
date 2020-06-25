@@ -73,6 +73,14 @@
                 <input matInput type="number" placeholder="Award Value" name="awardValue" ngModel #awardValueInput="ngModel" required>
                 <mat-error *ngIf="awardValueInput.invalid"> Please provide award value</mat-error>     
               </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value == 4">
+                <input matInput type="text" placeholder="Item Discription" name="itemDiscription" ngModel #itemDiscriptionInput="ngModel" required>
+                <mat-error *ngIf="itemDiscriptionInput.invalid"> Please provide Item Discription</mat-error>     
+              </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value == 4">
+                <input matInput type="number" placeholder="Quantity" name="itemQuantity" ngModel #itemQuantityInput="ngModel" required>
+                <mat-error *ngIf="itemQuantityInput.invalid"> Please provide Item Quantity</mat-error>     
+              </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">
                 <input matInput type="number" placeholder="Advance ID" name="advanceId" ngModel #advanceIdInput="ngModel" required>
                 <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
@@ -80,20 +88,20 @@
               <mat-form-field *ngIf="approvalInput.value == 2">
                 <input matInput type="number" readonly placeholder="Remaining amount" name="remainingAmount" ngModel #advanceIdInput="ngModel" required>
               </mat-form-field>
-              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
-                <input matInput type="text" placeholder="Payee Name" name="payeeName" ngModel #payeeNameInput="ngModel" required>
+              <mat-form-field *ngIf="approvalInput.value != 0">
+                <input matInput type="text" [placeholder]="payeePlaceholder" name="payeeName" ngModel #payeeNameInput="ngModel" required>
                 <mat-error *ngIf="payeeNameInput.invalid"> Please enter your full name </mat-error>
               </mat-form-field>
-              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
-                <input matInput type="text" placeholder="Account Number" inputmode="numeric" pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18" required>
+              <mat-form-field *ngIf="approvalInput.value != 0 ">
+                <input matInput type="text" [placeholder]="accountnoPlaceholder" inputmode="numeric" pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18" required>
                 <mat-error *ngIf="accountNumberInput.invalid"> Please provide account number (min character 8)</mat-error>
               </mat-form-field>
-              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
-                <input matInput type="text" placeholder="Bank Name" name="bankName" ngModel #bankNameInput="ngModel" required>
+              <mat-form-field *ngIf="approvalInput.value != 0 ">
+                <input matInput type="text" [placeholder]="banknamePlaceholder" name="bankName" ngModel #bankNameInput="ngModel" required>
                 <mat-error *ngIf="bankNameInput.invalid"> Please enter bank name </mat-error>
               </mat-form-field>
-              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value != 4">
-                <input matInput type="text" oninput="this.value = this.value.toUpperCase()" placeholder="Bank IFSC code" name="bankIfsc" ngModel #bankIfscInput="ngModel" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
+              <mat-form-field *ngIf="approvalInput.value != 0 ">
+                <input matInput type="text"  [placeholder]="ifscPlaceholder" oninput="this.value = this.value.toUpperCase()" placeholder="Bank IFSC code" name="bankIfsc" ngModel #bankIfscInput="ngModel" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
                 <mat-error *ngIf="bankIfscInput.invalid"> Please enter a valid IFSC code </mat-error>
               </mat-form-field>
               <mat-form-field>
