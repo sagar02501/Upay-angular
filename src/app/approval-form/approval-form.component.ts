@@ -11,6 +11,11 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./approval-form.component.css']
 })
 export class ApprovalFormComponent implements OnInit, OnDestroy {
+  approvalInput:number;
+  payeePlaceholder: string;
+  accountnoPlaceholder: string;
+  banknamePlaceholder: string;
+  ifscPlaceholder: string;
 
   constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar,private resolver: ComponentFactoryResolver) { }
   isOTP = false;
@@ -72,22 +77,19 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   approvalChanged(value) {
     if (value === 4) {
-      this.approvalPlaceholder = 'Vendors Details with account number / admin approval Id / price comparison';
-    } else {
-      this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
-    }
-    if (value === 4) {
       this.payeePlaceholder = 'Vendor name';
       this.accountnoPlaceholder = 'Vendor Account Number';
       this.banknamePlaceholder = 'Vendor Bank Name';
       this.ifscPlaceholder = 'Vendor Bank IFSC';
+      this.approvalPlaceholder = 'Vendors Details with account number / admin approval Id / price comparison';
     } else {
       this.payeePlaceholder = 'Payee Name';
       this.accountnoPlaceholder = 'Account Number';
       this.banknamePlaceholder = 'Bank Name';
       this.ifscPlaceholder = 'Bank IFSC';
-
+      this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
     }
+  
   }
 
   sendOTP(phone) {
@@ -114,7 +116,6 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   @ViewChild('appenHere', {read : ViewContainerRef}) target: ViewContainerRef;
   private componentRef: ComponentRef<any>;
-
 
   addNewComponent() {
     let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);

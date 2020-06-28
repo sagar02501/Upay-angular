@@ -115,6 +115,7 @@
                 [placeholder]="approvalPlaceholder" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="bodyInput.invalid"> Please provide Approval/Utilization Details (min character 20)</mat-error>
               </mat-form-field>
+            
               <div class="file-input">
                 <input type="file" #fileInput (change)="onImagePicked($event)">
                 <button mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()">Upload File</button>
@@ -122,7 +123,7 @@
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
               <div class="row" #appenHere></div>
-                <div style="float:left;">
+                <div style="float:left;margin-top: 44px;">
                     <button mat-raised-button color="primary"  (click)="$event.preventDefault();addNewComponent()">Add Utilization details</button>
                 </div>
                <br> 

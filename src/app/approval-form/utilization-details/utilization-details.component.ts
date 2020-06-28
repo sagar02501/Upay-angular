@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-utilization-details',
@@ -8,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class UtilizationDetailsComponent implements OnInit {
 
   constructor() { }
-
+  @Input() approval: number;
   ngOnInit() {
+   
   }
 
 }
