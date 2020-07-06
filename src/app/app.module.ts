@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,7 +19,6 @@ import { MatInputModule,
   MatChipsModule,
  } from '@angular/material';
  import { MatPaginatorModule } from '@angular/material/paginator';
-
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -37,7 +35,8 @@ import { ApproversSettingComponent } from './settings/approvers-setting/approver
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
 import { UtilizationDetailsComponent } from './approval-form/utilization-details/utilization-details.component';
-
+import { SalaryDetailsComponent } from './approval-form/salary-details/salary-details.component';
+import { VendorDetailsComponent } from './approval-form/vendor-details/vendor-details.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +55,8 @@ import { UtilizationDetailsComponent } from './approval-form/utilization-details
     ConfirmDialogComponent,
     GetSingleApprovalComponent,
     UtilizationDetailsComponent,
+    SalaryDetailsComponent,
+    VendorDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +86,6 @@ import { UtilizationDetailsComponent } from './approval-form/utilization-details
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ActionDialogComponent, ConfirmDialogComponent,UtilizationDetailsComponent]
+  entryComponents: [ActionDialogComponent, ConfirmDialogComponent,UtilizationDetailsComponent,SalaryDetailsComponent,VendorDetailsComponent]
 })
 export class AppModule { }

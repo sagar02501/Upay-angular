@@ -86,7 +86,7 @@
                 <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">
-                <input matInput type="number" readonly placeholder="Remaining amount" name="remainingAmount" ngModel #advanceIdInput="ngModel" required>
+                <input matInput type="number" readonly placeholder="Un-utilized amount" name="unutilizedAmount" ngModel #advanceIdInput="ngModel" required>
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0">
                 <input matInput type="text" [placeholder]="payeePlaceholder" name="payeeName" ngModel #payeeNameInput="ngModel" required>
@@ -123,9 +123,15 @@
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
               <div class="row" #appenHere></div>
-                <div style="float:left;margin-top: 44px;">
-                    <button mat-raised-button color="primary"  (click)="$event.preventDefault();addNewComponent()">Add Utilization details</button>
+                <div *ngIf="approvalInput.value == 2" style="float:left;margin-top: 44px;">
+                    <button mat-raised-button color="primary"  (click)="$event.preventDefault();addNewComponent()"><span>+ </span>Add Utilization details</button>
                 </div>
+                <div *ngIf="approvalInput.value == 5" style="float:left;margin-top: 44px;">
+                  <button mat-raised-button color="primary"  (click)="$event.preventDefault();addSalaryComponent()"><span>+ </span>Add Salary details</button>
+               </div>
+               <div *ngIf="approvalInput.value == 4" style="float:left;margin-top: 44px;">
+                <button mat-raised-button color="primary"  (click)="$event.preventDefault();addVendorComponent()"><span>+ </span>Add Vendor details</button>
+               </div>
                <br> 
               <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
               <button mat-raised-button color="primary" [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit" *ngIf="!isLoading">Submit</button>

@@ -1,3 +1,5 @@
+import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
+import { SalaryDetailsComponent } from './salary-details/salary-details.component';
 import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
 import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef,AfterViewInit,ViewChild} from '@angular/core';
 import { ApprovalFormService } from './../service/approval-form.service';
@@ -120,5 +122,13 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   addNewComponent() {
     let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);
     this.componentRef = this.target.createComponent(childComponent); 
+  } 
+  addSalaryComponent() {
+    let childComponent = this.resolver.resolveComponentFactory(SalaryDetailsComponent);
+    this.componentRef = this.target.createComponent(childComponent); 
   }  
+  addVendorComponent() {
+    let childComponent = this.resolver.resolveComponentFactory(VendorDetailsComponent);
+    this.componentRef = this.target.createComponent(childComponent); 
+  } 
 }

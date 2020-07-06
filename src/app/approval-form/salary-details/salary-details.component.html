@@ -1,0 +1,26 @@
+
+<div class="floating">
+<mat-form-field class="sizee">
+    <input matInput type="number"  placeholder="Salary Slip Number" name="billNumber" ngModel #billNumberInput="ngModel" required>
+    <mat-error *ngIf="billNumberInput.invalid"> Please enter salary slip number</mat-error>     
+</mat-form-field>
+<mat-form-field class="sizee">
+    <input matInput type="number" placeholder="Salary Amount" name="billAmount" ngModel #billAmountInput="ngModel" required>
+    <mat-error *ngIf="billAmountInput.invalid"> Please enter salary Amount</mat-error>     
+</mat-form-field>
+<mat-form-field class="sizee">
+    <input matInput type="text" placeholder="Employee" name="vendor" ngModel #vendorInput="ngModel" required>
+    <mat-error *ngIf="vendorInput.invalid"> Please enter employee</mat-error>     
+</mat-form-field>
+<mat-form-field class="sizee">
+    <input matInput type="text"
+   placeholder=" Discription"  name="body" ngModel #DiscriptionInput="ngModel" required minlength="20">
+    <mat-error *ngIf="DiscriptionInput.invalid"> Please provide Discription (min character 20)</mat-error>
+</mat-form-field>
+<div class="file-input">
+    <input type="file" #fileInput (change)="onImagePicked($event)">
+    <button class="filebtn" mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()">Upload File</button>
+  </div>
+</div>
+<p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
+
