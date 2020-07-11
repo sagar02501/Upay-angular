@@ -41,14 +41,19 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   salaries = [{
     number :"",
     amount: "",
-    vendor:"",
+    employee:"",
     itemDesc: ""
   }];
   vendors = [{
     number :"",
     amount: "",
-    vendor:"",
-    itemDesc: ""
+    name:"",
+    deliveryschedule:"",
+    paymentterms:"",
+    unitprice:"",
+    netamount:"",
+    tax:"",
+    remarks: ""
   }];
   /* no change */
   ngOnInit() {
@@ -141,7 +146,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     var newSalary = {
       number :"",
       amount: "",
-      vendor:"",
+      employee:"",
       itemDesc: ""
     };
     this.salaries.push(newSalary);
