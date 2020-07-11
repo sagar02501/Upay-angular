@@ -9,6 +9,8 @@ export class VendorDetailsComponent implements OnInit {
 
   constructor() { }
   @Input() approval: number;
+  @Input() vendors;
+  @Input() vendor;
   ngOnInit() {
    
   }

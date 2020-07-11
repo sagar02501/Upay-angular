@@ -9,6 +9,8 @@ export class UtilizationDetailsComponent implements OnInit {
 
   constructor() { }
   @Input() approval: number;
+  @Input() bills;
+  @Input() bill;
   ngOnInit() {
    
   }

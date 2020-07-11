@@ -1,7 +1,7 @@
 import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
 import { SalaryDetailsComponent } from './salary-details/salary-details.component';
 import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
-import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ComponentRef, ViewContainerRef,AfterViewInit,ViewChild} from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   banknamePlaceholder: string;
   ifscPlaceholder: string;
 
-  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar,private resolver: ComponentFactoryResolver) { }
+  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
   isOTP = false;
   isOTPVerified = 0;
   isSubmitted;
@@ -32,6 +32,24 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   zones = [];
   approvals = [];
   approvalFile;
+  bills = [{
+    number :"",
+    amount: "",
+    vendor:"",
+    itemDesc: ""
+  }];
+  salaries = [{
+    number :"",
+    amount: "",
+    vendor:"",
+    itemDesc: ""
+  }];
+  vendors = [{
+    number :"",
+    amount: "",
+    vendor:"",
+    itemDesc: ""
+  }];
   /* no change */
   ngOnInit() {
     this.settingsService.getZoneList();
@@ -116,24 +134,37 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
-  @ViewChild('appendHereUtilization', {read : ViewContainerRef}) target: ViewContainerRef;
-  private componentRef: ComponentRef<any>;
-  @ViewChild('appendHereVendor', {read : ViewContainerRef}) target1: ViewContainerRef;
-  private componentRef1: ComponentRef<any>;
-  @ViewChild('appendHereSalary', {read : ViewContainerRef}) target2: ViewContainerRef;
-  private componentRef2: ComponentRef<any>;
   
 
-  addNewComponent() {
-    let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);
-    this.componentRef = this.target.createComponent(childComponent); 
-  } 
+  
   addSalaryComponent() {
-    let childComponent = this.resolver.resolveComponentFactory(SalaryDetailsComponent);
-    this.componentRef1 = this.target1.createComponent(childComponent); 
+    var newSalary = {
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: ""
+    };
+    this.salaries.push(newSalary);
+    console.log(this.salaries);
   }  
   addVendorComponent() {
-    let childComponent = this.resolver.resolveComponentFactory(VendorDetailsComponent);
-    this.componentRef2 = this.target2.createComponent(childComponent); 
+    var newVendor = {
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: ""
+    };
+    this.vendors.push(newVendor);
+    console.log(this.vendors);
   } 
+  addBills(){
+    var newBill = {
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: ""
+    };
+    this.bills.push(newBill);
+    console.log(this.bills);
+  }
 }

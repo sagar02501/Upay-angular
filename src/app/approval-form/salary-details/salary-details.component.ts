@@ -9,6 +9,8 @@ export class SalaryDetailsComponent implements OnInit {
 
   constructor() { }
   @Input() approval: number;
+  @Input() salaries;
+  @Input() salary;
   ngOnInit() {
    
   }
