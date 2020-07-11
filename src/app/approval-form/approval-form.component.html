@@ -122,11 +122,13 @@
                 <p *ngIf="approvalInput.value != 4">Upload bills/quotations/utilization (if any)<br>Supported formats - pdf/jpg/jpeg/png</p>
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
-              <div class="row" #appenHere></div>
-                <div *ngIf="approvalInput.value == 2" style="float:left;margin-top: 44px;">
-                    <button mat-raised-button color="primary"  (click)="$event.preventDefault();addNewComponent()"><span>+ </span>Add Utilization details</button>
-                </div>
-                <div *ngIf="approvalInput.value == 5" style="float:left;margin-top: 44px;">
+              <div *ngIf="approvalInput.value == 2" class="row" #appendHereUtilization></div>
+              <div *ngIf="approvalInput.value == 4" class="row" #appendHereVendor></div>
+              <div *ngIf="approvalInput.value == 5" class="row" #appendHereSalary></div>
+               <div *ngIf="approvalInput.value == 2" style="float:left;margin-top: 44px;">
+                    <button mat-raised-button color="primary" (click)="$event.preventDefault();addNewComponent()"><span>+ </span>Add Utilization details</button>
+               </div>
+               <div *ngIf="approvalInput.value == 5" style="float:left;margin-top: 44px;">
                   <button mat-raised-button color="primary"  (click)="$event.preventDefault();addSalaryComponent()"><span>+ </span>Add Salary details</button>
                </div>
                <div *ngIf="approvalInput.value == 4" style="float:left;margin-top: 44px;">

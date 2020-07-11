@@ -116,8 +116,13 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
-  @ViewChild('appenHere', {read : ViewContainerRef}) target: ViewContainerRef;
+  @ViewChild('appendHereUtilization', {read : ViewContainerRef}) target: ViewContainerRef;
   private componentRef: ComponentRef<any>;
+  @ViewChild('appendHereVendor', {read : ViewContainerRef}) target1: ViewContainerRef;
+  private componentRef1: ComponentRef<any>;
+  @ViewChild('appendHereSalary', {read : ViewContainerRef}) target2: ViewContainerRef;
+  private componentRef2: ComponentRef<any>;
+  
 
   addNewComponent() {
     let childComponent = this.resolver.resolveComponentFactory(UtilizationDetailsComponent);
@@ -125,10 +130,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   } 
   addSalaryComponent() {
     let childComponent = this.resolver.resolveComponentFactory(SalaryDetailsComponent);
-    this.componentRef = this.target.createComponent(childComponent); 
+    this.componentRef1 = this.target1.createComponent(childComponent); 
   }  
   addVendorComponent() {
     let childComponent = this.resolver.resolveComponentFactory(VendorDetailsComponent);
-    this.componentRef = this.target.createComponent(childComponent); 
+    this.componentRef2 = this.target2.createComponent(childComponent); 
   } 
 }
