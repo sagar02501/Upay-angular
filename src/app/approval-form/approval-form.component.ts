@@ -145,9 +145,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   addSalaryComponent() {
     var newSalary = {
       number :"",
-      amount: "",
-      employee:"",
-      itemDesc: ""
+    amount: "",
+    employee:"",
+    itemDesc: ""
     };
     this.salaries.push(newSalary);
     console.log(this.salaries);
@@ -155,9 +155,14 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   addVendorComponent() {
     var newVendor = {
       number :"",
-      amount: "",
-      vendor:"",
-      itemDesc: ""
+    amount: "",
+    name:"",
+    deliveryschedule:"",
+    paymentterms:"",
+    unitprice:"",
+    netamount:"",
+    tax:"",
+    remarks: ""
     };
     this.vendors.push(newVendor);
     console.log(this.vendors);
