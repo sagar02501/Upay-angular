@@ -18,8 +18,24 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   accountnoPlaceholder: string;
   banknamePlaceholder: string;
   ifscPlaceholder: string;
-
-  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
+  public bill :{
+    number :string,
+    amount: string,
+    vendor:string,
+    itemDesc: string,
+    file: File | null
+  }
+  bills:any[];
+  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
+    this.bill ={
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: "",
+      file:null
+    }
+    this.bills = [this.bill];
+   }
   isOTP = false;
   isOTPVerified = 0;
   isSubmitted;
@@ -32,12 +48,8 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   zones = [];
   approvals = [];
   approvalFile;
-  bills = [{
-    number :"",
-    amount: "",
-    vendor:"",
-    itemDesc: ""
-  }];
+  
+  
   salaries = [{
     number :"",
     amount: "",
@@ -93,12 +105,24 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.approvalForm = approvalForm;
-    this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+    approvalForm.value.bills = this.bills;
+    approvalForm.value.vendors = this.vendors;
+    approvalForm.value.salaries = this.salaries;
+    console.log(approvalForm.value)
+    //this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
   }
 
   onImagePicked(event: Event) {
     this.approvalFile = (event.target as HTMLInputElement).files[0];
   }
+  
+  search(numberKey: string, myArray: any){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].number === numberKey) {
+            return myArray[i];
+        }
+    }
+}
 
   approvalChanged(value) {
     if (value === 4) {
@@ -168,12 +192,13 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     console.log(this.vendors);
   } 
   addBills(){
-    var newBill = {
+    var newBill ={
       number :"",
       amount: "",
       vendor:"",
-      itemDesc: ""
-    };
+      itemDesc: "",
+      file:null
+    }
     this.bills.push(newBill);
     console.log(this.bills);
   }

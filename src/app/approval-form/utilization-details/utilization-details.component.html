@@ -13,14 +13,13 @@
         <mat-error *ngIf="vendorInput.invalid"> Please enter vendor</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text"
-    placeholder="item Discription"  name="body" [(ngModel)]="bill.itemDesc" value="itemDesc" #DiscriptionInput="ngModel" required minlength="20">
+        <input matInput type="text" placeholder="item Discription"  name="body" [(ngModel)]="bill.itemDesc" value="itemDesc" #DiscriptionInput="ngModel" required minlength="20">
         <mat-error *ngIf="DiscriptionInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
-    <div class="file-input">
-        <input type="file" #fileInput (change)="onImagePicked($event)">
-        <button class="filebtn" mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()">Upload File</button>
+    <div class="file-input"> 
+        <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
+        <button class="filebtn" mat-raised-button color="primary" (click)="$event.preventDefault(); billInput.click()">Upload File</button>
     </div>
 </div>
-<p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
+<p class="filename" *ngIf="bill.file">{{bill.file.name}}</p>
 

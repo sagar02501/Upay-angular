@@ -123,7 +123,7 @@
                 <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
               </div>
               <div *ngIf="approvalInput.value == 2" >
-                <app-utilization-details [bills]="bills" *ngFor="let bill of bills" [bill]="bill"></app-utilization-details>
+                <app-utilization-details [bills]="bills" *ngFor="let bill of bills; let b = index" [b]="b" [bill]="bill"></app-utilization-details>
               </div>
               <div *ngIf="approvalInput.value == 4" >
                 <app-vendor-details [vendors]="vendors" *ngFor="let vendor of vendors" [vendor]="vendor"></app-vendor-details>

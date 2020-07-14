@@ -8,9 +8,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class UtilizationDetailsComponent implements OnInit {
 
   constructor() { }
+   onbillImagePicked(event: Event,index:number) {
+     console.log(index);
+    this.bills[index].file = (event.target as HTMLInputElement).files[0];
+  }
   @Input() approval: number;
   @Input() bills;
   @Input() bill;
+  @Input() b;
   ngOnInit() {
    
   }
