@@ -1,46 +1,46 @@
 
 <div class="floating">  
-<mat-form-field class="sizee">
-    <input matInput type="number"  placeholder="Vendor Bill Number" name="billNumber" [(ngModel)]="vendor.number" value="number" #billNumberInput="ngModel" required>
-    <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="number" #billAmountInput="ngModel" required>
-    <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Vendor Name" name="vendor" [(ngModel)]="vendor.name" value="vendor" #vendorInput="ngModel" required>
-    <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Delivery Schedule" name="deliveryschedule" [(ngModel)]="vendor.deliveryschedule" value="deliveryschedule" #deliveryscheduleInput="ngModel" required>
-    <mat-error *ngIf="deliveryscheduleInput.invalid"> Please enter deliveryschedule</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Payment Terms" name="paymentterms" [(ngModel)]="vendor.paymentterms" value="paymentterms" #paymenttermsInput="ngModel" required>
-    <mat-error *ngIf="paymenttermsInput.invalid"> Please enter payment terms</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
-    <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Net Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
-    <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Shipping Charge/Tax" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
-    <mat-error *ngIf="taxInput.invalid"> Please enter Shipping Charge/Tax</mat-error>     
-</mat-form-field>
-<mat-form-field class="sizee">
-    <input matInput type="text"
-   placeholder="Remarks" name="body" [(ngModel)]="vendor.remarks" value="remarks" #RemarksInput="ngModel" required minlength="20">
-    <mat-error *ngIf="RemarksInput.invalid"> Please provide Discription (min character 20)</mat-error>
-</mat-form-field>
-<div class="file-input">
-    <input type="file" #fileInput (change)="onImagePicked($event)">
-    <button class="filebtn" mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()"></button>
-  </div>
+    <mat-form-field class="sizee">
+        <input matInput type="number"  placeholder="Vendor Bill Number" name="billNumber" [(ngModel)]="vendor.number" value="number" #billNumberInput="ngModel" required>
+        <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="number" #billAmountInput="ngModel" required>
+        <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Vendor Name" name="vendor" [(ngModel)]="vendor.name" value="vendor" #vendorInput="ngModel" required>
+        <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Delivery Schedule" name="deliveryschedule" [(ngModel)]="vendor.deliveryschedule" value="deliveryschedule" #deliveryscheduleInput="ngModel" required>
+        <mat-error *ngIf="deliveryscheduleInput.invalid"> Please enter deliveryschedule</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Payment Terms" name="paymentterms" [(ngModel)]="vendor.paymentterms" value="paymentterms" #paymenttermsInput="ngModel" required>
+        <mat-error *ngIf="paymenttermsInput.invalid"> Please enter payment terms</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
+        <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Net Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
+        <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Shipping Charge/Tax" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
+        <mat-error *ngIf="taxInput.invalid"> Please enter Shipping Charge/Tax</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text"
+       placeholder="Remarks" name="body" [(ngModel)]="vendor.remarks" value="remarks" #RemarksInput="ngModel" required minlength="20">
+        <mat-error *ngIf="RemarksInput.invalid"> Please provide Discription (min character 20)</mat-error>
+    </mat-form-field>
+    <div class="file-input"> 
+        <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,v)" />
+        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
+    </div>
+    <p class="filename file-label-align" *ngIf="vendor.file">{{vendor.file.name}}</p>
 </div>
-<p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
-
+    

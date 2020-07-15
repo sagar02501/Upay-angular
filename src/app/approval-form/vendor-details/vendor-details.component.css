@@ -1,3 +1,33 @@
+.file-upload-button {
+  background-color: #ff5252;
+  border-radius: 50%;
+  content: '⇪';
+  height: 3.5rem;
+  overflow: hidden;
+  position: relative;
+  width: 3.5rem;
+  border: 1px solid;
+
+  &::after {
+    content: '⇪';
+    color: #fff;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+}
+.file-label-align{
+    margin-top: 0px;
+    position: absolute;
+    top: 62px;
+    left: 44px;
+}
+.file-info {
+color: #999;
+font-family: Lato;
+margin-left: 0.5rem;
+}
+
 .floating{
 position:relative;
  float:left;
@@ -53,4 +83,5 @@ position:relative;
   .filename {
     align-self: flex-start;
   }
+  
   

@@ -18,8 +18,8 @@
     </mat-form-field>
     <div class="file-input"> 
         <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
-        <button class="filebtn" mat-raised-button color="primary" (click)="$event.preventDefault(); billInput.click()">Upload File</button>
+        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
     </div>
+    <p class="filename file-label-align" *ngIf="bill.file">{{bill.file.name}}</p>
 </div>
-<p class="filename" *ngIf="bill.file">{{bill.file.name}}</p>
 

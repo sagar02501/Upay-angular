@@ -49,13 +49,14 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   approvals = [];
   approvalFile;
   
-  
   salaries = [{
     number :"",
     amount: "",
     employee:"",
-    itemDesc: ""
-  }];
+    itemDesc: "",
+    file:null
+    }];
+
   vendors = [{
     number :"",
     amount: "",
@@ -65,8 +66,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     unitprice:"",
     netamount:"",
     tax:"",
-    remarks: ""
+    remarks: "",
+    file:null 
   }];
+  
   /* no change */
   ngOnInit() {
     this.settingsService.getZoneList();
@@ -163,22 +166,20 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
-  
-
-  
   addSalaryComponent() {
     var newSalary = {
-      number :"",
+    number :"",
     amount: "",
     employee:"",
-    itemDesc: ""
+    itemDesc: "",
+    file:null
     };
     this.salaries.push(newSalary);
     console.log(this.salaries);
   }  
   addVendorComponent() {
     var newVendor = {
-      number :"",
+    number :"",
     amount: "",
     name:"",
     deliveryschedule:"",
@@ -186,7 +187,8 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     unitprice:"",
     netamount:"",
     tax:"",
-    remarks: ""
+    remarks: "",
+    file:null
     };
     this.vendors.push(newVendor);
     console.log(this.vendors);
