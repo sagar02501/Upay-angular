@@ -8,6 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SalaryDetailsComponent implements OnInit {
 
   constructor() { }
+  onbillImagePicked(event: Event,index:number) {
+    console.log(index);
+   this.salary[index].file = (event.target as HTMLInputElement).files[0];
+ }
   @Input() approval: number;
   @Input() salaries;
   @Input() salary;

@@ -141,6 +141,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.ifscPlaceholder = 'Bank IFSC';
       this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
     }
+    if(value == 0){
+      this.approvalPlaceholder = 'Justify your approval request';
+    }
   
   }
 
