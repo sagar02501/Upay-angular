@@ -12,6 +12,9 @@ export class UtilizationDetailsComponent implements OnInit {
      console.log(index);
     this.bills[index].file = (event.target as HTMLInputElement).files[0];
   }
+  removebillItem(index:number){
+    this.bills.splice(index,1);
+  }
   @Input() approval: number;
   @Input() bills;
   @Input() bill;

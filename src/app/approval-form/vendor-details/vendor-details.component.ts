@@ -11,6 +11,9 @@ export class VendorDetailsComponent implements OnInit {
     console.log(index);
    this.vendors[index].file = (event.target as HTMLInputElement).files[0];
   }
+  removevendorItem(index:number){
+    this.vendors.splice(index,1);
+  }
   @Input() approval: number;
   @Input() vendors;
   @Input() vendor;

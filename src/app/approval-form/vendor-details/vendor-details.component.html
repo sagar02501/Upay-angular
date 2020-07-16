@@ -38,9 +38,21 @@
         <mat-error *ngIf="RemarksInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
     <div class="file-input"> 
-        <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,v)" />
-        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
+        <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,b)" />
+        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>
+        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;" *ngIf="vendor.file">{{vendor.file.name}}</p>
+        <button style= "font-weight: 500;
+        color: #7ca3e4;
+        font-size: 15px;
+        background: transparent;
+        border: none;
+        margin-top: 10px;
+        float: right;
+        position: relative;
+        left: 20px;
+        "
+(click)="$event.preventDefault(); removevendorItem(b)" > - Del salary slip </button>
     </div>
-    <p class="filename file-label-align" *ngIf="vendor.file">{{vendor.file.name}}</p>
+    
 </div>
     

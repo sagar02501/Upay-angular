@@ -153,10 +153,10 @@
                 <app-utilization-details [bills]="bills" *ngFor="let bill of bills; let b = index" [b]="b" [bill]="bill"></app-utilization-details>
               </div>
               <div *ngIf="approvalInput.value == 4" >
-                <app-vendor-details [vendors]="vendors" *ngFor="let vendor of vendors" [vendor]="vendor"></app-vendor-details>
+                <app-vendor-details [vendors]="vendors" *ngFor="let vendor of vendors; let b = index" [b]="b" [vendor]="vendor"></app-vendor-details>
               </div>
               <div *ngIf="approvalInput.value == 5" >
-                <app-salary-details [salaries]="salaries" *ngFor="let salary of salaries" [salary]="salary"></app-salary-details>
+                <app-salary-details [salaries]="salaries" *ngFor="let salary of salaries; let b = index" [b]="b" [salary]="salary"></app-salary-details>
               </div>
                <br> 
               <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>

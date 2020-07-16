@@ -8,13 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SalaryDetailsComponent implements OnInit {
 
   constructor() { }
-  onbillImagePicked(event: Event,index:number) {
+  onsalaryImagePicked(event: Event,index:number) {
     console.log(index);
-   this.salary[index].file = (event.target as HTMLInputElement).files[0];
+   this.salaries[index].file = (event.target as HTMLInputElement).files[0];
  }
+ removesalaryItem(index:number){
+   this.salaries.splice(index,1);
+ }
+
   @Input() approval: number;
   @Input() salaries;
   @Input() salary;
+  @Input() b;
   ngOnInit() {
    
   }

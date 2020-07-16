@@ -26,6 +26,30 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     file: File | null
   }
   bills:any[];
+
+ public salary:{
+  number :string,
+  amount: string,
+  employee:string,
+  itemDesc: string,
+  file:File|null
+ }
+ salaries: any[];
+
+ public vendor:{
+  number :string,
+  amount: number,
+  name:string,
+  deliveryschedule:string,
+  paymentterms:string,
+  unitprice:string,
+  netamount:number,
+  tax:number,
+  remarks: string,
+  file: File | null 
+ }
+
+ vendors : any[];
   constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
     this.bill ={
       number :"",
@@ -35,6 +59,29 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       file:null
     }
     this.bills = [this.bill];
+
+    this.salary = {
+      number :"",
+      amount: "",
+      employee:"",
+      itemDesc: "",
+      file:null
+      };
+    this.salaries = [this.salary]
+  
+    this.vendor = {
+      number :"",
+      amount: 0.0,
+      name:"",
+      deliveryschedule:"",
+      paymentterms:"",
+      unitprice:"",
+      netamount:0.0,
+      tax:0.0,
+      remarks: "",
+      file:null 
+    };
+    this.vendors= [this.vendor];
    }
   isOTP = false;
   isOTPVerified = 0;
@@ -49,26 +96,6 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   approvals = [];
   approvalFile;
   
-  salaries = [{
-    number :"",
-    amount: "",
-    employee:"",
-    itemDesc: "",
-    file:null
-    }];
-
-  vendors = [{
-    number :"",
-    amount: "",
-    name:"",
-    deliveryschedule:"",
-    paymentterms:"",
-    unitprice:"",
-    netamount:"",
-    tax:"",
-    remarks: "",
-    file:null 
-  }];
   
   /* no change */
   ngOnInit() {
@@ -178,23 +205,23 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     file:null
     };
     this.salaries.push(newSalary);
-    console.log(this.salaries);
+    //console.log(this.salaries);
   }  
   addVendorComponent() {
     var newVendor = {
     number :"",
-    amount: "",
+    amount: 0.0,
     name:"",
     deliveryschedule:"",
     paymentterms:"",
     unitprice:"",
-    netamount:"",
-    tax:"",
+    netamount:0.0,
+    tax:0.0,
     remarks: "",
     file:null
     };
     this.vendors.push(newVendor);
-    console.log(this.vendors);
+    //console.log(this.vendors);
   } 
   addBills(){
     var newBill ={
@@ -205,6 +232,6 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       file:null
     }
     this.bills.push(newBill);
-    console.log(this.bills);
+    //console.log(this.bills);
   }
 }
