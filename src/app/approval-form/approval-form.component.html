@@ -110,17 +110,17 @@
                 placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required>
                 <mat-error *ngIf="subjectInput.invalid"> Please provide subject </mat-error>
               </mat-form-field>
-              <mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value == 1 || approvalInput.value == 3 || approvalInput.value == 0 ">
                 <textarea matInput
                 [placeholder]="approvalPlaceholder" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="bodyInput.invalid"> Please provide Approval/Utilization Details (min character 20)</mat-error>
               </mat-form-field>
             
-              <div class="file-input">
+              <div *ngIf="approvalInput.value == 1 || approvalInput.value == 3 || approvalInput.value == 0 " class="file-input">
                 <input type="file" #fileInput (change)="onImagePicked($event)">
                 <button mat-raised-button color="primary" (click)="$event.preventDefault();fileInput.click()">Upload File</button>
                 <p *ngIf="approvalInput.value != 4">Upload bills/quotations/utilization (if any)<br>Supported formats - pdf/jpg/jpeg/png</p>
-                <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p>
+                <!-- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> -->
               </div>
               <div *ngIf="approvalInput.value == 2" style="float:left;">
                 <div><p class="heaading-add" style=" 
@@ -128,7 +128,7 @@
                   top: 1051.44;
                   left: 18px;
                   font-weight: 550;
-                  top: 1027px;">Provide Bill(s) Details</p></div>
+                  top: 886px;">Provide Bill(s) Details</p></div>
                 <button mat-icon-button	style="margin-left: 261px;" color="primary" (click)="$event.preventDefault();addBills()"><span>+ </span>Add Utilization details</button>
            </div>
            <div *ngIf="approvalInput.value == 5" style="float:left;">
@@ -137,7 +137,7 @@
               top: 1051.44;
               left: 18px;
               font-weight: 550;
-              top: 916px;">Provide Employee(s) Details</p></div>
+              top: 775px;">Provide Employee(s) Details</p></div>
               <button mat-icon-button	style="margin-left: 161px;" color="primary"  (click)="$event.preventDefault();addSalaryComponent()"><span>+ </span>Add Salary details</button>
            </div>
            <div *ngIf="approvalInput.value == 4" style="float:left;">
@@ -146,7 +146,7 @@
               top: 1051.44;
               left: 18px;
               font-weight: 550;
-              top: 1105px;">Provide vendor(s) Details</p></div>
+              top: 957px;">Provide vendor(s) Details</p></div>
             <button mat-icon-button	style="margin-left: 161px;" color="primary"  (click)="$event.preventDefault();addVendorComponent()"><span>+ </span>Add Vendor details</button>
            </div>
               <div *ngIf="approvalInput.value == 2" >
