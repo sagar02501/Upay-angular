@@ -29,12 +29,20 @@
         <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Shipping Charge/Tax" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
-        <mat-error *ngIf="taxInput.invalid"> Please enter Shipping Charge/Tax</mat-error>     
+        <input matInput type="text" placeholder="other/Shipping Charges" name="shipping" [(ngModel)]="vendor.shipping" value="shipping" #shippingInput="ngModel" required>
+        <mat-error *ngIf="shippingInput.invalid"> Please enter other/Shipping Charges</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="GST" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
+        <mat-error *ngIf="taxInput.invalid"> Please enter GST</mat-error>     
+    </mat-form-field>
+    <mat-form-field class="sizee">
+        <input matInput type="text" placeholder="Shipping Address" name="shipping-address" [(ngModel)]="vendor.shipping-address" value="shipping-address" #taxInput="ngModel" required>
+        <mat-error *ngIf="taxInput.invalid"> Please enter Shipping <Address></Address></mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
         <input matInput type="text"
-       placeholder="Remarks" name="body" [(ngModel)]="vendor.remarks" value="remarks" #RemarksInput="ngModel" required minlength="20">
+       placeholder="Description and warrenty " name="body" [(ngModel)]="vendor.remarks" value="remarks" #RemarksInput="ngModel" required minlength="20">
         <mat-error *ngIf="RemarksInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
     <div class="file-input"> 
@@ -51,7 +59,7 @@
         position: relative;
         left: 20px;
         "
-(click)="$event.preventDefault(); removevendorItem(b)" > - Del Vendor </button>
+(click)="$event.preventDefault(); removevendorItem(b)" > - Remove Vendor </button>
     </div>
     
 </div>
