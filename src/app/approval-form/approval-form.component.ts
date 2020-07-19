@@ -139,7 +139,21 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     approvalForm.value.vendors = this.vendors;
     approvalForm.value.salaries = this.salaries;
     console.log(approvalForm.value)
-    //this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+    if(approvalForm.value.approval == 0 ||approvalForm.value.approval == 1  || approvalForm.value.approval == 3 ){
+       /* 0 - In Principle or Admin Approval
+          1 - Advance or Imprest
+          3 - Claim
+       */
+      this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+    }else{
+      console.log('TODO: New api',this.approvals[approvalForm.value.approval]);
+       /* 2 - Claim against advance/PO
+          4 - Award Approval
+          5 - Salary
+       */
+      this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
+    }
+    
   }
 
   onImagePicked(event: Event) {

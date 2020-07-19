@@ -13,12 +13,139 @@ export class ApprovalFormService {
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
   otpURI = '';
-
+  
+  billssucces: any[]
+  salarysuccess: any[]
+  awardsuccess: any[]
+  submitBills(approvalId,claimid,data,file){
+    const postData = new FormData();
+    //claimId
+    postData.append('approvalId', approvalId); 
+    postData.append('claimId', claimid);  
+    postData.append('billnumber', data.billNumber);
+    postData.append('billamount', data.billAmount);
+    postData.append('vendorname', data.vendor);
+    postData.append('description', data.body);
+    if (file) {
+      postData.append('file', file, data.fill.name);
+    }
+    this.http.post(this.url+`/bill`, postData).subscribe((res) => {
+      this.formSubmitSubject.next(res);
+    },
+    (err) => {
+      console.log(err);
+      this.formSubmitSubject.next(2);
+    }
+    );
+  }
+  submitSalary(approvalId,data,file){
+    const postData = new FormData();
+    postData.append('approvalId', approvalId);  
+    postData.append('salarynumber', data.Number);
+    postData.append('salaryamount', data.billAmount);
+    postData.append('employeename', data.employee);
+    postData.append('description', data.body);
+    if (file) {
+      postData.append('file', file, data.fill.name);
+    }
+    this.http.post(this.url+`/salary`, postData).subscribe((res) => {
+      this.formSubmitSubject.next(res);
+    },
+    (err) => {
+      console.log(err);
+      this.formSubmitSubject.next(2);
+    }
+    );
+  }
+  submitAward(approvalId,data,file){
+    const postData = new FormData();
+    postData.append('approvalId', approvalId);  
+    postData.append('billnumber', data.billNumber);
+    postData.append('billamount', data.billAmount);
+    postData.append('vendorname', data.vendor);
+    postData.append('deliveryschedule', data.deliveryschedule);
+    postData.append('payterms', data.paymentterms);
+    postData.append('unitprice', data.unitprice);
+    postData.append('netbillamount', data.netamount);
+    /* vendor_preference
+    shipping_addr
+    shipping_handling_chrg
+    other_charges
+    gst_tax
+    warranty
+    description */
+    
+    if (file) {
+      postData.append('file', file, data.fill.name);
+    }
+    this.http.post(this.url+`/awardtable`, postData).subscribe((res) => {
+      this.formSubmitSubject.next(res);
+    },
+    (err) => {
+      console.log(err);
+      this.formSubmitSubject.next(2);
+    }
+    );
+  }
   constructor(public http: HttpClient) { }
   url = environment.backendURL + 'api/approvals';
   
+  submitForm2(data,approvalTypes){
+    const postData = new FormData();
+    postData.append('name', data.name);
+    postData.append('zone', data.zone);
+    postData.append('designation', data.designation);
+    postData.append('contact', data.contact);
+    postData.append('email', data.email);
+    postData.append('amount', data.amount);
+    postData.append('subject', data.subject);
+    if (approvalTypes[data.approval]) {
+      postData.append('type', approvalTypes[data.approval].name);
+    }
+    if(data.advanceId){
+      postData.append('advanceid', data.advanceId);
+    }
+    if (data.payeeName) {
+      postData.append('payeeName', data.payeeName);
+    }
+    if (data.accountNumber) {
+      postData.append('accountNumber', data.accountNumber);
+    }
+    if (data.bankName) {
+      postData.append('bankName', data.bankName);
+    }
+    if (data.bankIfsc) {
+      postData.append('bankIfsc', data.bankIfsc);
+    }
+    
+    this.http.post(this.url+`/create2`, postData).subscribe((res) => {
+      console.log(res);
+      // if(data.approval == 2){
+      //   data.bills.forEach(bill => {
+      //     this.submitBills(data.advanceId,1 ,bill,bill.file); 
+      //   });
+      // }
+      // if(data.approval == 4){
+      //   data.vendors.forEach(vendor => {
+      //     this.submitAward(data.advanceId,vendor,vendor.file); 
+      //   });
+      // }
+      // if(data.approval == 5){
+      //   data.salaries.forEach(salary => {
+      //     this.submitSalary(data.advanceId,salary,salary.file); 
+      //   });  
+      // }
+      this.formSubmitSubject.next(res);
+    },
+    (err) => {
+      console.log(err);
+      this.formSubmitSubject.next(2);
+    }
+    );
+  }
+
   submitForm(data, file, approvalTypes) {
-    console.log(data, file);
+    //console.log(data, file);
     const postData = new FormData();
     postData.append('name', data.name);
     postData.append('zone', data.zone);
@@ -31,12 +158,39 @@ export class ApprovalFormService {
     if (approvalTypes[data.approval]) {
       postData.append('type', approvalTypes[data.approval].name);
     }
+     /*
+  Code ID: 003
+  Author: join.eb@gmail.com Elvin Baghele
+  Add new fields:  
+    payeeName
+    accountNumber
+    bankName
+    bankIfsc */
+  // Commented out code:
+  if (data.payeeName) {
+    postData.append('payeeName', data.paymentDetails);
+  }
+  if (data.accountNumber) {
+    postData.append('accountNumber', data.paymentDetails);
+  }
+  if (data.bankName) {
+    postData.append('bankName', data.paymentDetails);
+  }
+  if (data.bankIfsc) {
+    postData.append('bankIfsc', data.paymentDetails);
+  }
+   // Commented out code:
+  /* 
     if (data.advanceDetails) {
-      postData.append('advanceDetails', data.advanceDetails);
-    }
+        postData.append('advanceDetails', data.advanceDetails);
+      }
     if (data.paymentDetails) {
       postData.append('paymentDetails', data.paymentDetails);
     }
+  */
+  // Finish Code ID 003
+
+
     if (file) {
       postData.append('file', file, data.name);
     }

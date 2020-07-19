@@ -86,7 +86,7 @@
                 <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">
-                <input matInput type="number" readonly placeholder="Un-utilized amount" name="unutilizedAmount" ngModel #advanceIdInput="ngModel" required>
+                <input matInput type="number"  placeholder="Un-utilized amount" name="unutilizedAmount" ngModel #advanceIdInput="ngModel" >
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0">
                 <input matInput type="text" [placeholder]="payeePlaceholder" name="payeeName" ngModel #payeeNameInput="ngModel" required>
