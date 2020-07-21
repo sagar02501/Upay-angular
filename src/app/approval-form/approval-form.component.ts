@@ -123,7 +123,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
       this.approvals.push({name: 'In Principle or Admin Approval', value: 0});
       this.approvals.push({name: 'Advance or Imprest', value: 1});
-      this.approvals.push({name: 'Claim against advance', value: 2});
+      this.approvals.push({name: 'Claim against advance/PO', value: 2});
       this.approvals.push({name: 'Claim', value: 3});
       this.approvals.push({name: 'Award Approval', value: 4});
       this.approvals.push({name: 'Salary', value: 5});
