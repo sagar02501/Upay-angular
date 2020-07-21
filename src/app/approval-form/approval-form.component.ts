@@ -151,6 +151,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
           4 - Award Approval
           5 - Salary
        */
+      console.log(approvalForm.value.advanceId)
       this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
     }
     

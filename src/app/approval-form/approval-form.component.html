@@ -82,7 +82,7 @@
                 <mat-error *ngIf="itemQuantityInput.invalid"> Please provide Item Quantity</mat-error>     
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">
-                <input matInput type="number" placeholder="Advance ID" name="advanceId" ngModel #advanceIdInput="ngModel" required>
+                <input matInput type="text" placeholder="Advance ID" name="advanceId" ngModel #advanceIdInput="ngModel" required>
                 <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>     
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value == 2">

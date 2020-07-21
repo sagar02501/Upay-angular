@@ -91,34 +91,36 @@ export class ApprovalFormService {
   url = environment.backendURL + 'api/approvals';
   
   submitForm2(data,approvalTypes){
-    const postData = new FormData();
-    postData.append('name', data.name);
-    postData.append('zone', data.zone);
-    postData.append('designation', data.designation);
-    postData.append('contact', data.contact);
-    postData.append('email', data.email);
-    postData.append('amount', data.amount);
-    postData.append('subject', data.subject);
+    const postData1 = new FormData();
+    console.log("Submit form 2",data);
+    postData1.append('name', data.name);
+    postData1.append('zone', data.zone);
+    postData1.append('designation', data.designation);
+    postData1.append('contact', data.contact);
+    postData1.append('email', data.email);
+    postData1.append('amount', data.amount);
+    postData1.append('subject', data.subject);
     if (approvalTypes[data.approval]) {
-      postData.append('type', approvalTypes[data.approval].name);
+      postData1.append('type', approvalTypes[data.approval].name);
     }
     if(data.advanceId){
-      postData.append('advanceid', data.advanceId);
+      postData1.append('advanceid', data.advanceId);
     }
     if (data.payeeName) {
-      postData.append('payeeName', data.payeeName);
+      postData1.append('payeeName', data.payeeName);
     }
     if (data.accountNumber) {
-      postData.append('accountNumber', data.accountNumber);
+      postData1.append('accountNumber', data.accountNumber);
     }
     if (data.bankName) {
-      postData.append('bankName', data.bankName);
+      postData1.append('bankName', data.bankName);
     }
     if (data.bankIfsc) {
-      postData.append('bankIfsc', data.bankIfsc);
+      postData1.append('bankIfsc', data.bankIfsc);
     }
+   
     
-    this.http.post(this.url+`/create2`, postData).subscribe((res) => {
+    this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res) => {
       console.log(res);
       // if(data.approval == 2){
       //   data.bills.forEach(bill => {
