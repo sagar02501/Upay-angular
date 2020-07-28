@@ -29,12 +29,12 @@ export class ApprovalFormService {
     if (file) {
       postData.append('file', file, data.file.name);
     }
-    this.http.post(this.url+`/bill`, postData).subscribe((res) => {
-      this.formSubmitSubject.next(res);
+    this.http.post(this.url+`/bill`, postData).subscribe((res:any) => {
+      console.log(res.message)
     },
     (err) => {
       console.log(err);
-      this.formSubmitSubject.next(2);
+      console.log(err.message)
     }
     );
   }
@@ -127,6 +127,7 @@ export class ApprovalFormService {
           console.log("inside bills");
           this.submitBills(data.advanceId,claimid,bill,bill.file); 
         });
+        this.formSubmitSubject.next(res);
       }
       // if(data.approval == 4){
       //   data.vendors.forEach(vendor => {
@@ -138,6 +139,7 @@ export class ApprovalFormService {
       //     this.submitSalary(data.advanceId,salary,salary.file); 
       //   });  
       // }
+      
     },
     (err) => {
       console.log(err);
