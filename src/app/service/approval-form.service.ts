@@ -22,12 +22,12 @@ export class ApprovalFormService {
     //claimId
     postData.append('approvalId', approvalId); 
     postData.append('claimId', claimid);  
-    postData.append('billnumber', data.billNumber);
-    postData.append('billamount', data.billAmount);
+    postData.append('billnumber', data.number);
+    postData.append('billamount', data.amount);
     postData.append('vendorname', data.vendor);
-    postData.append('description', data.body);
+    postData.append('description', data.itemDesc);
     if (file) {
-      postData.append('file', file, data.fill.name);
+      postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/bill`, postData).subscribe((res) => {
       this.formSubmitSubject.next(res);
@@ -46,7 +46,7 @@ export class ApprovalFormService {
     postData.append('employeename', data.employee);
     postData.append('description', data.body);
     if (file) {
-      postData.append('file', file, data.fill.name);
+      postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/salary`, postData).subscribe((res) => {
       this.formSubmitSubject.next(res);
@@ -120,13 +120,14 @@ export class ApprovalFormService {
     }
    
     
-    this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res) => {
-      console.log(res);
-      // if(data.approval == 2){
-      //   data.bills.forEach(bill => {
-      //     this.submitBills(data.advanceId,1 ,bill,bill.file); 
-      //   });
-      // }
+    this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
+      let claimid = res.claimid;
+      if(data.approval == 2){
+        data.bills.forEach(bill => {
+          console.log("inside bills");
+          this.submitBills(data.advanceId,claimid,bill,bill.file); 
+        });
+      }
       // if(data.approval == 4){
       //   data.vendors.forEach(vendor => {
       //     this.submitAward(data.advanceId,vendor,vendor.file); 
@@ -137,7 +138,6 @@ export class ApprovalFormService {
       //     this.submitSalary(data.advanceId,salary,salary.file); 
       //   });  
       // }
-      this.formSubmitSubject.next(res);
     },
     (err) => {
       console.log(err);
