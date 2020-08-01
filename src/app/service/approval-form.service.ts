@@ -123,34 +123,34 @@ export class ApprovalFormService {
       postData1.append('awardquantity', data.itemQuantity);
     }
     
-    // this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
-    //   let claimid = res.claimid;
-    //   if(data.approval == 2){
-    //     data.bills.forEach(bill => {
-    //       console.log("inside bills");
-    //       this.submitBills(data.advanceId,claimid,bill,bill.file); 
-    //     });
-    //     this.formSubmitSubject.next(res);
-    //   }
-      // if(data.approval == 4){
-      //   data.vendors.forEach(vendor => {
-      //     this.submitAward(data.advanceId,vendor,vendor.file); 
-      //   });
-      //   this.formSubmitSubject.next(res);
-      // }
-      // if(data.approval == 5){
-      //   data.salaries.forEach(salary => {
-      //     this.submitSalary(data.advanceId,salary,salary.file); 
-      //   });  
-      //   this.formSubmitSubject.next(res);
-      // }
+    this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
+      let claimid = res.claimid;
+      if(data.approval == 2){
+        data.bills.forEach(bill => {
+          console.log("inside bills");
+          this.submitBills(data.advanceId,claimid,bill,bill.file); 
+        });
+        this.formSubmitSubject.next(res);
+      }
+      if(data.approval == 4){
+        data.vendors.forEach(vendor => {
+          this.submitAward(data.advanceId,vendor,vendor.file); 
+        });
+        this.formSubmitSubject.next(res);
+      }
+      if(data.approval == 5){
+        data.salaries.forEach(salary => {
+          this.submitSalary(data.advanceId,salary,salary.file); 
+        });  
+        this.formSubmitSubject.next(res);
+      }
       
-    // },
-    // (err) => {
-    //   console.log(err);
-    //   this.formSubmitSubject.next(2);
-    // }
-    // );
+    },
+    (err) => {
+      console.log(err);
+      this.formSubmitSubject.next(2);
+    }
+    );
   }
 
   submitForm(data, file, approvalTypes) {
