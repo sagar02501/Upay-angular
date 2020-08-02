@@ -83,5 +83,11 @@ position:relative;
   .filename {
     align-self: flex-start;
   }
+  .heading-add{
+    position: absolute;
+    top: 1051.44;
+    left: 58px;
+    top: 1027px;
+  }
   
   

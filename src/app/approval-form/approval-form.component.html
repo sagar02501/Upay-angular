@@ -92,6 +92,10 @@
                 <input matInput type="text" [placeholder]="payeePlaceholder" name="payeeName" ngModel #payeeNameInput="ngModel" required>
                 <mat-error *ngIf="payeeNameInput.invalid"> Please enter your full name </mat-error>
               </mat-form-field>
+              <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value == 4 ">
+                <input matInput type="text" placeholder="Vendor address" name="vendorAddress" ngModel #vendorAddressInput="ngModel" required>
+                <mat-error *ngIf="vendorAddressInput.invalid"> Please enter a vendors <address></address> </mat-error>
+              </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0 ">
                 <input matInput type="text" [placeholder]="accountnoPlaceholder" inputmode="numeric" pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18" required>
                 <mat-error *ngIf="accountNumberInput.invalid"> Please provide account number (min character 8)</mat-error>
@@ -123,31 +127,31 @@
                 <!-- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> -->
               </div>
               <div *ngIf="approvalInput.value == 2" style="float:left;">
-                <div><p class="heaading-add" style=" 
+                <!-- <div><p class="heaading-add" style=" 
                   position: absolute;
                   top: 1051.44;
                   left: 18px;
                   font-weight: 550;
-                  top: 83%;">Provide Bill(s) Details</p></div>
-                <button mat-icon-button	style="margin-left: 261px;" color="primary" (click)="$event.preventDefault();addBills()"><span>+ </span>Add Utilization details</button>
+                  top: 83%;">Provide Bill(s) Details</p></div> -->
+                <button mat-icon-button	style="margin-left: 144px;position: absolute;" color="primary" (click)="$event.preventDefault();addBills()"><span>+ </span>Add Utilization details</button>
            </div>
            <div *ngIf="approvalInput.value == 5" style="float:left;">
-            <div><p class="heaading-add" style=" 
+            <!-- <div><p class="heaading-add" style=" 
               position: absolute;
               top: 1051.44;
               left: 18px;
               font-weight: 550;
-              top: 81%;">Provide Employee(s) Details</p></div>
-              <button mat-icon-button	style="margin-left: 161px;" color="primary"  (click)="$event.preventDefault();addSalaryComponent()"><span>+ </span>Add Salary details</button>
+              top: 81%;">Provide Employee(s) Details</p></div> -->
+              <button mat-icon-button	style="margin-left: 161px;position: absolute;" color="primary"  (click)="$event.preventDefault();addSalaryComponent()"><span>+ </span>Add Salary details</button>
            </div>
            <div *ngIf="approvalInput.value == 4" style="float:left;">
-            <div><p class="heaading-add" style=" 
+            <!-- <div><p class="heaading-add" style=" 
               position: absolute;
               top: 1051.44;
               left: 18px;
               font-weight: 550;
-              top: 79%;">Provide vendor(s) Details</p></div>
-            <button mat-icon-button	style="margin-left: 161px;" color="primary"  (click)="$event.preventDefault();addVendorComponent()"><span>+ </span>Add Vendor details</button>
+              top: 79%;">Provide vendor(s) Details</p></div> -->
+            <button mat-icon-button	style="margin-left: 161px;position: absolute;" color="primary"  (click)="$event.preventDefault();addVendorComponent()"><span>+ </span>Add Vendor details</button>
            </div>
               <div *ngIf="approvalInput.value == 2" >
                 <app-utilization-details [bills]="bills" *ngFor="let bill of bills; let b = index" [b]="b" [bill]="bill"></app-utilization-details>
