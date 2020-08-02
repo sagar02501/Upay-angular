@@ -10,7 +10,7 @@ padding-top: 7px;">Provide Employee(s) detail</h4>
     <mat-error *ngIf="billAmountInput.invalid"> Please enter salary Amount</mat-error>     
 </mat-form-field>
 <mat-form-field class="sizee">
-    <input matInput type="text" placeholder="Employee" name="employee" [(ngModel)]="salary.name" value="employee" #vendorInput="ngModel" required>
+    <input matInput type="text" placeholder="Employee" name="employee" [(ngModel)]="salary.employee" value="employee" #vendorInput="ngModel" required>
     <mat-error *ngIf="vendorInput.invalid"> Please enter employee</mat-error>     
 </mat-form-field>
 <mat-form-field class="sizee">

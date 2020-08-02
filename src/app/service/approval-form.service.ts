@@ -71,9 +71,10 @@ export class ApprovalFormService {
     postData.append('remarksAndWarranty', data.remarks);
     postData.append('otherAndshipping', data.shipping);
     postData.append('tax', data.tax);
+    postData.append('vendorAdd', data.vendorAdd);
        
     if (file) {
-      postData.append('file', file, data.fill.name);
+      postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/awardtable`, postData).subscribe((res:any) => {
       console.log(res.message)
@@ -122,9 +123,15 @@ export class ApprovalFormService {
     if (data.itemQuantity) {
       postData1.append('awardquantity', data.itemQuantity);
     }
+    if (data.shippingAddress) {
+      postData1.append('shippingAddress', data.shippingAddress);
+    }
+
     
     this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
+      
       let claimid = res.claimid;
+      let approvalId = res.approvalId;
       if(data.approval == 2){
         data.bills.forEach(bill => {
           console.log("inside bills");
@@ -134,13 +141,13 @@ export class ApprovalFormService {
       }
       if(data.approval == 4){
         data.vendors.forEach(vendor => {
-          this.submitAward(data.advanceId,vendor,vendor.file); 
+          this.submitAward(approvalId,vendor,vendor.file); 
         });
         this.formSubmitSubject.next(res);
       }
       if(data.approval == 5){
         data.salaries.forEach(salary => {
-          this.submitSalary(data.advanceId,salary,salary.file); 
+          this.submitSalary(approvalId,salary,salary.file); 
         });  
         this.formSubmitSubject.next(res);
       }
