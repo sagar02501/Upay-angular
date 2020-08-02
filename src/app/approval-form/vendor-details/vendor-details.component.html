@@ -14,8 +14,8 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
         <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Shipping Address" name="shippingAdd" [(ngModel)]="vendor.shippingAdd" value="shippingAdd" #shippingAddInput="ngModel" required>
-        <mat-error *ngIf="shippingAddInput.invalid"> Please enter Shipping Address</mat-error>     
+        <input matInput type="text" placeholder="Vendor Address" name="vendorAdd" [(ngModel)]="vendor.vendorAddInput" value="shippingAdd" #vendorAddInput="ngModel" required>
+        <mat-error *ngIf="vendorAddInput.invalid"> Please enter vendor Address</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
         <input matInput type="text" placeholder="Delivery Schedule" name="deliveryschedule" [(ngModel)]="vendor.deliveryschedule" value="deliveryschedule" #deliveryscheduleInput="ngModel" required>

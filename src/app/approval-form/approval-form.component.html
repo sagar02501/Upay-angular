@@ -93,8 +93,8 @@
                 <mat-error *ngIf="payeeNameInput.invalid"> Please enter your full name </mat-error>
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value == 4 ">
-                <input matInput type="text" placeholder="Vendor address" name="vendorAddress" ngModel #vendorAddressInput="ngModel" required>
-                <mat-error *ngIf="vendorAddressInput.invalid"> Please enter a vendors <address></address> </mat-error>
+                <input matInput type="text" placeholder="shipping address" name="shippingAddress" ngModel #shippingAddressInput="ngModel" required>
+                <mat-error *ngIf="shippingAddressInput.invalid"> Please enter a vendors <address></address> </mat-error>
               </mat-form-field>
               <mat-form-field *ngIf="approvalInput.value != 0 ">
                 <input matInput type="text" [placeholder]="accountnoPlaceholder" inputmode="numeric" pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18" required>
