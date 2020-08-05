@@ -1,39 +1,42 @@
 <h4 style="padding-bottom: 19px;
 padding-top: 7px;">Provide Vendor(s) detail</h4>
-<div class="floating">  
-    <mat-form-field class="sizee">
-        <input matInput type="number"  placeholder="Vendor Bill Number" name="billNumber" [(ngModel)]="vendor.number" value="number" #billNumberInput="ngModel" required>
-        <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="number" #billAmountInput="ngModel" required>
-        <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Vendor Name" name="vendor" [(ngModel)]="vendor.name" value="vendor" #vendorInput="ngModel" required>
-        <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Vendor Address" name="vendorAdd" [(ngModel)]="vendor.vendorAdd" value="vendorAdd" #vendorAddInput="ngModel" required>
-        <mat-error *ngIf="vendorAddInput.invalid"> Please enter vendor Address</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Delivery Schedule" name="deliveryschedule" [(ngModel)]="vendor.deliveryschedule" value="deliveryschedule" #deliveryscheduleInput="ngModel" required>
-        <mat-error *ngIf="deliveryscheduleInput.invalid"> Please enter deliveryschedule</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Payment Terms" name="paymentterms" [(ngModel)]="vendor.paymentterms" value="paymentterms" #paymenttermsInput="ngModel" required>
-        <mat-error *ngIf="paymenttermsInput.invalid"> Please enter payment terms</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
-        <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
-    </mat-form-field>
-    <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Net Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
-        <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
-    </mat-form-field>
-
+<div class="floating"> 
+    <div class="row mt-10 mb-10">
+        <mat-form-field class="sizee">
+            <input matInput type="number"  placeholder="Vendor Bill Number" name="billNumber" [(ngModel)]="vendor.number" value="number" #billNumberInput="ngModel" required>
+            <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="number" #billAmountInput="ngModel" required>
+            <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Vendor Name" name="vendor" [(ngModel)]="vendor.name" value="vendor" #vendorInput="ngModel" required>
+            <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Vendor Address" name="vendorAdd" [(ngModel)]="vendor.vendorAdd" value="vendorAdd" #vendorAddInput="ngModel" required>
+            <mat-error *ngIf="vendorAddInput.invalid"> Please enter vendor Address</mat-error>     
+        </mat-form-field>
+    </div> 
+    <div class="row row mt-10 mb-10">
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Delivery Schedule" name="deliveryschedule" [(ngModel)]="vendor.deliveryschedule" value="deliveryschedule" #deliveryscheduleInput="ngModel" required>
+            <mat-error *ngIf="deliveryscheduleInput.invalid"> Please enter deliveryschedule</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Payment Terms" name="paymentterms" [(ngModel)]="vendor.paymentterms" value="paymentterms" #paymenttermsInput="ngModel" required>
+            <mat-error *ngIf="paymenttermsInput.invalid"> Please enter payment terms</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
+            <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Net Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
+            <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
+        </mat-form-field>
+    </div>
     <mat-form-field class="sizee">
         <input matInput type="text" placeholder="other/Shipping Charges" name="shipping" [(ngModel)]="vendor.shipping" value="shipping" #shippingInput="ngModel" required>
         <mat-error *ngIf="shippingInput.invalid"> Please enter other/Shipping Charges</mat-error>     
