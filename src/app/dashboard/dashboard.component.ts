@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     .subscribe((res) => {
       if (typeof(res) !== 'string' && (res as any).isSuccess == undefined) {
         this.approvalList = res;
+        console.log("this.approvalList",this.approvalList)
       } else {
         if (res === 'sentToCentralTrue') {
           this.success = true;
