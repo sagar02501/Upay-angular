@@ -17,7 +17,7 @@ padding-top: 7px;">Provide Bill(s) detail</h4>
         <input matInput type="text" placeholder="item Discription"  name="body" [(ngModel)]="bill.itemDesc" value="itemDesc" #DiscriptionInput="ngModel" required minlength="20">
         <mat-error *ngIf="DiscriptionInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
-    <div class="file-input"> 
+    <div class="file-input mt-10 mb-10"> 
         <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
         <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;"*ngIf="bill.file">{{bill.file.name}}</p>

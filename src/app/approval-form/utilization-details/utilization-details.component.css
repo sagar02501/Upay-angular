@@ -1,3 +1,9 @@
+.mt-10{
+  margin-top: 10px;
+}
+.mb-10{
+  margin-bottom: 10px;
+}
 .file-upload-button {
   background-color: #ff5252;
   border-radius: 50%;
