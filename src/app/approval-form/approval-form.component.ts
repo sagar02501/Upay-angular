@@ -242,7 +242,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     file:null
     };
     this.vendors.push(newVendor);
-    console.log(this.vendors);
+    // console.log(this.vendors);
   } 
   addBills(){
     var newBill ={
