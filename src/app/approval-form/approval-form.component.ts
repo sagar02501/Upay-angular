@@ -41,6 +41,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   amount: number,
   name:string,
   vendorAdd:string,
+  preferance:string,
   deliveryschedule:string,
   paymentterms:string,
   unitprice:string,
@@ -75,6 +76,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       amount: 0.0,
       name:"",
       vendorAdd:"",
+      preferance:"",
       deliveryschedule:"",
       paymentterms:"",
       unitprice:"",
@@ -230,6 +232,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     amount: 0.0,
     name:"",
     vendorAdd:"",
+    preferance:"",
     deliveryschedule:"",
     paymentterms:"",
     unitprice:"",
@@ -239,7 +242,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     file:null
     };
     this.vendors.push(newVendor);
-    //console.log(this.vendors);
+    console.log(this.vendors);
   } 
   addBills(){
     var newBill ={

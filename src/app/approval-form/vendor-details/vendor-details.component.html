@@ -50,6 +50,18 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
        placeholder="Description and warrenty " name="body" [(ngModel)]="vendor.remarks" value="remarks" #RemarksInput="ngModel" required minlength="20">
         <mat-error *ngIf="RemarksInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
+    <mat-form-field class="sizee">
+        <mat-label>Vendor Preference</mat-label>
+        <mat-select name="preferance" value="preferance" [(ngModel)]="vendor.preferance" #preferanceInput="ngModel" required>
+          <mat-option ng-disabled >Please select vendor preference</mat-option>
+          <mat-option value="L1">L1</mat-option>
+          <mat-option value="L2">L2</mat-option>
+          <mat-option value="L3">L3</mat-option>
+          <mat-option value="L4">L4</mat-option>
+          <mat-option value="L5">L5</mat-option>
+        </mat-select>
+        <mat-error *ngIf="preferanceInput.invalid"> Please select preferance </mat-error>
+      </mat-form-field>
     <div class="file-input mb-10 mt-10"> 
         <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,b)" />
         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>
