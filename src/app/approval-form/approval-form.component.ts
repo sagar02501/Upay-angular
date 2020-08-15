@@ -39,7 +39,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
  public vendor:{
   number :string,
   amount: number,
-  name:string,
+  vendorname:string,
   vendorAdd:string,
   preferance:string,
   deliveryschedule:string,
@@ -74,7 +74,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.vendor = {
       number :"",
       amount: 0.0,
-      name:"",
+      vendorname:"",
       vendorAdd:"",
       preferance:"",
       deliveryschedule:"",
@@ -150,12 +150,13 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
        */
       this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
     }else{
-      console.log('TODO: New api',this.approvals[approvalForm.value.approval]);
+      //console.log('TODO: New api',this.approvals[approvalForm.value.approval]);
        /* 2 - Claim against advance/PO
           4 - Award Approval
           5 - Salary
        */
-      console.log(approvalForm.value.advanceId)
+      //console.log(approvalForm.value.advanceId)
+      console.log("submit form 2",approvalForm.value);
       this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
     }
     
@@ -230,7 +231,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     var newVendor = {
     number :"",
     amount: 0.0,
-    name:"",
+    vendorname:"",
     vendorAdd:"",
     preferance:"",
     deliveryschedule:"",

@@ -7,11 +7,11 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
             <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="number" #billAmountInput="ngModel" required>
+            <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="amount" #billAmountInput="ngModel" required>
             <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="text" placeholder="Vendor Name" name="vendor" [(ngModel)]="vendor.name" value="vendor" #vendorInput="ngModel" required>
+            <input matInput type="text" placeholder="Vendor Name" name="vendorname" [(ngModel)]="vendor.vendorname" value="vendorname" #vendorInput="ngModel" required>
             <mat-error *ngIf="vendorInput.invalid"> Please enter vendor name</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">

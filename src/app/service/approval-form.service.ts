@@ -63,9 +63,10 @@ export class ApprovalFormService {
     postData.append('approvalId', approvalId);  
     postData.append('billnumber', data.number);
     postData.append('billamount', data.amount);
-    postData.append('vendorname', data.vendor);
+    postData.append('vendorname', data.vendorname);
     postData.append('deliveryschedule', data.deliveryschedule);
     postData.append('payterms', data.paymentterms);
+    postData.append('vendor_preference', data.preferance);
     postData.append('unitprice', data.unitprice);
     postData.append('netbillamount', data.netamount);
     postData.append('remarksAndWarranty', data.remarks);
