@@ -37,6 +37,11 @@ import { GetSingleApprovalComponent } from './get-single-approval/get-single-app
 import { UtilizationDetailsComponent } from './approval-form/utilization-details/utilization-details.component';
 import { SalaryDetailsComponent } from './approval-form/salary-details/salary-details.component';
 import { VendorDetailsComponent } from './approval-form/vendor-details/vendor-details.component';
+import { AwardDashboardComponent } from './award-dashboard/award-dashboard.component';
+import { AwardListComponent } from './award-dashboard/award-list/award-list.component';
+import { AwardListItemComponent } from './award-dashboard/award-list/award-list-item/award-list-item.component';
+import { BillDashboardComponent } from './bill-dashboard/bill-dashboard.component';
+import { BillListComponent } from './bill-dashboard/bill-list/bill-list.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +62,11 @@ import { VendorDetailsComponent } from './approval-form/vendor-details/vendor-de
     UtilizationDetailsComponent,
     SalaryDetailsComponent,
     VendorDetailsComponent,
+    AwardDashboardComponent,
+    AwardListComponent,
+    AwardListItemComponent,
+    BillDashboardComponent,
+    BillListComponent,
   ],
   imports: [
     BrowserModule,

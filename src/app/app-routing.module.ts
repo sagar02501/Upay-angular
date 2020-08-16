@@ -1,3 +1,5 @@
+import { BillDashboardComponent } from './bill-dashboard/bill-dashboard.component';
+import { AwardDashboardComponent } from './award-dashboard/award-dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'track', component: GetSingleApprovalComponent},
   { path: 'approve', component: GetSingleApprovalComponent},
+  { path: 'award-dashboard', component: AwardDashboardComponent, canActivate: [AuthGuard]},
+  { path: 'bill-dashboard', component: BillDashboardComponent, canActivate: [AuthGuard]},
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: '**', component: LoginComponent},
