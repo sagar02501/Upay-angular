@@ -130,6 +130,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   sendForApproval(e) {
+    console.log("this.approval e",e);
     if (e.approvalId) {
       this.approvalFormService.sendToCentral(e);
     } else {

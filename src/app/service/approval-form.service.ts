@@ -232,8 +232,8 @@ export class ApprovalFormService {
     );
   }
 
-  getSingleApproval(id) {
-    this.http.get(this.url + `/getSingleApproval/${id}`).subscribe((res) => {
+  getSingleApproval(id,claimId) {
+    this.http.get(this.url + `/getSingleApproval/${id}/${claimId}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
     (err) => { this.approvalSubject.next(err.error); }

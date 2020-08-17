@@ -67,6 +67,7 @@ export class ApprovalListItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log("this.approval",this.approval);
         this.actionOccured.emit({notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
       }
     });

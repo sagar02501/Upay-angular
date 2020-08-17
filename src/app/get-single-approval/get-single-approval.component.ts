@@ -17,6 +17,7 @@ export class GetSingleApprovalComponent implements OnInit {
   approval;
   approvalCreatedDate;
   trackId;
+  claimId;
   timeline;
   err = false;
   private approvalSubscription: Subscription;
@@ -30,6 +31,10 @@ export class GetSingleApprovalComponent implements OnInit {
   ngOnInit() {
     this.token = this.route.snapshot.queryParams['token'];
     this.approvalId = this.route.snapshot.queryParams['approvalId'];
+    
+    this.claimId = this.route.snapshot.queryParams['claimId'];
+    console.log("this.claimId",this.claimId)
+    
     if (this.approvalId) {
       this.getSingleApprovalData();
     }
@@ -61,11 +66,13 @@ export class GetSingleApprovalComponent implements OnInit {
   }
 
   getSingleApprovalData() {
-    this.approvalService.getSingleApproval(this.approvalId || this.trackId);
+    this.approvalService.getSingleApproval(this.approvalId || this.trackId,this.claimId);
   }
 
   trackById() {
     this.trackId = this.trackId.trim().toUpperCase();
+    //TODO : need to change the tracking system.
+    //pass boolean to below function
     if (this.trackId) {
       this.getSingleApprovalData();
     }
