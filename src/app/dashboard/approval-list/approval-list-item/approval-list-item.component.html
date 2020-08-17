@@ -44,7 +44,8 @@
   </div>
   <div class="approval-file">
       <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
-      <span *ngIf="!approval.filePath">-</span>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" routerLink="award-dashboard">Vendor dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" routerLink="bill-dashboard">Bills dashboard</a>
   </div>
   <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
