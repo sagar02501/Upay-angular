@@ -278,6 +278,7 @@ export class ApprovalFormService {
   }
 
   sendToCentral(data) {
+    console.log("data",data)
     this.http.post(this.url + '/approve/central', data).subscribe((res) => {
       this.approvalSubject.next('sentToCentralTrue');
     },

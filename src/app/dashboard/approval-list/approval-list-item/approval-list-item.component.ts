@@ -53,7 +53,7 @@ export class ApprovalListItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({send: true, approvalId: this.approval._id, zone: this.zone, timeline: this.approval.timeline});
+        this.actionOccured.emit({send: true,approval_type:this.approval.approval_type, approvalId: this.approval._id, approval_id: this.approval.approvalId, claim_Id : this.approval.claimId, zone: this.zone, timeline: this.approval.timeline});
       }
     });
   }
@@ -64,7 +64,7 @@ export class ApprovalListItemComponent implements OnInit {
       title: 'Notify Initiator',
       to: 'Initiator'
     }});
-
+    
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log("this.approval",this.approval);
