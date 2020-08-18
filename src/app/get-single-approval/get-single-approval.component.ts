@@ -65,8 +65,8 @@ export class GetSingleApprovalComponent implements OnInit {
     });
   }
 
-  getSingleApprovalData() {
-    this.approvalService.getSingleApproval(this.approvalId || this.trackId,this.claimId);
+  getSingleApprovalData(trackflag:boolean = false) {
+    this.approvalService.getSingleApproval(this.approvalId || this.trackId,this.claimId,trackflag);
   }
 
   trackById() {
@@ -74,7 +74,7 @@ export class GetSingleApprovalComponent implements OnInit {
     //TODO : need to change the tracking system.
     //pass boolean to below function
     if (this.trackId) {
-      this.getSingleApprovalData();
+      this.getSingleApprovalData(true);
     }
   }
 
