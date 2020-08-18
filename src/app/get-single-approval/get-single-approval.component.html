@@ -9,7 +9,7 @@
   </div>
   <div class="approval__body" *ngIf="approval">
     <h3>Approval Details</h3><br>
-    <div><label>Id: </label><span>{{approval?.approvalId}}</span></div>
+    <div><label>Approval Id: </label><span>{{approval?.approvalId}}</span></div>
     <div><label>Claim Id: </label><span>{{approval?.claimId}}</span></div>
     <div [ngClass]="{'bold': !token}"><label>Status: </label><span>{{approval?.status}}</span></div>
     <div><label>Name: </label><span>{{approval?.name}}</span></div>
