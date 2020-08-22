@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-award-list-item',
@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./award-list-item.component.css']
 })
 export class AwardListItemComponent implements OnInit {
-
-  constructor() { }
+  
+  constructor() {}
+  @Input() award;
 
   ngOnInit() {
+    console.log(this.award)
   }
 
 }

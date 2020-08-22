@@ -240,11 +240,11 @@ export class ApprovalFormService {
     (err) => { this.approvalSubject.next(err.error); }
     );
   }
-  getAwardApproval(id,claimId,trackflag) {
-    this.http.get(this.url + `/getAwardApproval/${id}/${claimId}/${trackflag}`).subscribe((res) => {
-      this.approvalSubject.next(res);
+  getAwardApproval(id) {
+    this.http.get(this.url + `/getAwardApproval/${id}`).subscribe((res) => {
+      this.awardSubject.next(res);
     },
-    (err) => { this.approvalSubject.next(err.error); }
+    (err) => { this.awardSubject.next(err.error); }
     );
   }
 

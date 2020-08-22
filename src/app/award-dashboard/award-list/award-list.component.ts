@@ -1,5 +1,8 @@
-import { ApprovalFormService } from './../../service/approval-form.service';
 import { Component, OnInit } from '@angular/core';
+import { ApprovalFormService } from './../../service/approval-form.service';
+import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-award-list',
@@ -8,36 +11,52 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AwardListComponent implements OnInit {
 
-  constructor(private awardService: ApprovalFormService,) {}
+  approvalId;
+  awardList;
+  timeline;
+  awardCreatedDate;
+
+  private awardSubscription: Subscription;
+  constructor(private awardService: ApprovalFormService,
+    private approvalService: ApprovalFormService,
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar) {}
   
   ngOnInit() {
-    this.token = this.route.snapshot.queryParams['token'];
     this.approvalId = this.route.snapshot.queryParams['id'];
   
     if (this.approvalId) {
       this.getAwardData();
     }
-    this.approvalSubscription = this.approvalService.getApprovalListener().subscribe((res) => {
+    this.awardSubscription = this.approvalService.getAwardListener().subscribe((res) => {
       if ((res as any).error_message) {
         this.openSnackBar((res as any).error_message, 'failure');
         return;
       }
       if ((res as any).message) {
         this.openSnackBar((res as any).message, 'success');
-        this.approval = undefined;
+        this.awardList = undefined;
         return;
       }
-      this.approval = res;
+      this.awardList = res;
       console.log(res);
-      if (this.approval) {
-        this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
-        this.timeline = this.approval.timeline.split('\n');
+      if (this.awardList) {
+        this.awardCreatedDate = new Date(this.awardList.date).toLocaleString();
+        this.timeline = this.awardList.timeline.split('\n');
       }
     });
   }
+  openSnackBar(message, type) {
+    this.snackBar.open(message, null, {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: type
+    });
+  }
 
-  getAwardData(trackflag:boolean = false) {
-    this.approvalService.getSingleApproval(this.approvalId || this.trackId,this.claimId,trackflag);
+  getAwardData() {
+    this.approvalService.getAwardApproval(this.approvalId);
   }
 
 }
+

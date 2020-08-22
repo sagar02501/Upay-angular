@@ -1,3 +1,31 @@
-<p>
-  award-list-item works!
-</p>
+<div class="award-list__item">
+  <div class="award-id">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-name">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-address">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-designation">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.billnumber || '-'}}
+  </div>
+  <div class="award-file">
+      <a *ngIf="award.filePath" href="{{award.filePath}}" target="_blank">File</a>
+      <!-- <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a> -->
+      <!-- <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a> -->
+  </div>
+</div>

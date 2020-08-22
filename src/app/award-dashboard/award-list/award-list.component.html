@@ -12,10 +12,7 @@
       <div class="award-name">
         Vendor Name
       </div>
-      <div class="award-email">
-        Vendor address
-      </div>
-      <div class="award-body">
+      <div class="award-address">
         Vendor address
       </div>
       <div class="award-designation">
@@ -37,8 +34,8 @@
        File
       </div>
     </div>
-    <!-- <div class="approvals-table__body">
-      <app-award-list-item *ngFor="let award of awardList" [award]="award" [awardList]="awardList" [openBody]="openBody" (actionOccured)="handleEvent($event)"></app-award-list-item>
-    </div> -->
+    <div class="award-table__body">
+      <app-award-list-item *ngFor="let award of awardList" [award]="award" ></app-award-list-item>
+    </div>
   </section>
 </div>
