@@ -9,6 +9,7 @@ import { environment } from './../../environments/environment';
 export class ApprovalFormService {
 
   private approvalSubject = new Subject();
+  private awardSubject = new Subject();
   private approvalStatusSubject = new Subject();
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
@@ -239,6 +240,13 @@ export class ApprovalFormService {
     (err) => { this.approvalSubject.next(err.error); }
     );
   }
+  getAwardApproval(id,claimId,trackflag) {
+    this.http.get(this.url + `/getAwardApproval/${id}/${claimId}/${trackflag}`).subscribe((res) => {
+      this.approvalSubject.next(res);
+    },
+    (err) => { this.approvalSubject.next(err.error); }
+    );
+  }
 
   approveApproval(token, remarks) {
     const data = {remarks: remarks};
@@ -343,6 +351,9 @@ export class ApprovalFormService {
 
   getApprovalListener() {
     return this.approvalSubject.asObservable();
+  }
+  getAwardListener() {
+    return this.awardSubject.asObservable();
   }
   getApprovalStatusListener() {
     return this.approvalStatusSubject.asObservable();

@@ -45,7 +45,7 @@
   <div class="approval-file">
       <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
       <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
   </div>
   <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
