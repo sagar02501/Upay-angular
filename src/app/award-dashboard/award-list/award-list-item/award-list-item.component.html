@@ -1,27 +1,45 @@
 <div class="award-list__item">
   <div class="award-id">
-    {{award.billnumber || '-'}}
+    {{award.approvalId || '-'}}
   </div>
   <div class="award-name">
-    {{award.billnumber || '-'}}
+    {{award.vendorname || '-'}}
   </div>
   <div class="award-address">
-    {{award.billnumber || '-'}}
+    {{award.vendor_addr || '-'}}
   </div>
   <div class="award-designation">
-    {{award.billnumber || '-'}}
+    {{award.vendor_preference || '-'}}
   </div>
   <div class="award-contact">
     {{award.billnumber || '-'}}
   </div>
   <div class="award-contact">
-    {{award.billnumber || '-'}}
+    {{award.date || '-'}}
   </div>
   <div class="award-contact">
-    {{award.billnumber || '-'}}
+    {{award.billamount || '-'}}
   </div>
   <div class="award-contact">
-    {{award.billnumber || '-'}}
+    {{award.unitprice || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.netbillamount || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.gst_tax || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.shipping_handling_chrg || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.description_warranty || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.deliveryschedule || '-'}}
+  </div>
+  <div class="award-contact">
+    {{award.payterms || '-'}}
   </div>
   <div class="award-file">
       <a *ngIf="award.filePath" href="{{award.filePath}}" target="_blank">File</a>
