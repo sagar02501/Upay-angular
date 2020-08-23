@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./award-list.component.css']
 })
 export class AwardListComponent implements OnInit {
-
   approvalId;
   awardList;
   timeline;

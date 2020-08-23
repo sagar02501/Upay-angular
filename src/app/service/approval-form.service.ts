@@ -10,6 +10,7 @@ export class ApprovalFormService {
 
   private approvalSubject = new Subject();
   private awardSubject = new Subject();
+  private billSubject = new Subject();
   private approvalStatusSubject = new Subject();
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
@@ -247,6 +248,13 @@ export class ApprovalFormService {
     (err) => { this.awardSubject.next(err.error); }
     );
   }
+  getBillApproval(id) {
+    this.http.get(this.url + `/getBillApproval/${id}`).subscribe((res) => {
+      this.billSubject.next(res);
+    },
+    (err) => { this.billSubject.next(err.error); }
+    );
+  }
 
   approveApproval(token, remarks) {
     const data = {remarks: remarks};
@@ -354,6 +362,9 @@ export class ApprovalFormService {
   }
   getAwardListener() {
     return this.awardSubject.asObservable();
+  }
+  getBillListener() {
+    return this.billSubject.asObservable();
   }
   getApprovalStatusListener() {
     return this.approvalStatusSubject.asObservable();

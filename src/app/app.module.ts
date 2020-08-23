@@ -42,6 +42,7 @@ import { AwardListComponent } from './award-dashboard/award-list/award-list.comp
 import { AwardListItemComponent } from './award-dashboard/award-list/award-list-item/award-list-item.component';
 import { BillDashboardComponent } from './bill-dashboard/bill-dashboard.component';
 import { BillListComponent } from './bill-dashboard/bill-list/bill-list.component';
+import { BillListItemComponent } from './bill-dashboard/bill-list/bill-list-item/bill-list-item.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { BillListComponent } from './bill-dashboard/bill-list/bill-list.componen
     AwardListItemComponent,
     BillDashboardComponent,
     BillListComponent,
+    BillListItemComponent,
   ],
   imports: [
     BrowserModule,
