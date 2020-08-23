@@ -1,27 +1,24 @@
 <div class="bill-list__item">
   <div class="bill-id">
-    {{bill.billnumber || '-'}}
+    {{bill.approvalId || '-'}}
   </div>
   <div class="bill-name">
-    {{bill.billnumber || '-'}}
+    {{bill.claimId || '-'}}
   </div>
   <div class="bill-address">
-    {{bill.billnumber || '-'}}
+    {{bill.vendorname || '-'}}
   </div>
   <div class="bill-designation">
     {{bill.billnumber || '-'}}
   </div>
   <div class="bill-contact">
-    {{bill.billnumber || '-'}}
+    {{bill.billamount || '-'}}
   </div>
   <div class="bill-contact">
-    {{bill.billnumber || '-'}}
+    {{bill.date || '-'}}
   </div>
   <div class="bill-contact">
-    {{bill.billnumber || '-'}}
-  </div>
-  <div class="bill-contact">
-    {{bill.billnumber || '-'}}
+    {{bill.description || '-'}}
   </div>
   <div class="bill-file">
       <a *ngIf="bill.filePath" href="{{bill.filePath}}" target="_blank">File</a>
