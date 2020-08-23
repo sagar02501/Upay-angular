@@ -9,7 +9,7 @@ export class AwardListItemComponent implements OnInit {
   
   constructor() {}
   @Input() award;
-  
+  @Input() awardList;
 
   ngOnInit() {
     console.log(this.award)
