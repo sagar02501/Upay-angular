@@ -27,7 +27,16 @@
     <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
     <div><label>Amount: </label><span>{{approval?.amount}}</span></div>
     <div><label>Remarks by mediator: </label><span>{{approval?.mediator_remarks}}</span></div>
-    <div><label>Timeline: </label><span>{{approval?.timeline}}</span></div>
+    <div><label>Timeline: </label><span>
+      <ul>
+      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
+    </ul></span></div>
+    <div class="approval-file"><label>File: </label><span>
+      <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+    </span>
+  </div>
     <div *ngIf="approval?.approver_remarks"><label>Remarks by approver: </label><span>{{approval?.approver_remarks}}</span></div>
   </div>
   <div class="approval__actions" *ngIf="approval && token">
@@ -40,11 +49,5 @@
       <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Approve', remarksInput.value)" cdkFocusInitial>Approve</button>
       <button mat-raised-button (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
     </div>
-  </div>
-  <div class="timeline" *ngIf="!token && trackId && approval">
-    <label><strong>Timeline: </strong></label>
-    <ul>
-      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
-    </ul>
   </div>
 </div>
