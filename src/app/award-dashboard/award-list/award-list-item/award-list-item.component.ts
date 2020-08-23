@@ -12,7 +12,7 @@ export class AwardListItemComponent implements OnInit {
   @Input() awardList;
 
   ngOnInit() {
-    console.log(this.award)
+    console.log(this.awardList)
   }
 
 }

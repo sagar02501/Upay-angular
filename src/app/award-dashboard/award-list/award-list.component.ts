@@ -34,7 +34,7 @@ export class AwardListComponent implements OnInit {
       }
       if ((res as any).message) {
         this.openSnackBar((res as any).message, 'success');
-        this.awardList = undefined;
+        this.awardList = res;
         return;
       }
       this.awardList = res;
