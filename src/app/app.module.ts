@@ -1,3 +1,4 @@
+import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -71,6 +72,7 @@ import { BillListItemComponent } from './bill-dashboard/bill-list/bill-list-item
     BillListItemComponent,
   ],
   imports: [
+    DateRangePickerModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

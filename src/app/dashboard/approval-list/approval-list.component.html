@@ -6,11 +6,13 @@
       <input type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchApproval()"/>
     </div>
     <div class="approval-calender">
-     <mat-form-field>
+      <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'></ejs-daterangepicker>
+
+     <!-- <mat-form-field>
      <input matInput [matDatepicker]="myDatePicker">
      <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
      <mat-datepicker #myDatePicker></mat-datepicker>
-    </mat-form-field>
+    </mat-form-field> -->
     </div>
     <div class="approvals-list__header--print" (click)="openBodyAndCreatePdf()">
       Print

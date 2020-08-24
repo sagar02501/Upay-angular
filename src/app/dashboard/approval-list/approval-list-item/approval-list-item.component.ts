@@ -514,7 +514,7 @@ export class ApprovalListItemComponent implements OnInit {
     const win = window.open('', '', 'height=700,width=700');
 
     win.document.write('<html><head>');
-    win.document.write('<title>Purchase Order</title>');
+    win.document.write('<title>Upay|Purchase Order</title>');
     win.document.write(style);
     win.document.write('</head>');
     win.document.write('<body>');
