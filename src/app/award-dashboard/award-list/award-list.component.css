@@ -32,7 +32,7 @@
   display: flex;
   margin: 20px;
   min-width: 100%;
-  width: 1666px;
+  width: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -69,7 +69,12 @@
       color: rgba(0,0,0,.54);
       transition: opacity 0.2s, transform 0.5s ease-in-out;
     }
-
+    .award-address{
+      text-align: center;
+    }
+    .award-contact{
+      text-align: center;
+    }
   .award-table__body {
     max-height: 75vh;
     background-color: #eff2f7;

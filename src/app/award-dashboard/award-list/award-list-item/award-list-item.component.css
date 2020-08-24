@@ -1,5 +1,5 @@
 .award-list__item {
-    height: 35px;
+    height: 40px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
@@ -52,9 +52,8 @@
 .icon-rotate {
   transform: rotateX(180deg);
 }
-.award-address {
-     padding-left: 10px;
-    padding-right: 10px;
+.award-address{
+  text-align: center;
 }
 .award-action {
   cursor: pointer;
