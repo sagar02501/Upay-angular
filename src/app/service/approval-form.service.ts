@@ -129,7 +129,10 @@ export class ApprovalFormService {
     if (data.shippingAddress) {
       postData1.append('shippingAddress', data.shippingAddress);
     }
-
+    if (data.awardValue) {
+      postData1.append('awardValue', data.awardValue);
+    }
+   
     
     this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
       

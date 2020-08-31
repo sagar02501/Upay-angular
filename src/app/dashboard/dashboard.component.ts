@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   fundtransfer(e) {
-    console.log(e);
+    console.log("fund transfer" , e);
     this.approvalFormService.fundTransfer(e);
   }
 
