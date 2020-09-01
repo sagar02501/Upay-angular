@@ -1,5 +1,5 @@
 .award-list__item {
-    height: 40px;
+    height: auto;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
