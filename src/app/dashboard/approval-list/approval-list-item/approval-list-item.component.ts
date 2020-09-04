@@ -144,6 +144,7 @@ export class ApprovalListItemComponent implements OnInit {
   }
 
   printApproval() {
+
     const approvalData =
     `<h3>Approval Data</h3>
       <div class="print-approval">
@@ -258,6 +259,7 @@ export class ApprovalListItemComponent implements OnInit {
     win.print();
   }
   printPo() {
+    console.log('hi');
     const approvalData =
     `<body>
     <header>
@@ -524,5 +526,6 @@ export class ApprovalListItemComponent implements OnInit {
     win.document.close();
 
     win.print();
-  }
+  // }
+}
 }
