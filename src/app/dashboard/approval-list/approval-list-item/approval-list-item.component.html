@@ -25,19 +25,22 @@
     {{approvalCreatedDate || '-'}}
   </div>
   <div class="approval-amount">
+    {{approval.awardvalue || '-'}}
+  </div>
+  <div class="approval-amount">
       {{approval.amount || '-'}}
   </div>
   <div class="approval-amount">
-    {{'500'}}
+    {{approval.amount_transferred  || '-'}}
   </div> 
   <div class="approval-amount">
-    {{'1000'}}
+    {{approval.claimamount || '-'}}
   </div>
   <div class="approval-amount">
-    {{'1500'}}
+    {{approval.utilizedamount || '-'}}
   </div> 
   <div class="approval-amount">
-    {{'2000'}}
+    {{approval.unutilizedamount || '-'}}
   </div>
   <div class="approval-zone">
       {{approval.zone || '-'}}
