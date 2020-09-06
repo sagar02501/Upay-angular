@@ -330,7 +330,7 @@ export class ApprovalFormService {
   }
 
   deleteApproval(data) {
-    this.http.delete(this.url + '/' + data.approvalId).subscribe((res) => {
+    this.http.delete(this.url + '/' + data.approvalId+ '/' + data.approval_id + '/' + data.claim_Id).subscribe((res) => {
       this.approvalSubject.next('deleteTrue');
     },
     (err) => {

@@ -132,7 +132,7 @@ export class ApprovalListItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({delete: true, approvalId: this.approval._id});
+        this.actionOccured.emit({delete: true, approvalId: this.approval._id,approval_id: this.approval.approvalId,claim_Id : this.approval.claimId});
       }
     });
   }
