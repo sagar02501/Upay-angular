@@ -298,7 +298,8 @@ export class ApprovalListItemComponent implements OnInit {
             if (this.awardList[i].vendor_preference  == 'L1'){
                 this.awardPodata = this.awardList[i];
               }
-              this.printpurchaseorder(this.approval,this.awardPodata)
+              console.log(this.awardList);
+              this.printpurchaseorder(this.awardList,this.awardPodata)
               // To do call print function and pass award PO data and approval 
           }
         });
@@ -321,11 +322,11 @@ export class ApprovalListItemComponent implements OnInit {
     `<body>
     <header>
         <address contenteditable>
-            <h2>Under Privileged Advancement by Youth</h2>
-            <p>C/O PRATIK KAMBLE</p>
-            <p>BANK COLONY, SHIVAJI WARD</p>
-            <p>BHANDARA, MAHARASHTRA, 441904</p>
-            <p><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
+            <h2 style="font-size: 15px">Under Privileged Advancement by Youth</h2>
+            <p style="font-size: 13px">C/O PRATIK KAMBLE</p>
+            <p style="font-size: 13px">BANK COLONY, SHIVAJI WARD</p>
+            <p style="font-size: 13px">BHANDARA, MAHARASHTRA, 441904</p>
+            <p style="font-size: 13px"><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
         </address>
         <span>
             <img style="text-align: center" alt="" src="https://www.upay.org.in/wp-content/uploads/2020/03/cropped-logo-1.png">
@@ -333,21 +334,21 @@ export class ApprovalListItemComponent implements OnInit {
         </span>
         <address contenteditable>
             <h4>The following number must appear on all related correspondence,<br> shipping papers, and invoices:</h4>
-            <p style="font-size: 13px">APPROVAL DOC NUMBER:UPAYCE0920
+            <p style="font-size: 13px">APPROVAL DOC NUMBER:${awardPodata.approvalId}
                 <br>
-                P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/DEL/2020/07</p>
+                P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/DEL/2020/07${awardPodata.billnumber}</p>
         </address>
     </header>
     <article>
         <h1>To,</h1>
         <address style="width: 60%">
-            <p style="width: 40%">Grocers Delight </p>
-            <p style="width: 40%">Account no: 90261010011974</p>
-            <p style="width: 40%">Ifsc code: SYNB0009026</p>
-            <p style="width: 40%">Syndicate Bank</p>
+            <p style="width: 40%;font-size:13px;">${awardPodata.vendorname}</p>
+            <p style="width: 40%;font-size:13px;">Account no: ${awardPodata.approvalId}</p>
+            <p style="width: 40%;font-size:13px;">Ifsc code: ${awardPodata.approvalId}</p>
+            <p style="width: 40%;font-size:13px;">${awardPodata.vendor_addr}</p>
         </address>
-        <label style="float: right;width: 40%">SHIPPING ADDRESS:</label>
-        <p style="float: right;width: 40%">Special police unit for NE Region,Delhi police, PTS,Police complex, Malviya nagar, New Delhi- 110017</p>
+        <label style="float: right;width: 40%">Shipping Address:</label>
+        <p style="float: right;width: 40%">${awardPodata.approvalId}</p>
         <table >
             <thead>
             <tr>
@@ -360,11 +361,11 @@ export class ApprovalListItemComponent implements OnInit {
             </thead>
             <tbody>
             <tr>
-                <td><span contenteditable>21-05-2020</span></td>
-                <td><span contenteditable>Mithila Malhotra 8447284956</span></td>
+                <td><span contenteditable>${awardPodata.date}</span></td>
+                <td><span contenteditable>${awardPodata.approvalId}</span></td>
                 <td><span contenteditable>NA</span></td>
-                <td><span contenteditable>22-05-2020</span></td>
-                <td><span>Full Payment after delivery</span></td>
+                <td><span contenteditable>${awardPodata.deliveryschedule}</span></td>
+                <td><span>${awardPodata.payterms}</span></td>
             </tr>
             </tbody>
         </table>
@@ -381,37 +382,34 @@ export class ApprovalListItemComponent implements OnInit {
             </thead>
             <tbody>
             <tr>
-                <td style="text-align: center"><span contenteditable>200</span></td>
+                <td style="text-align: center"><span contenteditable>${awardPodata.approvalId}</span></td>
                 <td style="text-align: center"><span contenteditable>Number</span></td>
-                <td style="text-align: center"><span contenteditable>1 unit of Ration having
-    5 kg Rice, 3kg Atta, 1.5 kg Dal, 0.5 kg jaggery,
-    2 kg poha, 50 gm haldi,
-    50 gm mirchi,, 0.5 lt oil, 1 packet salt and 1 soap</span></td>
-                <td style="text-align: center"><span data-prefix>₹</span><span contenteditable>608.5</span></td>
-                <td style="text-align: center"><span data-prefix>₹</span><span>121700</span></td>
+                <td style="text-align: center;text-justify:center;"><span contenteditable>${awardPodata.description_warranty}p</span></td>
+                <td style="text-align: center"><span data-prefix>₹</span><span contenteditable>${awardPodata.unitprice}</span></td>
+                <td style="text-align: center"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
             </tr>
             </tbody>
         </table>
         <table class="balance">
             <tr>
                 <th><span contenteditable>Sub Total</span></th>
-                <td><span data-prefix>₹</span><span>600.00</span></td>
+                <td><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>GST</span></th>
-                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+                <td><span data-prefix>₹</span><span contenteditable>${awardPodata.gst_tax}</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>Shipping & Handling</span></th>
-                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+                <td><span data-prefix>₹</span><span contenteditable>${awardPodata.shipping_handling_chrg}</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>Other</span></th>
-                <td><span data-prefix>₹</span><span contenteditable>0.00</span></td>
+                <td><span data-prefix>₹</span><span contenteditable>${awardPodata.other}</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>Grand Total</span></th>
-                <td><span data-prefix>₹</span><span>600.00</span></td>
+                <td><span data-prefix>₹</span><span>${awardPodata.approvalId}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
