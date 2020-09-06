@@ -293,14 +293,13 @@ export class ApprovalListItemComponent implements OnInit {
             return;
           }
           this.awardList = res;
-          console.log(res);
+          console.log(this.approval);
           for (let i = 0; i < this.awardList.length; i++) {
             if (this.awardList[i].vendor_preference  == 'L1'){
                 this.awardPodata = this.awardList[i];
               }
               console.log(this.awardList);
               this.printpurchaseorder(this.awardList,this.awardPodata)
-              // To do call print function and pass award PO data and approval 
           }
         });
       }
@@ -343,12 +342,12 @@ export class ApprovalListItemComponent implements OnInit {
         <h1>To,</h1>
         <address style="width: 60%">
             <p style="width: 40%;font-size:13px;">${awardPodata.vendorname}</p>
-            <p style="width: 40%;font-size:13px;">Account no: ${awardPodata.approvalId}</p>
-            <p style="width: 40%;font-size:13px;">Ifsc code: ${awardPodata.approvalId}</p>
+            <p style="width: 40%;font-size:13px;">Account no: ${approval.account_no}</p>
+            <p style="width: 40%;font-size:13px;">Ifsc code: ${approval.ifsc_code}</p>
             <p style="width: 40%;font-size:13px;">${awardPodata.vendor_addr}</p>
         </address>
         <label style="float: right;width: 40%">Shipping Address:</label>
-        <p style="float: right;width: 40%">${awardPodata.approvalId}</p>
+        <p style="float: right;width: 40%">${approval.shipping_addr}</p>
         <table >
             <thead>
             <tr>
@@ -382,7 +381,7 @@ export class ApprovalListItemComponent implements OnInit {
             </thead>
             <tbody>
             <tr>
-                <td style="text-align: center"><span contenteditable>${awardPodata.approvalId}</span></td>
+                <td style="text-align: center"><span contenteditable>${approval.ifsc_code}</span></td>
                 <td style="text-align: center"><span contenteditable>Number</span></td>
                 <td style="text-align: center;text-justify:center;"><span contenteditable>${awardPodata.description_warranty}p</span></td>
                 <td style="text-align: center"><span data-prefix>₹</span><span contenteditable>${awardPodata.unitprice}</span></td>
