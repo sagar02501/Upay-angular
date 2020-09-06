@@ -1,5 +1,7 @@
+import { Subscription } from 'rxjs';
+import { ApprovalFormService } from './../../../service/approval-form.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActionDialogComponent } from './../../action-dialog/action-dialog.component';
 import { AuthService } from 'src/app/service/auth.service';
 import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.component';
@@ -10,8 +12,14 @@ import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.co
   styleUrls: ['./approval-list-item.component.css']
 })
 export class ApprovalListItemComponent implements OnInit {
+  ApprovalFormService: any;
+  awardList;
+  timeline;
+  awardPodata;
+  awardCreatedDate;
 
-  constructor(private dialog: MatDialog, private authService: AuthService) { }
+  private awardSubscription: Subscription;
+  constructor(private dialog: MatDialog, private authService: AuthService,private approvalService: ApprovalFormService,private snackBar: MatSnackBar) { }
   @Input() approval;
   @Input() approverList;
   @Output() actionOccured: EventEmitter<any> = new EventEmitter();
@@ -258,9 +266,58 @@ export class ApprovalListItemComponent implements OnInit {
 
     win.print();
   }
-  printPo() {
-    console.log('hi');
-    const approvalData =
+  
+  printPo() {  
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        header: 'Confirm',
+        message: `Are you sure you want to print PO for this approval?`,
+        buttonTextPrimary: 'Yes',
+        buttonTextSecondary: 'Cancel'
+      }
+    });
+   
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.approval.approvalId) {
+          this.getAwardData(this.approval.approvalId);
+        }
+        this.awardSubscription = this.approvalService.getAwardListener().subscribe((res) => {
+          if ((res as any).error_message) {
+            this.openSnackBar((res as any).error_message, 'failure');
+            return;
+          }
+          if ((res as any).message) {
+            this.openSnackBar((res as any).message, 'success');
+            this.awardList = res;
+            return;
+          }
+          this.awardList = res;
+          console.log(res);
+          for (let i = 0; i < this.awardList.length; i++) {
+            if (this.awardList[i].vendor_preference  == 'L1'){
+                this.awardPodata = this.awardList[i];
+              }
+              this.printpurchaseorder(this.approval,this.awardPodata)
+              // To do call print function and pass award PO data and approval 
+          }
+        });
+      }
+    });
+  // }
+}
+  openSnackBar(message, type) {
+    this.snackBar.open(message, null, {
+      duration: 3000,
+      verticalPosition: 'top',
+      panelClass: type
+    });
+  }
+  getAwardData(approvalId) {
+    this.approvalService.getAwardApproval(approvalId);
+  }
+  printpurchaseorder(approval,awardPodata){
+      const approvalData =
     `<body>
     <header>
         <address contenteditable>
@@ -526,6 +583,5 @@ export class ApprovalListItemComponent implements OnInit {
     win.document.close();
 
     win.print();
-  // }
-}
+  }
 }
