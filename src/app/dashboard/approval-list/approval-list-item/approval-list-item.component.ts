@@ -299,7 +299,7 @@ export class ApprovalListItemComponent implements OnInit {
                 this.awardPodata = this.awardList[i];
               }
               console.log(this.awardList);
-              this.printpurchaseorder(this.awardList,this.awardPodata)
+              this.printpurchaseorder(this.approval,this.awardPodata)
           }
         });
       }
@@ -381,9 +381,9 @@ export class ApprovalListItemComponent implements OnInit {
             </thead>
             <tbody>
             <tr>
-                <td style="text-align: center"><span contenteditable>${approval.ifsc_code}</span></td>
+                <td style="text-align: center"><span contenteditable>${approval.awardquantity}</span></td>
                 <td style="text-align: center"><span contenteditable>Number</span></td>
-                <td style="text-align: center;text-justify:center;"><span contenteditable>${awardPodata.description_warranty}p</span></td>
+                <td style="text-align: center;text-justify:center;"><span contenteditable>${approval.awardItemDesc}p</span></td>
                 <td style="text-align: center"><span data-prefix>₹</span><span contenteditable>${awardPodata.unitprice}</span></td>
                 <td style="text-align: center"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
             </tr>
@@ -404,11 +404,11 @@ export class ApprovalListItemComponent implements OnInit {
             </tr>
             <tr>
                 <th><span contenteditable>Other</span></th>
-                <td><span data-prefix>₹</span><span contenteditable>${awardPodata.other}</span></td>
+                <td><span data-prefix>₹</span><span contenteditable>-</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>Grand Total</span></th>
-                <td><span data-prefix>₹</span><span>${awardPodata.approvalId}</span></td>
+                <td><span data-prefix>₹</span><span>${approval.shipping_handling_chrg}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
