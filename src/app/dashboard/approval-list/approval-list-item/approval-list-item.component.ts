@@ -404,11 +404,11 @@ export class ApprovalListItemComponent implements OnInit {
             </tr>
             <tr>
                 <th><span contenteditable>Other</span></th>
-                <td><span data-prefix>₹</span><span contenteditable>-</span></td>
+                <td><span data-prefix></span><span contenteditable>-</span></td>
             </tr>
             <tr>
                 <th><span contenteditable>Grand Total</span></th>
-                <td><span data-prefix>₹</span><span>${approval.shipping_handling_chrg}</span></td>
+                <td><span data-prefix>₹</span><span>${parseInt(awardPodata.billamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
