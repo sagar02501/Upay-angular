@@ -271,7 +271,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
       
       this.unutilizedAmount = (res as any).unutilizedamount;
-      console.log(this.unutilizedAmount, res);
+      //console.log(this.unutilizedAmount, res);
     });
   }
 }
