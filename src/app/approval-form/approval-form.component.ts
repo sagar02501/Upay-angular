@@ -269,8 +269,11 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.approvalService.getUnutilizedamt(advanceId)
     }
     this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
-      
-      this.unutilizedAmount = (res as any).unutilizedamount;
+      if((res as any).error_message ){
+        this.unutilizedAmount = "Approval Id does not exist"
+      }
+      else
+       this.unutilizedAmount = (res as any).unutilizedamount;
       //console.log(this.unutilizedAmount, res);
     });
   }
