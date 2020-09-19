@@ -317,7 +317,7 @@ export class ApprovalListItemComponent implements OnInit {
     this.approvalService.getAwardApproval(approvalId);
   }
   printpurchaseorder(approval,awardPodata){
-      const approvalData =
+    const approvalData =
     `<body>
     <header>
         <address contenteditable>

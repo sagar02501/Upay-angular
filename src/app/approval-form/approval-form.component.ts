@@ -6,6 +6,7 @@ import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-approval-form',
@@ -18,6 +19,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   accountnoPlaceholder: string;
   banknamePlaceholder: string;
   ifscPlaceholder: string;
+  unutilizedAmount:string;
+
+  private unutilizedSubscription: Subscription;
+ 
   public bill :{
     number :string,
     amount: string,
@@ -52,7 +57,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
  }
 
  vendors : any[];
-  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
+  constructor(public approvalFormService: ApprovalFormService,private approvalService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
     this.bill ={
       number :"",
       amount: "",
@@ -255,5 +260,25 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     }
     this.bills.push(newBill);
     //console.log(this.bills);
+  }
+  
+  getUntilizedamt(event: any){
+    console.log(event.target.value);
+    var advanceId = event.target.value;
+    if (advanceId !== undefined){
+      this.approvalService.getUnutilizedamt(advanceId)
+    }
+    this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
+      if ((res as any).error_message) {
+        this.openSnackBar((res as any).error_message);
+        return;
+      }
+      if ((res as any).message) {
+        this.openSnackBar((res as any).message);
+        // this.unutilizedAmount = res.unutilizedamount;
+        return;
+      }
+      console.log(res);
+    });
   }
 }

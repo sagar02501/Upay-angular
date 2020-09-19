@@ -11,6 +11,7 @@ export class ApprovalFormService {
   private approvalSubject = new Subject();
   private awardSubject = new Subject();
   private billSubject = new Subject();
+  private unutilizedamtSubject = new Subject();
   private approvalStatusSubject = new Subject();
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
@@ -258,6 +259,13 @@ export class ApprovalFormService {
     (err) => { this.billSubject.next(err.error); }
     );
   }
+  getUnutilizedamt(id) {
+    this.http.get(this.url + `/getUnutilizedamt/${id}`).subscribe((res) => {
+      this.unutilizedamtSubject.next(res);
+    },
+    (err) => { this.unutilizedamtSubject.next(err.error); }
+    );
+  }
 
   approveApproval(token, remarks) {
     const data = {remarks: remarks};
@@ -368,6 +376,9 @@ export class ApprovalFormService {
   }
   getBillListener() {
     return this.billSubject.asObservable();
+  }
+  getUnutilizedamtListner(){
+    return this.unutilizedamtSubject.asObservable();
   }
   getApprovalStatusListener() {
     return this.approvalStatusSubject.asObservable();
