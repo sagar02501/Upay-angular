@@ -20,7 +20,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   banknamePlaceholder: string;
   ifscPlaceholder: string;
   unutilizedAmount:string;
-
+  
   private unutilizedSubscription: Subscription;
  
   public bill :{
@@ -269,16 +269,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.approvalService.getUnutilizedamt(advanceId)
     }
     this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
-      if ((res as any).error_message) {
-        this.openSnackBar((res as any).error_message);
-        return;
-      }
-      if ((res as any).message) {
-        this.openSnackBar((res as any).message);
-        // this.unutilizedAmount = res.unutilizedamount;
-        return;
-      }
-      console.log(res);
+      
+      this.unutilizedAmount = (res as any).unutilizedamount;
+      console.log(this.unutilizedAmount, res);
     });
   }
 }
