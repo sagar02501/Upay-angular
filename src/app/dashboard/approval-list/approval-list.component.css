@@ -32,7 +32,7 @@
   display: flex;
   margin: 20px;
   min-width: 100%;
-  width: 2200px;
+  width: 2370px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -42,7 +42,7 @@
 }
 
 .approvals-table__header {
-    height: 40px;
+    height: 45px;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(1rem, 1fr)) 10px;
