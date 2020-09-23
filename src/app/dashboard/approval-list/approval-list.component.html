@@ -98,7 +98,6 @@
         File
       </div>
       <div class="approval-status">
-         
         <button mat-button class="approval-status" (click)="selectStatus.open()" >
           Status
           <mat-select class="approval-status1" #selectStatus [(ngModel)]="selectedStatus" multiple (openedChange)="openedChange($event)" >
@@ -109,6 +108,11 @@
             <mat-option  value="transferred">TRANSFERRED</mat-option>
             <mat-option  value="approved">APPROVED</mat-option>
             <mat-option  value="to Central">TO CENTRAL</mat-option>
+            <mat-option  value="fund transferred utilization pending">Fund transferred utilization pending</mat-option>
+            <mat-option  value="partiall utilization done">Partiall utilization done</mat-option>
+            <mat-option  value="partially settled with extra claim">Partially settled with extra claim</mat-option>
+            <mat-option  value="fully settled">Fully settled</mat-option>
+            <mat-option  value="fully settled with extra claim">Fully settled with extra claim</mat-option>
           </mat-select>
        </button>
       </div>
