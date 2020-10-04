@@ -317,6 +317,18 @@ export class ApprovalListItemComponent implements OnInit {
     this.approvalService.getAwardApproval(approvalId);
   }
   printpurchaseorder(approval,awardPodata){
+    // converts ISO 8601 to date
+    let date = new Date(awardPodata.date);
+    let year = date.getFullYear();
+    let month = date.getMonth()+1;
+    let dt = date.getDate();
+    if (dt < 10) {
+      dt = '0' + dt;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+    var approvaldate=(dt+'-' + month + '-'+year);
     const approvalData =
     `<body>
     <header>
@@ -360,7 +372,7 @@ export class ApprovalListItemComponent implements OnInit {
             </thead>
             <tbody>
             <tr>
-                <td><span contenteditable>${awardPodata.date}</span></td>
+                <td><span contenteditable>${approvaldate}</span></td>
                 <td><span contenteditable>${awardPodata.approvalId}</span></td>
                 <td><span contenteditable>NA</span></td>
                 <td><span contenteditable>${awardPodata.deliveryschedule}</span></td>
