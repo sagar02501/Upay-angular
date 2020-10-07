@@ -21,6 +21,7 @@ padding-top: 7px;">Provide Bill(s) detail</h4>
         <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
         <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;"*ngIf="bill.file">{{bill.file.name}}</p>
+        
         <button style= "font-weight: 500;
         color: #7ca3e4;
         font-size: 15px;

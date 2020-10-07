@@ -181,11 +181,11 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   approvalChanged(value) {
     if (value === 4) {
-      this.payeePlaceholder = 'Vendor name';
-      this.accountnoPlaceholder = 'Vendor Account Number';
-      this.banknamePlaceholder = 'Vendor Bank Name';
-      this.ifscPlaceholder = 'Vendor Bank IFSC';
-      this.approvalPlaceholder = 'Vendors Details with account number / admin approval Id / price comparison';
+      this.payeePlaceholder = 'L1 Vendor name';
+      this.accountnoPlaceholder = 'L1 Vendor Account Number';
+      this.banknamePlaceholder = 'L1 Vendor Bank Name';
+      this.ifscPlaceholder = 'L1 Vendor Bank IFSC';
+      this.approvalPlaceholder = 'L1 Vendors Details with account number / admin approval Id / price comparison';
     } else {
       this.payeePlaceholder = 'Payee Name';
       this.accountnoPlaceholder = 'Account Number';

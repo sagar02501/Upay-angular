@@ -317,18 +317,25 @@ export class ApprovalListItemComponent implements OnInit {
     this.approvalService.getAwardApproval(approvalId);
   }
   printpurchaseorder(approval,awardPodata){
+    console.log(approval)
     // converts ISO 8601 to date
     let date = new Date(awardPodata.date);
     let year = date.getFullYear();
-    let month = date.getMonth()+1;
-    let dt = date.getDate();
-    if (dt < 10) {
-      dt = '0' + dt;
+    let months = date.getMonth()+1;
+    let dts = date.getDate();
+    let dt = ''
+    let month = ''
+    if (dts < 10) {
+      dt = '0' + dts.toString();
+    }else{
+      dt =  dts.toString();
     }
-    if (month < 10) {
-      month = '0' + month;
+    if (months < 10) {
+      month = '0' + months.toString();
+    }else{
+      month =  months.toString();
     }
-    var approvaldate=(dt+'-' + month + '-'+year);
+    var approvaldate=(dt+'-' + month + '-'+year.toString());
     const approvalData =
     `<body>
     <header>
@@ -353,10 +360,11 @@ export class ApprovalListItemComponent implements OnInit {
     <article>
         <h1>To,</h1>
         <address style="width: 60%">
-            <p style="width: 40%;font-size:13px;">${awardPodata.vendorname}</p>
+            <p style="width: 40%;font-size:13px;">Vendor Name: ${awardPodata.vendorname}</p>
             <p style="width: 40%;font-size:13px;">Account no: ${approval.account_no}</p>
             <p style="width: 40%;font-size:13px;">Ifsc code: ${approval.ifsc_code}</p>
-            <p style="width: 40%;font-size:13px;">${awardPodata.vendor_addr}</p>
+            <p style="width: 40%;font-size:13px;"> Vendor Address: ${awardPodata.vendor_addr}</p>
+            <p style="width: 40%;font-size:13px;"> Subject: ${approval.subject}</p>
         </address>
         <label style="float: right;width: 40%">Shipping Address:</label>
         <p style="float: right;width: 40%">${approval.shipping_addr}</p>
@@ -373,7 +381,7 @@ export class ApprovalListItemComponent implements OnInit {
             <tbody>
             <tr>
                 <td><span contenteditable>${approvaldate}</span></td>
-                <td><span contenteditable>${awardPodata.approvalId}</span></td>
+                <td><span contenteditable>${approval.name + '\n'+ approval.contact}</span></td>
                 <td><span contenteditable>NA</span></td>
                 <td><span contenteditable>${awardPodata.deliveryschedule}</span></td>
                 <td><span>${awardPodata.payterms}</span></td>
