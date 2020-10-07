@@ -80,7 +80,10 @@ export class ApprovalListItemComponent implements OnInit {
       }
     });
   }
-
+  withoutfundTransfer(){
+    this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
+      transactionId: 'WithoutFundTransfer', transferredAmount:0});
+  }
   fundTransfer() {
     const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
       title: 'Fund Transfer',
