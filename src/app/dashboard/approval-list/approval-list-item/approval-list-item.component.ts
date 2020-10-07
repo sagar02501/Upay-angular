@@ -354,7 +354,7 @@ export class ApprovalListItemComponent implements OnInit {
             <h4>The following number must appear on all related correspondence,<br> shipping papers, and invoices:</h4>
             <p style="font-size: 13px">APPROVAL DOC NUMBER:${awardPodata.approvalId}
                 <br>
-                P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/DEL/2020/07${awardPodata.billnumber}</p>
+                P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/${(approval.zone).toUpperCase()}/${year}/${(awardPodata.approvalId).match(/(\d+)/)[0]}</p>
         </address>
     </header>
     <article>

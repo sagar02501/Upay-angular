@@ -64,7 +64,8 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
       </mat-form-field>
     <div class="file-input mb-10 mt-10"> 
         <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,b)" />
-        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>
+        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
+        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachemnt</p>
         <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;" *ngIf="vendor.file">{{vendor.file.name}}</p>
         
         <button style= "font-weight: 500;
