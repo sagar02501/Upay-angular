@@ -45,7 +45,7 @@ export class GetSingleApprovalComponent implements OnInit {
       }
       if ((res as any).message) {
         this.openSnackBar((res as any).message, 'success');
-        this.approval = undefined;
+        this.approval = res;
         return;
       }
       this.approval = res;

@@ -191,16 +191,16 @@ export class ApprovalFormService {
     bankIfsc */
   // Commented out code:
   if (data.payeeName) {
-    postData.append('payeeName', data.paymentDetails);
+    postData.append('payeeName', data.payeeName);
   }
   if (data.accountNumber) {
-    postData.append('accountNumber', data.paymentDetails);
+    postData.append('accountNumber', data.accountNumber);
   }
   if (data.bankName) {
-    postData.append('bankName', data.paymentDetails);
+    postData.append('bankName', data.bankName);
   }
   if (data.bankIfsc) {
-    postData.append('bankIfsc', data.paymentDetails);
+    postData.append('bankIfsc', data.bankIfsc);
   }
    // Commented out code:
   /* 
