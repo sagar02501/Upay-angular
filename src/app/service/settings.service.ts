@@ -61,12 +61,23 @@ export class SettingsService {
     return this.zoneSubject.asObservable();
   }
 
-  getApproverList() {
-    this.http.get(this.url + 'approver').subscribe((res) => {
-      this.approverSubject.next(res);
-    },
-    (err) => {console.log(err); }
-    );
+  getApproverList(forward = "false") {
+    
+    if(forward == 'true'){
+      this.http.get(this.url + 'approver/forward').subscribe((res) => {
+        this.approverSubject.next(res);
+      },
+      (err) => {console.log(err); }
+      );
+    }else{
+      this.http.get(this.url + 'approver').subscribe((res) => {
+        this.approverSubject.next(res);
+      },
+      (err) => {console.log(err); }
+      );
+    }
+    
+    
   }
 
   addApprover(email, zone) {

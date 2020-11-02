@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SettingsService } from './../service/settings.service';
+import { AuthService } from './../service/auth.service';
+import { ActionDialogComponent } from '../dashboard/action-dialog/action-dialog.component';
+
 
 @Component({
   selector: 'app-get-single-approval',
@@ -11,7 +15,8 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   styleUrls: ['./get-single-approval.component.css']
 })
 export class GetSingleApprovalComponent implements OnInit {
-
+  private approverSubscription: Subscription;
+  approverList;
   token = null;
   approvalId;
   approval;
@@ -24,16 +29,21 @@ export class GetSingleApprovalComponent implements OnInit {
 
   constructor(
     private approvalService: ApprovalFormService,
+    private approvalForwardService: ApprovalFormService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar, private settingsService: SettingsService,private authService: AuthService) { }
 
   ngOnInit() {
+    this.settingsService.getApproverList('true'); //forward = true
+ 
+   
+    
     this.token = this.route.snapshot.queryParams['token'];
     this.approvalId = this.route.snapshot.queryParams['approvalId'];
     
     this.claimId = this.route.snapshot.queryParams['claimId'];
-    console.log("this.claimId",this.claimId)
+    //console.log("this.claimId",this.claimId)
     
     if (this.approvalId) {
       this.getSingleApprovalData();
@@ -49,11 +59,15 @@ export class GetSingleApprovalComponent implements OnInit {
         return;
       }
       this.approval = res;
-      console.log(res);
+      //console.log(res);
       if (this.approval) {
         this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
         this.timeline = this.approval.timeline.split('\n');
       }
+    });
+    
+    this.approverSubscription = this.settingsService.getApproverSubjectListener().subscribe((res) => {
+      this.approverList = res;
     });
   }
 
@@ -63,6 +77,24 @@ export class GetSingleApprovalComponent implements OnInit {
       verticalPosition: 'top',
       panelClass: type
     });
+  }
+  
+  sendToApprover() {
+    console.log('approver list',this.approverList)
+    const dialogRef = this.dialog.open(ActionDialogComponent,
+       {data: {
+         approverList: this.approverList,
+        title: 'Send to Approver'}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.sendForApproval({forward: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
+      }
+    });
+  }
+  
+  sendForApproval(e) {
+      this.approvalForwardService.sendApproval(e);
   }
 
   getSingleApprovalData(trackflag:boolean = false) {

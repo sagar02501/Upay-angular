@@ -294,7 +294,11 @@ export class ApprovalFormService {
   }
 
   sendApproval(data) {
-    this.http.post(this.url + '/approve', data).subscribe((res) => {
+    let link = '/approve';
+    if(data.forward != undefined && data.forward == true){
+      link = '/forward';
+    }
+    this.http.post(this.url + link, data).subscribe((res) => {
       this.approvalSubject.next('sentToApproverTrue');
     },
     (err) => {
