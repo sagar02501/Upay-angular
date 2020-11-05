@@ -81,13 +81,28 @@ export class ApprovalListItemComponent implements OnInit {
     });
   }
   withoutfundTransfer(){
-    this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
-      transactionId: 'WithoutFundTransfer', transferredAmount:0});
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        header: 'Settle Without Fund Transfer',
+        message: `Are you sure you want to settle this approval without fund transfer ?`,
+        buttonTextPrimary: 'Yes',
+        buttonTextSecondary: 'No'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
+          transactionId: 'WithoutFundTransfer', transferredAmount:0});
+      }
+    });
+    
   }
   fundTransfer() {
     const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
       title: 'Fund Transfer',
-      isFundTransfer: true
+      isFundTransfer: true,
+      approval :this.approval
     }});
     dialogRef.afterClosed().subscribe(result => {
       if (result && !result.transactionId) {

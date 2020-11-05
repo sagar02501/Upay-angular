@@ -88,18 +88,31 @@
       placeholder="Remarks" name="narrationId" ngModel #narrationInput="ngModel" required>
     </mat-form-field>
   </div>
+  
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput
-      type="text"
-      placeholder="Budget Head" name="budgedHeadId" ngModel #budgetHeadInput="ngModel" required>
+      <mat-label>Budget Head</mat-label>
+      <mat-select name="budgetHeadId" ngModel #budgetHeadInput="ngModel" (selectionChange) ="budgetHeadChanged($event.value)" required>
+        <mat-option>
+          Pick a Budget Head..
+        </mat-option>
+        <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
+          {{bh.friendlyName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput
-      type="text"
-      placeholder="Budget Sub Head" name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
+      <mat-label>Budget Sub Head</mat-label>
+      <mat-select name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
+        <mat-option>
+          Pick a Budget Sub Head..
+        </mat-option>
+        <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
+          {{bsh.friendlyName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
