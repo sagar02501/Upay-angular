@@ -188,9 +188,11 @@ export class ActionDialogComponent implements OnInit {
   budgetHeadChanged(value) {
     this.subBudgetHeadChangeEvent = this.budgetSubHead.filter( sb => sb.budgetHeadTechnicalName == value);
   }
-  
+  advanceAmountInput = 0;
   ngOnInit() {
-    console.log(this.data);
+    
+    this.advanceAmountInput = this.data.approval.amount;
+    //console.log(this.advanceAmountInput);
     this.approverList = this.data.approverList || [];
     this.title = this.data.title || '';
     this.to = this.data.to || 'Approver';

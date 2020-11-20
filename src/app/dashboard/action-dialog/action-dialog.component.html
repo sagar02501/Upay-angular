@@ -37,14 +37,14 @@
     <mat-form-field>
       <input matInput
       type="text"
-      placeholder="Advance Amount" name="advanceAmountId" ngModel #advanceAmountInput="ngModel" required>
+      placeholder="Advance Amount/Requisite Amount (Please calculate in case of any claim)" name="advanceAmountId" [(ngModel)]="advanceAmountInput" required>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
     <mat-form-field>
       <input matInput
       type="number"
-      placeholder="Amount to transfer" name="transAmt" ngModel #transAmtInput="ngModel" required>
+      placeholder="Amount to transfer" name="transAmt"ngModel #transAmtInput="ngModel"  required>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
