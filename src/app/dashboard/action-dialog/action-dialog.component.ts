@@ -190,8 +190,8 @@ export class ActionDialogComponent implements OnInit {
   }
   advanceAmountInput = 0;
   ngOnInit() {
-    
-    this.advanceAmountInput = this.data.approval.amount;
+    if(this.data.approval !== undefined )
+    this.advanceAmountInput = this.data.approval.amount || 0;
     //console.log(this.advanceAmountInput);
     this.approverList = this.data.approverList || [];
     this.title = this.data.title || '';
