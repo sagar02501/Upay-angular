@@ -75,8 +75,8 @@ export class ApprovalListItemComponent implements OnInit {
     
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        //console.log("this.approval",this.approval);
-        this.actionOccured.emit({notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
+       // console.log("results",result);
+        this.actionOccured.emit({notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file});
       }
     });
   }
@@ -290,7 +290,7 @@ export class ApprovalListItemComponent implements OnInit {
       data: {
         header: 'Confirm',
         message: `Are you sure you want to Send PO to Initiator for this approval?`,
-        buttonTextPrimary: 'Preview',
+        buttonTextPrimary: 'Preview and  Send',
         buttonTextSecondary: 'Cancel'
       }
     });
@@ -311,12 +311,12 @@ export class ApprovalListItemComponent implements OnInit {
             return;
           }
           this.awardList = res;
-          console.log(this.approval);
+          //console.log(this.approval);
           for (let i = 0; i < this.awardList.length; i++) {
             if (this.awardList[i].vendor_preference  == 'L1'){
                 this.awardPodata = this.awardList[i];
               }
-              console.log(this.awardList);
+              //console.log(this.awardList);
               this.printpurchaseorder(this.approval,this.awardPodata)
           }
         });
@@ -335,7 +335,7 @@ export class ApprovalListItemComponent implements OnInit {
     this.approvalService.getAwardApproval(approvalId);
   }
   printpurchaseorder(approval,awardPodata){
-    console.log(approval)
+    //console.log(approval)
     // converts ISO 8601 to date
     let date = new Date(awardPodata.date);
     let year = date.getFullYear();
@@ -354,24 +354,24 @@ export class ApprovalListItemComponent implements OnInit {
       month =  months.toString();
     }
     var approvaldate=(dt+'-' + month + '-'+year.toString());
-    const ap = `<div style="box-sizing: border-box;height: 11in;margin: 0 auto;overflow: hidden;padding: 0.5in;width: 8.5in;background: #FFF;border-radius: 1px;box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); border:10px black solid;">
+    const ap = `<div class="poouterblock" style="box-sizing: border-box;height: 11in;margin: 0 auto;overflow: hidden;padding: 0.5in;width: 8.5in;background: #FFF;border-radius: 1px;box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); border:10px black solid;">
     <header style="margin: 0 0 3em;">
     
-        <address contenteditable style="float: left;font-size: 50%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
-            <h2 style="font-size: 15px">Under Privileged Advancement by Youth</h2>
-            <p style="font-size: 13px;margin: 0 0 0.25em;">C/O PRATIK KAMBLE</p>
-            <p style="font-size: 13px;margin: 0 0 0.25em;">BANK COLONY, SHIVAJI WARD</p>
-            <p style="font-size: 13px;margin: 0 0 0.25em;">BHANDARA, MAHARASHTRA, 441904</p>
-            <p style="font-size: 13px;margin: 0 0 0.25em;"><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
+        <address class="poaddress" contenteditable style="float: left;font-size: 50%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
+            <h2 class="poaddressh2" style="font-size: 15px">Under Privileged Advancement by Youth</h2>
+            <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">C/O PRATIK KAMBLE</p>
+            <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">BANK COLONY, SHIVAJI WARD</p>
+            <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">BHANDARA, MAHARASHTRA, 441904</p>
+            <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;"><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
         </address>
-        <div  style="margin-left:100px; float:right;">
+        <div class="pologo"  style="margin-left:100px; float:right;">
           <center>
           <img src="https://www.upay.org.in/wp-content/uploads/2020/03/cropped-logo-1.png"  alt="UPAY">
-        <h3 style="color: gray;">Purchase Order</h2>
+        <h3 class="pologotitle"  style="color: gray;">Purchase Order</h2>
           </center>
         </div>
         <div style="clear:both";></div>
-        <address contenteditable style="font-size: 80%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
+        <address class="poship"  contenteditable style="font-size: 80%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
             <h4>The following number must appear on all related correspondence,<br> shipping papers, and invoices:</h4>
             <p style="font-size: 13px;margin: 0 0 0.25em;">APPROVAL DOC NUMBER:${awardPodata.approvalId}
                 <br>
@@ -379,39 +379,39 @@ export class ApprovalListItemComponent implements OnInit {
         </address>
     </header>
     <article style="margin: 0 0 3em;">
-     <div style="float:left; width:450px;">
-     <h1 style="font: bold 100% sans-serif;letter-spacing: 0.5em;text-transform: uppercase;clip: rect(0 0 0 0);">To,</h1>
-     <address style="margin: 0 0 3em;font-size: 81%;font-weight: bold;">
-         <p style="font-size:13px;font-style: normal;">Vendor Name: ${awardPodata.vendorname}</p>
-         <p style="font-size:13px; font-style: normal;">Account no: ${approval.account_no}</p>
-         <p style="font-size:13px; font-style: normal;">Ifsc code: ${approval.ifsc_code}</p>
-         <p style="font-size:13px; font-style: normal;"> Vendor Address: ${awardPodata.vendor_addr}</p>
-         <p style="font-size:13px; font-style: normal;"> Subject: ${approval.subject}</p>
+     <div class="povendor"  style="float:left; width:450px;">
+     <h1 class="povendorh1"  style="font: bold 100% sans-serif;letter-spacing: 0.5em;text-transform: uppercase;clip: rect(0 0 0 0);">To,</h1>
+     <address class="povendoraddr"   style="margin: 0 0 3em;font-size: 81%;font-weight: bold;">
+         <p class="povendoraddrp"  style="font-size:13px;font-style: normal;">Vendor Name: ${awardPodata.vendorname}</p>
+         <p class="povendoraddrp" style="font-size:13px; font-style: normal;">Account no: ${approval.account_no}</p>
+         <p class="povendoraddrp" style="font-size:13px; font-style: normal;">Ifsc code: ${approval.ifsc_code}</p>
+         <p class="povendoraddrp" style="font-size:13px; font-style: normal;"> Vendor Address: ${awardPodata.vendor_addr}</p>
+         <p class="povendoraddrp" style="font-size:13px; font-style: normal;"> Subject: ${approval.subject}</p>
      </address>
      </div>
-     <div style="float:left;">
+     <div class="poshipaddr"  style="float:left;">
      <label style="width: 40%">Shipping Address:</label>
-     <p style="width: 40%">${approval.shipping_addr}</p>
+     <p class="poshipaddrp" style="width: 40%">${approval.shipping_addr}</p>
      </div>
      
         
-        <table style="font-size: 75%;table-layout: fixed;width: 100%;border-collapse: separate;border-spacing: 0px;">
+        <table class="inventoryheader" style="font-size: 75%;table-layout: fixed;width: 100%;border-collapse: separate;border-spacing: 0px;">
             <thead>
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">P.O. Date</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Procurer name and contact number</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Warranty if any</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Delivery Schedule</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Payment Terms</span></th>
+                <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">P.O. Date</span></th>
+                <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Procurer name and contact number</span></th>
+                <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Warranty if any</span></th>
+                <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Delivery Schedule</span></th>
+                <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Payment Terms</span></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approvaldate}</span></td>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.name + '\n'+ approval.contact}</span></td>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">NA</span></td>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.deliveryschedule}</span></td>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span>${awardPodata.payterms}</span></td>
+                <td class="inventoryheadertd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approvaldate}</span></td>
+                <td class="inventoryheadertd"   style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.name + '\n'+ approval.contact}</span></td>
+                <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">NA</span></td>
+                <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.deliveryschedule}</span></td>
+                <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span>${awardPodata.payterms}</span></td>
             </tr>
             </tbody>
         </table>
@@ -419,40 +419,40 @@ export class ApprovalListItemComponent implements OnInit {
         <table class="inventory" style="font-size: 75%;table-layout: fixed;width: 100%;border-collapse: separate;border-spacing: 0px;margin: 0 0 3em;clear: both;">
             <thead>
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Quantity</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Description</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit Price</span></th>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Total</span></th>
+                <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Quantity</span></th>
+                <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit</span></th>
+                <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Description</span></th>
+                <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit Price</span></th>
+                <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Total</span></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 26%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardquantity}</span></td>
-                <td style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 38%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Number</span></td>
-                <td style="text-align: center;text-justify: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardItemDesc}p</span></td>
-                <td style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.unitprice}</span></td>
-                <td style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
+                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 26%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardquantity}</span></td>
+                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 38%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Number</span></td>
+                <td class="inventorytd" style="text-align: center;text-justify: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardItemDesc}p</span></td>
+                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.unitprice}</span></td>
+                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
             </tr>
             </tbody>
         </table>
         <table class="balance" style="font-size: 75%;table-layout: fixed;width: 36%;border-collapse: separate;border-spacing: 0px;float: right;">
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Sub Total</span></th>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
+                <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Sub Total</span></th>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
             </tr>
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">GST</span></th>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.gst_tax}</span></td>
+                <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">GST</span></th>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.gst_tax}</span></td>
             </tr>
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Shipping & Handling</span></th>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.shipping_handling_chrg}</span></td>
+                <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Shipping & Handling</span></th>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.shipping_handling_chrg}</span></td>
             </tr>
             
             <tr>
-                <th style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
-                <td style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.billamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
+                <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.billamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
@@ -464,38 +464,49 @@ export class ApprovalListItemComponent implements OnInit {
     </aside>
     <center><span>This is a computer-generated document. No signature is required.</span></center>
     </div>`
-
-
-    const win = window.open('', '', 'height=700,width=700');
-
-    win.document.write('<html><head>');
-    win.document.write('<title>Upay|Purchase Order</title>');
-    win.document.write('</head>');
-    win.document.write('<body>');
-    win.document.write(ap);
-    win.document.write('</body></html>');
     
-    setTimeout(function() {
-      win.document.close();
-    }, 500);
-    const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
-      approverList: [{email: this.approval.email}],
-      title: 'Notify Initiator',
-      to: 'Initiator'
-    }});
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        header: 'PO Preview',
+        message:'',
+        htmlBody: ap,
+        isSendPO:true,
+        approverList: [{email: this.approval.email}],
+        buttonTextPrimary: 'Send',
+        buttonTextSecondary: 'Cancel'
+      },
+      height: '700px',
+      width: '700px',
+    });
+    // const win = window.open('', '', 'height=700,width=700');
+
+    // win.document.write('<html><head>');
+    // win.document.write('<title>Upay|Purchase Order Preview- You can close this window</title>');
+    // win.document.write('</head>');
+    // win.document.write('<body>');
+    // win.document.write(ap);
+    
+    // win.document.write('</body></html>');
+    
+    // setTimeout(function() {
+    //   win.document.close();
+    //   //win.print();
+    // }, 500);
+    // const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
+    //   approverList: [{email: this.approval.email}],
+    //   title: 'Notify Initiator',
+    //   to: 'Initiator'
+    // }});
     
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //console.log("this.approval",this.approval);
-        this.actionOccured.emit({notify: true, approvalData: this.approval, po:win.document.body.innerHTML, emailId: result.email, remarks: result.remarks});
+        this.actionOccured.emit({notify: true, approvalData: this.approval, po:ap, emailId: result.email, remarks: result.remarks});
       }
     });
-    /*
-    setTimeout(function() {
-      win.document.close();
-      win.print();
-    }, 500); */
+    
     
   }
+
 }

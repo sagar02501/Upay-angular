@@ -16,10 +16,20 @@
       type="text"
       [placeholder]="placeholder" name="remarks" ngModel #remarksInput="ngModel">
     </mat-form-field>
+    
+      <input *ngIf="to == 'Initiator'"
+        type="file"
+        accept=".doc,.docx,.txt,.pdf"
+        placeholder="Upload Attachement"
+        name="input-file"
+        ngModel #fileInput="ngModel"
+        observeFiles
+        (change)="onImagePicked($event)"
+        >
   </div>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
-    <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value}" cdkFocusInitial>Send</button>
+    <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value, file: file}" cdkFocusInitial>Send</button>
   </div>
 </div>
 <div *ngIf="isFundTransfer && isNew" class="fund">

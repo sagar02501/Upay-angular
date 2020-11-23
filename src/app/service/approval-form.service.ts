@@ -321,7 +321,18 @@ export class ApprovalFormService {
   }
 
   notifyInitiator(data) {
-    this.http.post(this.url + '/approve/notify', data).subscribe((res) => {
+    //console.log("daat",data);
+    const postData2 = new FormData();
+    postData2.append('approvalData',data.approvalData);
+    postData2.append('emailId',data.emailId);
+    postData2.append('remarks',data.remarks);
+    if(data.po){
+      postData2.append('po',data.po);
+    }
+    if(data.file){
+      postData2.append('file',data.file,data.file.name);
+    }
+    this.http.post(this.url + '/approve/notify', postData2).subscribe((res) => {
       this.approvalSubject.next('notifyTrue');
     },
     (err) => {

@@ -203,7 +203,10 @@ export class ActionDialogComponent implements OnInit {
       this.placeholder = 'Remarks/DOP Clause';
     }
   }
-
+  file: File | null
+  onImagePicked(event: Event) {
+   this.file = (event.target as HTMLInputElement).files[0];
+ }
   openPaymentDashboard() {
     window.open('https://x.razorpay.com/contacts', '_blank')
   }
