@@ -337,6 +337,7 @@ export class ApprovalListItemComponent implements OnInit {
   printpurchaseorder(approval,awardPodata){
     //console.log(approval)
     // converts ISO 8601 to date
+    console.log(awardPodata)
     let date = new Date(awardPodata.date);
     let year = date.getFullYear();
     let months = date.getMonth()+1;
@@ -432,14 +433,14 @@ export class ApprovalListItemComponent implements OnInit {
                 <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 38%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Number</span></td>
                 <td class="inventorytd" style="text-align: center;text-justify: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardItemDesc}p</span></td>
                 <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.unitprice}</span></td>
-                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
+                <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span>${awardPodata.netbillamount}</span></td>
             </tr>
             </tbody>
         </table>
         <table class="balance" style="font-size: 75%;table-layout: fixed;width: 36%;border-collapse: separate;border-spacing: 0px;float: right;">
             <tr>
                 <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Sub Total</span></th>
-                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${awardPodata.billamount}</span></td>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${awardPodata.netbillamount}</span></td>
             </tr>
             <tr>
                 <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">GST</span></th>
@@ -452,7 +453,7 @@ export class ApprovalListItemComponent implements OnInit {
             
             <tr>
                 <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
-                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.billamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.netbillamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
@@ -460,7 +461,7 @@ export class ApprovalListItemComponent implements OnInit {
     <aside>
       <p>Authorized By : Zonal Secretory Finance/ Director Finance </p>
        <p>Accepted By Vendor</p>
-        <p>Date </p>
+        <p>Date: ${new Date()} </p>
     </aside>
     <center><span>This is a computer-generated document. No signature is required.</span></center>
     </div>`

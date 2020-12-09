@@ -42,7 +42,7 @@ export class BillListComponent implements OnInit {
       console.log(res);
       if (this.billList) {
         this.billCreatedDate = new Date(this.billList.date).toLocaleString();
-        this.timeline = this.billList.timeline.split('\n');
+        //this.timeline = this.billList.timeline.split('\n');
       }
     });
   }

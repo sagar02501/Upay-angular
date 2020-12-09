@@ -2,7 +2,7 @@
 padding-top: 7px;">Provide Employee(s) detail</h4>
 <div class="floating">
 <mat-form-field class="sizee">
-    <input matInput type="number"  placeholder="Salary Slip Number" name="Number" [(ngModel)]="salary.number" #billNumberInput="ngModel" required>
+    <input matInput type="text"  placeholder="Salary Slip Number" name="Number" [(ngModel)]="salary.number" #billNumberInput="ngModel" required>
     <mat-error *ngIf="billNumberInput.invalid"> Please enter salary slip number</mat-error>     
 </mat-form-field>
 <mat-form-field class="sizee">
@@ -21,7 +21,7 @@ padding-top: 7px;">Provide Employee(s) detail</h4>
 <div class="file-input mt-10 mb-10"> 
     <input type="file" name="file" #salaryInput observeFiles (change)="onsalaryImagePicked($event,b)" />
     <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); salaryInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
-    <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachemnt</p>
+    <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachment</p>
     <p class="filename" style="padding:10px; margin-top:10px; max-width: 250px;" *ngIf="salary.file">{{salary.file.name}}</p>
     
     <button style= "font-weight: 500;

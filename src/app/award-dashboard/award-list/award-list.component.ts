@@ -41,7 +41,7 @@ export class AwardListComponent implements OnInit {
       console.log(res);
       if (this.awardList) {
         this.awardCreatedDate = new Date(this.awardList.date).toLocaleString();
-        this.timeline = this.awardList.timeline.split('\n');
+        //this.timeline = this.awardList.timeline.split('\n');
       }
     });
   }

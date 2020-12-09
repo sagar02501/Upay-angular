@@ -7,7 +7,7 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
             <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="number" placeholder="Vendor Bill Amount" name="billAmount" [(ngModel)]="vendor.amount" value="amount" #billAmountInput="ngModel" required>
+            <input matInput type="number" placeholder="Vendor Bill/Quotation Gross Amount" name="billAmount" [(ngModel)]="vendor.amount" value="amount" #billAmountInput="ngModel" required>
             <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
@@ -33,7 +33,7 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
             <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="text" placeholder="Net Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
+            <input matInput type="text" placeholder="Basic Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
             <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
         </mat-form-field>
     </div>
@@ -65,7 +65,7 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
     <div class="file-input mb-10 mt-10"> 
         <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,b)" />
         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); vendorInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
-        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachemnt</p>
+        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachment</p>
         <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;" *ngIf="vendor.file">{{vendor.file.name}}</p>
         
         <button style= "font-weight: 500;
