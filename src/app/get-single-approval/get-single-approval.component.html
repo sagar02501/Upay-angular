@@ -9,7 +9,8 @@
   </div>
   <div class="approval__body" *ngIf="approval">
     <h3>Approval Details</h3><br>
-    <div><label>Id: </label><span>{{approval?.approvalId}}</span></div>
+    <div><label>Approval Id: </label><span>{{approval?.approvalId}}</span></div>
+    <div><label>Claim Id: </label><span>{{approval?.claimId}}</span></div>
     <div [ngClass]="{'bold': !token}"><label>Status: </label><span>{{approval?.status}}</span></div>
     <div><label>Name: </label><span>{{approval?.name}}</span></div>
     <div><label>Email: </label><span>{{approval?.email}}</span></div>
@@ -20,8 +21,23 @@
     <div><label>Subject: </label><span>{{approval?.subject}}</span></div>
     <div><label>Approval Details: </label><span>{{approval?.body}}</span></div>
     <div><label>Payment Details: </label><span>{{approval?.payment_details}}</span></div>
+    <div><label>A/C: </label> <span>{{approval?.account_no}}</span></div>
+    <div><label>Bank Name </label><span>{{approval?.bank_name}}</span></div>
+    <div><label>Payee Name: </label> <span>{{approval?.payee_name}}</span></div>
+    <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
+    <div><label>Award Value: </label><span>{{approval?.awardvalue}}</span></div>
     <div><label>Amount: </label><span>{{approval?.amount}}</span></div>
     <div><label>Remarks by mediator: </label><span>{{approval?.mediator_remarks}}</span></div>
+    <div><label>Timeline: </label><span>
+      <ul>
+      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
+    </ul></span></div>
+    <div class="approval-file"><label>File: </label><span>
+      <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+    </span>
+  </div>
     <div *ngIf="approval?.approver_remarks"><label>Remarks by approver: </label><span>{{approval?.approver_remarks}}</span></div>
   </div>
   <div class="approval__actions" *ngIf="approval && token">
@@ -32,13 +48,8 @@
     </mat-form-field>
     <div>
       <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Approve', remarksInput.value)" cdkFocusInitial>Approve</button>
-      <button mat-raised-button (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
+      <button mat-raised-button color="primary" (click)="sendToApprover()" cdkFocusInitial>Forward</button>
+      <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
     </div>
-  </div>
-  <div class="timeline" *ngIf="!token && trackId && approval">
-    <label><strong>Timeline: </strong></label>
-    <ul>
-      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
-    </ul>
   </div>
 </div>

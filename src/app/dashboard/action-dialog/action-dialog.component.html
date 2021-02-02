@@ -16,10 +16,20 @@
       type="text"
       [placeholder]="placeholder" name="remarks" ngModel #remarksInput="ngModel">
     </mat-form-field>
+    
+      <input *ngIf="to == 'Initiator'"
+        type="file"
+        accept=".doc,.docx,.txt,.pdf"
+        placeholder="Upload Attachement"
+        name="input-file"
+        ngModel #fileInput="ngModel"
+        observeFiles
+        (change)="onImagePicked($event)"
+        >
   </div>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
-    <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value}" cdkFocusInitial>Send</button>
+    <button mat-button [disabled]="!approverInput.value" [mat-dialog-close]="{email: approverInput.value, remarks: remarksInput.value, file: file}" cdkFocusInitial>Send</button>
   </div>
 </div>
 <div *ngIf="isFundTransfer && isNew" class="fund">
@@ -37,14 +47,14 @@
     <mat-form-field>
       <input matInput
       type="text"
-      placeholder="Advance Amount" name="advanceAmountId" ngModel #advanceAmountInput="ngModel" required>
+      placeholder="Advance Amount" name="advanceAmountId" [(ngModel)]="advanceAmountInput" required>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
     <mat-form-field>
       <input matInput
       type="number"
-      placeholder="Amount to transfer" name="transAmt" ngModel #transAmtInput="ngModel" required>
+      placeholder="Amount to transfer" name="transAmt"ngModel #transAmtInput="ngModel"  required>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
@@ -88,18 +98,31 @@
       placeholder="Remarks" name="narrationId" ngModel #narrationInput="ngModel" required>
     </mat-form-field>
   </div>
+  
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput
-      type="text"
-      placeholder="Budget Head" name="budgedHeadId" ngModel #budgetHeadInput="ngModel" required>
+      <mat-label>Budget Head</mat-label>
+      <mat-select name="budgetHeadId" ngModel #budgetHeadInput="ngModel" (selectionChange) ="budgetHeadChanged($event.value)" required>
+        <mat-option>
+          Pick a Budget Head..
+        </mat-option>
+        <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
+          {{bh.friendlyName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput
-      type="text"
-      placeholder="Budget Sub Head" name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
+      <mat-label>Budget Sub Head</mat-label>
+      <mat-select name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
+        <mat-option>
+          Pick a Budget Sub Head..
+        </mat-option>
+        <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
+          {{bsh.friendlyName}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
   <div mat-dialog-content>

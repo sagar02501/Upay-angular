@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 * {
   padding: 0;
@@ -10,4 +11,10 @@
 html {
   font-size: 62.5%;
   font-weight: 300;
+}
+.mat-dialog-container {
+  height: auto !important;
+}
+mat-card[_ngcontent-c1] {
+  opacity: 0.8 !important;
 }

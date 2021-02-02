@@ -13,7 +13,8 @@ import { NgForm} from '@angular/forms';
 
 
 export class ApprovalListComponent implements OnInit {
- 
+  public start: Date = new Date ("07/07/2020"); 
+    public end: Date = new Date ("07/08/2020");
   constructor() { }
   selectedStatus;
   selectedZone;

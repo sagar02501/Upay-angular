@@ -1,0 +1,28 @@
+<div class="bill-list__item">
+  <div class="bill-id">
+    {{bill.approvalId || '-'}}
+  </div>
+  <div class="bill-name">
+    {{bill.claimId || '-'}}
+  </div>
+  <div class="bill-address">
+    {{bill.vendorname || '-'}}
+  </div>
+  <div class="bill-designation">
+    {{bill.billnumber || '-'}}
+  </div>
+  <div class="bill-contact">
+    {{bill.billamount || '-'}}
+  </div>
+  <div class="bill-contact">
+    {{bill.date || '-'}}
+  </div>
+  <div class="bill-contact">
+    {{bill.description || '-'}}
+  </div>
+  <div class="bill-file">
+      <a *ngIf="bill.filePath" href="{{bill.filePath}}" target="_blank">File</a>
+      <!-- <a *ngIf="!approval.filePath && approval.approval_type =='bill Approval'" href="../bill-dashboard?id={{approval.approvalId }}">Vendor dashboard</a> -->
+      <!-- <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a> -->
+  </div>
+</div>

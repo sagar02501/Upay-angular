@@ -1,0 +1,39 @@
+<section class="bill-list__header">
+  <div class="bill-list__header--title">
+    <strong>Bills List</strong>
+  </div>
+</section>
+<div class="a-table">
+  <section class="bill-table">
+    <div class="bill-table__header">
+      <div class="bill-id">
+        Approval Id
+      </div>
+      <div class="bill-name">
+        Claim ID 
+      </div>
+      <div class="bill-email">
+        Vendor name
+      </div>
+      <div class="bill-body">
+        Bill Number
+      </div>
+      <div class="bill-contact">
+        Bill Amount
+      </div>
+      <div class="bill-contact">
+        Bill Date
+      </div>
+      <div class="bill-contact">
+       Description
+      </div>
+      <div class="bill-contact">
+       File
+      </div>
+    </div>
+    <div class="bill-table__body">
+      <app-bill-list-item *ngFor="let bill of billList" [bill]="bill" ></app-bill-list-item>
+    </div>
+  </section>
+</div>
+

@@ -56,6 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     .subscribe((res) => {
       if (typeof(res) !== 'string' && (res as any).isSuccess == undefined) {
         this.approvalList = res;
+        console.log("this.approvalList",this.approvalList)
       } else {
         if (res === 'sentToCentralTrue') {
           this.success = true;
@@ -129,6 +130,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   sendForApproval(e) {
+    console.log("this.approval e",e);
     if (e.approvalId) {
       this.approvalFormService.sendToCentral(e);
     } else {
@@ -141,7 +143,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   fundtransfer(e) {
-    console.log(e);
+    console.log("fund transfer" , e);
     this.approvalFormService.fundTransfer(e);
   }
 

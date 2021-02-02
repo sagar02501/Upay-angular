@@ -1,6 +1,6 @@
 <div class="approvals-list__item">
   <div class="approval-id">
-    {{approval.approvalId || '-'}}
+    {{ approval.claimId || approval.approvalId || '-'}}
     </div>
   <div class="approval-name">
     {{approval.name || '-'}}
@@ -25,14 +25,30 @@
     {{approvalCreatedDate || '-'}}
   </div>
   <div class="approval-amount">
+    {{approval.awardvalue || '-'}}
+  </div>
+  <div class="approval-amount">
       {{approval.amount || '-'}}
+  </div>
+  <div class="approval-amount">
+    {{approval.amount_transferred  || '-'}}
+  </div> 
+  <div class="approval-amount">
+    {{approval.claimamount || '-'}}
+  </div>
+  <div class="approval-amount">
+    {{approval.utilizedamount || '-'}}
+  </div> 
+  <div class="approval-amount">
+    {{approval.unutilizedamount || '-'}}
   </div>
   <div class="approval-zone">
       {{approval.zone || '-'}}
   </div>
   <div class="approval-file">
       <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
-      <span *ngIf="!approval.filePath">-</span>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" target="_blank" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" target="_blank" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
   </div>
   <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
@@ -49,9 +65,11 @@
   <p *ngIf="approval.advance_details"><strong>Advance Details: </strong><pre>{{approval.advance_details}}</pre>
 </div>
 <mat-menu #actionMenu="matMenu">
-    <button mat-menu-item (click)="sendToApprover()">Send to Approver</button>
+    <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central'"  (click)="sendToApprover()">Send to Approver</button>
     <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
     <button mat-menu-item (click)="notifyInitiator()">Notify Initiator</button>
+    <button mat-menu-item [disabled]="approval.approval_type != 'Award Approval' || approval.status == 'new' || approval.status == 'pending'" (click)="printPo()">Generate P.O.</button>
+    <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="withoutfundTransfer()">Settle Without Fund Transfer</button>
     <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
     <button mat-menu-item (click)="printApproval()">Print</button>
     <button mat-menu-item (click)="deleteApproval()">Delete</button>

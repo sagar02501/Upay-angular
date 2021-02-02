@@ -5,6 +5,15 @@
     <div class="approval-search">
       <input type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchApproval()"/>
     </div>
+    <div class="approval-calender">
+      <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'></ejs-daterangepicker>
+
+     <!-- <mat-form-field>
+     <input matInput [matDatepicker]="myDatePicker">
+     <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
+     <mat-datepicker #myDatePicker></mat-datepicker>
+    </mat-form-field> -->
+    </div>
     <div class="approvals-list__header--print" (click)="openBodyAndCreatePdf()">
       Print
     </div>
@@ -30,9 +39,7 @@
             <mat-option  value="Advance or Imprest">Advance or Imprest</mat-option>
             <mat-option  value="Claim">Claim</mat-option>
             <mat-option  value="In Principle or Admin Approval">In Principle or Admin Approval</mat-option>
-            
             <mat-option  value="Award Approval">Award Approval</mat-option>
-
           </mat-select>
        </button>
       
@@ -51,13 +58,32 @@
         <div [ngClass]="{'i-rotate': sortDateAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-amount" (click)="sortApproval('amount')">
-        Amount
+        Award Value
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Requisite Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Advance/Transferred Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Extra Claim Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Utilized Amount
+        <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
+      </div>
+      <div class="approval-amount" (click)="sortApproval('amount')">
+        Unutilized Amount
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-zone">
         <button mat-button class="approval-zone" (click)=zoneInput.open()>
           Zone
-          
             <!-- <mat-label></mat-label> -->
             <mat-select class="approval-zone1" name="zone" [(ngModel)]="selectedZone" #zoneInput  multiple (openedChange)="openedChange($event)">
               <mat-option  (click)="selectedZone = undefined; zoneInput.open();" >Clear All</mat-option>
@@ -72,7 +98,6 @@
         File
       </div>
       <div class="approval-status">
-         
         <button mat-button class="approval-status" (click)="selectStatus.open()" >
           Status
           <mat-select class="approval-status1" #selectStatus [(ngModel)]="selectedStatus" multiple (openedChange)="openedChange($event)" >
@@ -83,6 +108,11 @@
             <mat-option  value="transferred">TRANSFERRED</mat-option>
             <mat-option  value="approved">APPROVED</mat-option>
             <mat-option  value="to Central">TO CENTRAL</mat-option>
+            <mat-option  value="fund transferred utilization pending">Fund transferred utilization pending</mat-option>
+            <mat-option  value="partiall utilization done">Partiall utilization done</mat-option>
+            <mat-option  value="partially settled with extra claim">Partially settled with extra claim</mat-option>
+            <mat-option  value="fully settled">Fully settled</mat-option>
+            <mat-option  value="fully settled with extra claim">Fully settled with extra claim</mat-option>
           </mat-select>
        </button>
       </div>

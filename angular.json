@@ -44,6 +44,23 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true
             }
           }
         },
@@ -55,6 +72,9 @@
           "configurations": {
             "production": {
               "browserTarget": "ApprovalSystem:build:production"
+            },
+            "staging": {
+              "browserTarget": "ApprovalSystem:build:staging"
             }
           }
         },
@@ -123,5 +143,8 @@
       }
     }
   },
-  "defaultProject": "ApprovalSystem"
+  "defaultProject": "ApprovalSystem",
+  "cli": {
+    "analytics": "5b3bbe01-ad02-443a-8885-1a93357d64bd"
+  }
 }

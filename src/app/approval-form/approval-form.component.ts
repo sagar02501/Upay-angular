@@ -1,8 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { VendorDetailsComponent } from './vendor-details/vendor-details.component';
+import { SalaryDetailsComponent } from './salary-details/salary-details.component';
+import { UtilizationDetailsComponent } from './utilization-details/utilization-details.component';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ApprovalFormService } from './../service/approval-form.service';
 import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-approval-form',
@@ -10,8 +14,84 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./approval-form.component.css']
 })
 export class ApprovalFormComponent implements OnInit, OnDestroy {
+  approvalInput:number;
+  payeePlaceholder: string;
+  accountnoPlaceholder: string;
+  banknamePlaceholder: string;
+  ifscPlaceholder: string;
+  unutilizedAmount:string;
+  
+  private unutilizedSubscription: Subscription;
+ 
+  public bill :{
+    number :string,
+    amount: string,
+    vendor:string,
+    itemDesc: string,
+    file: File | null
+  }
+  bills:any[];
 
-  constructor(public approvalFormService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) { }
+ public salary:{
+  number :string,
+  amount: string,
+  employee:string,
+  itemDesc: string,
+  file:File|null
+ }
+ salaries: any[];
+
+ public vendor:{
+  number :string,
+  amount: number,
+  vendorname:string,
+  vendorAdd:string,
+  preferance:string,
+  deliveryschedule:string,
+  paymentterms:string,
+  unitprice:string,
+  netamount:number,
+  tax:number,
+  remarks: string,
+  file: File | null 
+ }
+
+ vendors : any[];
+  constructor(public approvalFormService: ApprovalFormService,private approvalService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
+    this.bill ={
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: "",
+      file:null
+    }
+    this.bills = [this.bill];
+
+    this.salary = {
+      number :"",
+      amount: "",
+      employee:"",
+      itemDesc: "",
+      file:null
+      };
+    this.salaries = [this.salary]
+  
+    this.vendor = {
+      number :"",
+      amount: 0.0,
+      vendorname:"",
+      vendorAdd:"",
+      preferance:"",
+      deliveryschedule:"",
+      paymentterms:"",
+      unitprice:"",
+      netamount:0.0,
+      tax:0.0,
+      remarks: "",
+      file:null 
+    };
+    this.vendors= [this.vendor];
+   }
   isOTP = false;
   isOTPVerified = 0;
   isSubmitted;
@@ -24,7 +104,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   zones = [];
   approvals = [];
   approvalFile;
-
+  
+  
+  /* no change */
   ngOnInit() {
     this.settingsService.getZoneList();
     this.otpVerificationSubscription = this.approvalFormService.getOTPVerificationListener()
@@ -50,9 +132,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
       this.approvals.push({name: 'In Principle or Admin Approval', value: 0});
       this.approvals.push({name: 'Advance or Imprest', value: 1});
-      this.approvals.push({name: 'Claim against advance', value: 2});
+      this.approvals.push({name: 'Claim against advance/PO', value: 2});
       this.approvals.push({name: 'Claim', value: 3});
       this.approvals.push({name: 'Award Approval', value: 4});
+      this.approvals.push({name: 'Salary', value: 5});
   }
 
   onSubmit(approvalForm) {
@@ -61,20 +144,59 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.approvalForm = approvalForm;
-    this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+    approvalForm.value.bills = this.bills;
+    approvalForm.value.vendors = this.vendors;
+    approvalForm.value.salaries = this.salaries;
+    console.log(approvalForm.value)
+    if(approvalForm.value.approval == 0 ||approvalForm.value.approval == 1  || approvalForm.value.approval == 3 ){
+       /* 0 - In Principle or Admin Approval
+          1 - Advance or Imprest
+          3 - Claim
+       */
+      this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+    }else{
+      //console.log('TODO: New api',this.approvals[approvalForm.value.approval]);
+       /* 2 - Claim against advance/PO
+          4 - Award Approval
+          5 - Salary
+       */
+      //console.log(approvalForm.value.advanceId)
+      console.log("submit form 2",approvalForm.value);
+      this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
+    }
+    
   }
 
   onImagePicked(event: Event) {
     this.approvalFile = (event.target as HTMLInputElement).files[0];
   }
+  
+  search(numberKey: string, myArray: any){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].number === numberKey) {
+            return myArray[i];
+        }
+    }
+}
 
   approvalChanged(value) {
     if (value === 4) {
-      this.approvalPlaceholder = 'Vendors Details with account number / admin approval Id / price comparison';
+      this.payeePlaceholder = 'L1 Vendor name';
+      this.accountnoPlaceholder = 'L1 Vendor Account Number';
+      this.banknamePlaceholder = 'L1 Vendor Bank Name';
+      this.ifscPlaceholder = 'L1 Vendor Bank IFSC';
+      this.approvalPlaceholder = 'L1 Vendors Details with account number / admin approval Id / price comparison';
     } else {
+      this.payeePlaceholder = 'Payee Name';
+      this.accountnoPlaceholder = 'Account Number';
+      this.banknamePlaceholder = 'Bank Name';
+      this.ifscPlaceholder = 'Bank IFSC';
       this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
     }
-
+    if(value == 0){
+      this.approvalPlaceholder = 'Justify your approval request';
+    }
+  
   }
 
   sendOTP(phone) {
@@ -99,4 +221,60 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.zoneSubscription.unsubscribe();
   }
 
+  addSalaryComponent() {
+    var newSalary = {
+    number :"",
+    amount: "",
+    employee:"",
+    itemDesc: "",
+    file:null
+    };
+    this.salaries.push(newSalary);
+    //console.log(this.salaries);
+  }  
+  addVendorComponent() {
+    var newVendor = {
+    number :"",
+    amount: 0.0,
+    vendorname:"",
+    vendorAdd:"",
+    preferance:"",
+    deliveryschedule:"",
+    paymentterms:"",
+    unitprice:"",
+    netamount:0.0,
+    tax:0.0,
+    remarks: "",
+    file:null
+    };
+    this.vendors.push(newVendor);
+    // console.log(this.vendors);
+  } 
+  addBills(){
+    var newBill ={
+      number :"",
+      amount: "",
+      vendor:"",
+      itemDesc: "",
+      file:null
+    }
+    this.bills.push(newBill);
+    //console.log(this.bills);
+  }
+  
+  getUntilizedamt(event: any){
+    console.log(event.target.value);
+    var advanceId = event.target.value;
+    if (advanceId !== undefined){
+      this.approvalService.getUnutilizedamt(advanceId)
+    }
+    this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
+      if((res as any).error_message ){
+        this.unutilizedAmount = "Approval Id does not exist"
+      }
+      else
+       this.unutilizedAmount = (res as any).unutilizedamount;
+      //console.log(this.unutilizedAmount, res);
+    });
+  }
 }
