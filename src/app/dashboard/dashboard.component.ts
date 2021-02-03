@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;;
   private approvalSubscription: Subscription;
+  private allApprovalSubscription: Subscription;
   private approvalStatusSubscription: Subscription;
   private approverSubscription: Subscription;
   private zoneSub: Subscription;
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   zonefilters;
   statusfilters;
   approvaltypefilters;
+  allApprovalData;
 
   ngOnInit() {
     this.approvalFormService.getApprovalStatusData();
@@ -49,6 +51,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.count = this.count.count;
       }
     });
+    this.allApprovalSubscription = this.approvalFormService.getAllApprovalListener().subscribe((res) => {
+      if (res) {
+        this.allApprovalData = res;
+      }
+    })
     this.zoneSub = this.settingsService.getZoneSubjectListener().subscribe((res) => {
       this.zonesList = res as any;
     });
@@ -121,6 +128,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadExcelData() {
+    this.approvalFormService.getAllApproval(this.searchText, this.sortBy, this.sortOrder, Math.pow(10, 10), 0, this.statusfilters, this.zonefilters, this.approvaltypefilters)
+  }
+
   pageChanged(e) {
     if (e.pageSize != this.pageSize) {
       this.paginator.pageIndex = 0;
@@ -162,6 +173,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.approvalSubscription.unsubscribe();
     this.approverSubscription.unsubscribe();
+    this.allApprovalSubscription.unsubscribe();
     this.zoneSub.unsubscribe();
   }
 }

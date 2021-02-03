@@ -22,6 +22,7 @@ export class ApprovalListComponent implements OnInit {
   @Input() approvalList;
   @Input() approverList;
   @Input() zonesList;
+  @Input() allApprovalData;
   openBody = false;
   searchText;
   sortBy;
@@ -29,6 +30,7 @@ export class ApprovalListComponent implements OnInit {
   sortDateAsc = true;
   approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
+  @Output() exportExcelFired: EventEmitter<any> = new EventEmitter()
   
   
   openedChange(opened: boolean) {
@@ -62,6 +64,10 @@ export class ApprovalListComponent implements OnInit {
     this.approvalSearchSubject.pipe(debounceTime(500)).subscribe((e) => {
       this.sortApproval();
     });
+  }
+
+  ngOnChanges() {
+    console.log(this.allApprovalData);
   }
 
   handleEvent(e) {
@@ -215,6 +221,10 @@ export class ApprovalListComponent implements OnInit {
     win.document.close();
 
     win.print();
+}
+
+createExcelReport() {
+  this.exportExcelFired.emit(true);
 }
 
 }
