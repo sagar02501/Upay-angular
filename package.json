@@ -29,6 +29,7 @@
     "bcrypt": "^3.0.6",
     "bcryptjs": "^2.4.3",
     "core-js": "^2.5.4",
+    "file-saver": "^2.0.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.0",
     "mongoose-unique-validator": "^2.0.3",
@@ -38,6 +39,7 @@
     "nodemon": "^1.18.11",
     "request": "^2.88.0",
     "rxjs": "6.0.0",
+    "xlsx": "^0.16.9",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

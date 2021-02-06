@@ -66,9 +66,6 @@ export class ApprovalListComponent implements OnInit {
     });
   }
 
-  ngOnChanges() {
-    console.log(this.allApprovalData);
-  }
 
   handleEvent(e) {
     this.actionOccured.emit(e);
