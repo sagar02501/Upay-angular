@@ -4,6 +4,12 @@ import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { MatPaginator } from '@angular/material';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;;
   private approvalSubscription: Subscription;
+  private allApprovalSubscription: Subscription;
   private approvalStatusSubscription: Subscription;
   private approverSubscription: Subscription;
   private zoneSub: Subscription;
@@ -35,6 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   zonefilters;
   statusfilters;
   approvaltypefilters;
+  allApprovalData;
 
   ngOnInit() {
     this.approvalFormService.getApprovalStatusData();
@@ -121,6 +129,24 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadExcelData() {
+    this.approvalFormService.getAllApproval(this.searchText, this.sortBy, this.sortOrder, Math.pow(10, 10), 0, this.statusfilters, this.zonefilters, this.approvaltypefilters);
+    this.allApprovalSubscription = this.approvalFormService.getAllApprovalListener().subscribe((res) => {
+      if (res) {
+        this.allApprovalData = res;
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.allApprovalData);
+        const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, 'UPAY');
+      }
+    })
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {type: EXCEL_TYPE});
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().toLocaleDateString() + '_' + new  Date().toLocaleTimeString() + EXCEL_EXTENSION);
+ }
+
   pageChanged(e) {
     if (e.pageSize != this.pageSize) {
       this.paginator.pageIndex = 0;
@@ -162,6 +188,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.approvalSubscription.unsubscribe();
     this.approverSubscription.unsubscribe();
+    this.allApprovalSubscription.unsubscribe();
     this.zoneSub.unsubscribe();
   }
 }

@@ -14,8 +14,9 @@
      <mat-datepicker #myDatePicker></mat-datepicker>
     </mat-form-field> -->
     </div>
-    <div class="approvals-list__header--print" (click)="openBodyAndCreatePdf()">
-      Print
+    <div>
+      <button mat-raised-button color='primary' class='function-button' (click)="openBodyAndCreatePdf()">Print</button>
+      <button mat-raised-button color='warn' class='function-button' (click)="createExcelReport()">Export Excel</button>
     </div>
   </section>
   <div class="a-table">

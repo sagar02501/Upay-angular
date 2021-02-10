@@ -22,6 +22,7 @@ export class ApprovalListComponent implements OnInit {
   @Input() approvalList;
   @Input() approverList;
   @Input() zonesList;
+  @Input() allApprovalData;
   openBody = false;
   searchText;
   sortBy;
@@ -29,6 +30,7 @@ export class ApprovalListComponent implements OnInit {
   sortDateAsc = true;
   approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
+  @Output() exportExcelFired: EventEmitter<any> = new EventEmitter()
   
   
   openedChange(opened: boolean) {
@@ -63,6 +65,7 @@ export class ApprovalListComponent implements OnInit {
       this.sortApproval();
     });
   }
+
 
   handleEvent(e) {
     this.actionOccured.emit(e);
@@ -215,6 +218,10 @@ export class ApprovalListComponent implements OnInit {
     win.document.close();
 
     win.print();
+}
+
+createExcelReport() {
+  this.exportExcelFired.emit(true);
 }
 
 }
