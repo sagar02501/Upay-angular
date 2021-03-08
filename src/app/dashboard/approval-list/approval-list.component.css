@@ -6,7 +6,8 @@
     font-family: 'Rubik', sans-serif;
     font-size: 1.4rem;
 }
-.approvals-list__header--print {
+
+/* .approvals-list__header--print {
   cursor: pointer;
   padding: 0.5rem 1rem;
   letter-spacing: 1px;
@@ -14,7 +15,12 @@
   color: #fff;
   border-radius: 3px;
   align-self: flex-end;
+} */
+
+.function-button {
+  margin: 4px;
 }
+
 .approval-search {
   width: 30%;
 }
