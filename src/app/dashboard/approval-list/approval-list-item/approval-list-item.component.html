@@ -65,7 +65,7 @@
   <p *ngIf="approval.advance_details"><strong>Advance Details: </strong><pre>{{approval.advance_details}}</pre>
 </div>
 <mat-menu #actionMenu="matMenu">
-    <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central'"  (click)="sendToApprover()">Send to Approver</button>
+    <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"  (click)="sendToApprover()">Send to Approver</button>
     <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
     <button mat-menu-item (click)="notifyInitiator()">Notify Initiator</button>
     <button mat-menu-item [disabled]="approval.approval_type != 'Award Approval' || approval.status == 'new' || approval.status == 'pending'" (click)="printPo()">Generate P.O.</button>
