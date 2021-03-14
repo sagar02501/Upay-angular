@@ -22,4 +22,4 @@
     </div>
 </div>
 <app-approval-list [approvalList]="approvalList" [zonesList] = "zonesList" [approverList]="approverList" (actionOccured)="handleEvent($event)" (exportExcelFired)="loadExcelData()"></app-approval-list>
-<mat-paginator [length]="count?.total" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]" (page)="pageChanged($event)"></mat-paginator>
+<mat-paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]" (page)="pageChanged($event)"></mat-paginator>
