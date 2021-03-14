@@ -80,7 +80,6 @@ export class GetSingleApprovalComponent implements OnInit {
   }
   
   sendToApprover() {
-    console.log('approver list',this.approverList)
     const dialogRef = this.dialog.open(ActionDialogComponent,
        {data: {
          approverList: this.approverList,
