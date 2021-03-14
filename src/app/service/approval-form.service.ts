@@ -9,6 +9,7 @@ import { environment } from './../../environments/environment';
 export class ApprovalFormService {
 
   private approvalSubject = new Subject();
+  private allApprovalSubject = new Subject();
   private awardSubject = new Subject();
   private billSubject = new Subject();
   private unutilizedamtSubject = new Subject();
@@ -227,6 +228,15 @@ export class ApprovalFormService {
     }
     );
   }
+
+  getAllApproval(search?, sort?, order = -1, pageSize = Math.pow(10, 10), pageNum = 0, status?, zones?,approvaltype?) {
+    sort = sort || 'date';
+    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}&approvaltype=${approvaltype}`).subscribe((res) => {
+      this.allApprovalSubject.next(res);
+    },
+    (err) => {console.log(err); }
+    );
+  }
  
   getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0,status?, zones?,approvaltype?) {
     sort = sort || 'date';
@@ -394,6 +404,9 @@ export class ApprovalFormService {
 
   getApprovalListener() {
     return this.approvalSubject.asObservable();
+  }
+  getAllApprovalListener() {
+    return this.allApprovalSubject.asObservable();
   }
   getAwardListener() {
     return this.awardSubject.asObservable();
