@@ -72,5 +72,5 @@
     <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="withoutfundTransfer()">Settle Without Fund Transfer</button>
     <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
     <button mat-menu-item (click)="printApproval()">Print</button>
-    <button mat-menu-item (click)="deleteApproval()">Delete</button>
+    <button mat-menu-item [disabled]="reviewdasboard != 'false'" (click)="deleteApproval()">Delete</button>
 </mat-menu>

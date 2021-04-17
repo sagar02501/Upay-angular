@@ -190,7 +190,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.approvalSubscription.unsubscribe();
     this.approverSubscription.unsubscribe();
-    this.allApprovalSubscription.unsubscribe();
+    //this.allApprovalSubscription.unsubscribe();
     this.zoneSub.unsubscribe();
   }
 }

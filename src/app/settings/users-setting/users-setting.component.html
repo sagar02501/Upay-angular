@@ -2,6 +2,25 @@
   <mat-tab-group>
     <mat-tab label="Update/Delete" active>
       <div class="update-user">
+        <div style="text-align:left;">
+          <div>
+          <p>User</p>
+        </div>
+        <div >
+          <p>Zone</p>
+        </div>
+        
+        <div >
+          <p>Is Reviewer</p>
+        </div>
+        <div >
+          <p>Settings</p>
+        </div>
+        <div >
+          <p></p>
+        </div>
+        
+      </div>
         <div *ngFor="let user of users">
           <div class="user-name">
             <mat-form-field>
@@ -14,7 +33,7 @@
           <div class="user-zone">
             <mat-form-field>
               <!-- <mat-label></mat-label> -->
-              <mat-select name="zone" [disabled]="!user.edit" [(ngModel)]="user.zone" #zoneInput="ngModel" required>
+              <mat-select name="zone" [disabled]="!user.edit" [(ngModel)]="user.zone" #zoneInput="ngModel"  required>
                 <mat-option *ngFor="let zone of zones" [value]="zone.name">
                   {{zone.name}}
                 </mat-option>
@@ -22,10 +41,18 @@
               <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
               </mat-form-field>
           </div>
+          <div>
+            <mat-form-field>
+            <mat-select name="reviewdashboard" [disabled]="!user.edit"  [(ngModel)]="user.reviewadmin" #reviewUserInput="ngModel" required >
+             <mat-option  value="false">false</mat-option>
+              <mat-option  value="true">true</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
           <div class="user-actions">
             <button mat-raised-button *ngIf="!user.edit" (click)="resetPwd(user._id)">Reset Pwd</button>
             <button mat-raised-button *ngIf="!user.edit" (click)="user.edit = true">Edit</button>
-            <button mat-raised-button *ngIf="user.edit" (click)="editUser(user._id, user.email, user.zone);user.edit = false">Save</button>
+            <button mat-raised-button *ngIf="user.edit" (click)="editUser(user._id, user.email, user.zone, user.reviewadmin);user.edit = false">Save</button>
             <button mat-raised-button (click)="deleteUser(user._id);">Delete</button>
           </div>
         </div>
@@ -51,6 +78,14 @@
               </mat-select>
               <mat-error *ngIf="zoneInput.invalid"> Please provide zone </mat-error>
               </mat-form-field>
+              <mat-form-field>
+                <mat-label>is Reviewer</mat-label>
+                <mat-select name="reviewdashboard"  [(value)]="selected"  ngModel #reviewUserInput="ngModel" required >
+                  <mat-option  value="false">false</mat-option>
+                   <mat-option  value="true">true</mat-option>
+                 </mat-select>
+                <mat-error *ngIf="reviewUserInput.invalid"> Please provide is reviewer </mat-error>
+                </mat-form-field> 
             <mat-form-field>
               <input type="password" matInput
               placeholder="Password" name="password" ngModel #passwordInput="ngModel" required>
