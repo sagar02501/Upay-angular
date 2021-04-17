@@ -32,31 +32,31 @@ export class ApprovalListComponent implements OnInit {
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
   @Output() exportExcelFired: EventEmitter<any> = new EventEmitter()
   
-  
+  status ='';
+  zones ='';
+  approvaltype = '';
   openedChange(opened: boolean) {
-    let status ='';
-    let zones ='';
-    let approvaltype = '';
+    
     if(opened == true){ console.log('selecting zone or status');}
     else{
       if( (this.selectedStatus instanceof Array ) && this.selectedStatus.length >= 0 )
          {
-          status = this.selectedStatus.toString();
+          this.status = this.selectedStatus.toString();
           //console.log(this.selectedStatus.toString())
          }
       if( (this.selectedZone instanceof Array ) && this.selectedZone.length >= 0 )
          {
-          zones = this.selectedZone.toString();
+          this.zones = this.selectedZone.toString();
          // console.log(this.selectedZone.toString())
          } 
 
          if( (this.selectedApprovalType instanceof Array ) && this.selectedApprovalType.length >= 0 )
          {
-          approvaltype = this.selectedApprovalType.toString();
+          this.approvaltype = this.selectedApprovalType.toString();
          // console.log(this.selectedZone.toString())
          } 
          //console.log(zones + ' , '+ status)
-         this.filterApproval(zones,status,approvaltype);
+         this.filterApproval(this.zones,this.status,this.approvaltype);
      }
     
  }
@@ -83,12 +83,13 @@ export class ApprovalListComponent implements OnInit {
     if (sortBy === 'amount') {
       this.sortAmountAsc ? this.sortAmountAsc = false : this.sortAmountAsc = true;
     }
-    this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy,status: this.selectedStatus instanceof Array  ? this.selectedStatus.toString():'', zones:  this.selectedZone instanceof Array ? this.selectedZone.toString():''});
+    this.filterApproval(this.zones,this.status,this.approvaltype);
+    //this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy,status: this.selectedStatus instanceof Array  ? this.selectedStatus.toString():'', zones:  this.selectedZone instanceof Array ? this.selectedZone.toString():''});
   }
 
   filterApproval(zone?,status?,approvaltype?) {
    // console.log('filterEmit', zone, status)
-    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'' ,status: status, zones: zone,approvaltype:approvaltype});
+    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'date' ,status: status, zones: zone,approvaltype:approvaltype});
   }
 
   openBodyAndCreatePdf() {

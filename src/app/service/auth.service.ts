@@ -21,8 +21,8 @@ export class AuthService {
 
   constructor(public http: HttpClient, public router: Router, private snackBar: MatSnackBar) { }
 
-  createUser(email: string, password: string, zone: string) {
-    const authData: AuthData = { email: email, password: password, zone: zone };
+  createUser(email: string, password: string, zone: string, reviewadmin : string) {
+    const authData: AuthData = { email: email, password: password, zone: zone, reviewadmin:reviewadmin };
     this.http.post(this.url + 'signup', authData)
       .subscribe((res) => {
         this.openSnackBar((res as any).message, 1);
@@ -35,8 +35,8 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password, zone: '' };
-    this.http.post<{token: string, expiresIn: number, userId: string, zone: string}>(this.url + 'login', authData)
+    const authData: AuthData = { email: email, password: password, zone: '',reviewadmin:'false' };
+    this.http.post<{token: string, expiresIn: number, userId: string, zone: string, reviewadmin: string}>(this.url + 'login', authData)
       .subscribe(response => {
         this.token = response.token;
         if (this.token) {
@@ -64,8 +64,8 @@ export class AuthService {
     );
   }
 
-  editUser(id, email, zone) {
-    const data = {id: id, email: email, zone: zone};
+  editUser(id, email, zone, reviewadmin) {
+    const data = {id: id, email: email, zone: zone, reviewadmin:reviewadmin};
     this.http.post(this.url + 'edit', data).subscribe((res) => {
       this.openSnackBar((res as any).message, 1);
     },
@@ -107,6 +107,10 @@ export class AuthService {
     return this.parseJwt(this.token).zone;
   }
 
+  getReviewUserZone() {
+    return this.parseJwt(this.token).reviewadmin;
+  }
+
   parseJwt(token) {
     const base64Url = token.split('.')[1];
     const base64 = decodeURIComponent(atob(base64Url).split('').map(function(c) {
@@ -129,12 +133,18 @@ export class AuthService {
   }
 
   logout() {
+    
     this.token = null;
+    
     this.isAuthenticated = false;
     // this.authStatusListener.next(false);
+    
     this.userId = null;
+    
     clearTimeout(this.tokenTimer);
+    
     this.clearAuthData();
+    
     this.router.navigate(['/login']);
   }
 

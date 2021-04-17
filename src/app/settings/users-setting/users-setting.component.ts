@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from './../../confirm-dialog/confirm-dialog.co
 export class UsersSettingComponent implements OnInit, OnDestroy {
 
   isLoading = false;
-
+  private selectedReviewAdmin = false;
   private userSub: Subscription;
   users = [];
   private zoneSub: Subscription;
@@ -40,7 +40,7 @@ export class UsersSettingComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
-    this.authService.createUser(form.value.email, form.value.password, form.value.zone);
+    this.authService.createUser(form.value.email, form.value.password, form.value.zone, form.value.reviewdashboard || 'false');
   }
 
   resetPwd(id) {
@@ -60,8 +60,8 @@ export class UsersSettingComponent implements OnInit, OnDestroy {
     });
   }
 
-  editUser(id, email, zone) {
-    this.authService.editUser(id, email, zone);
+  editUser(id, email, zone,reviewadmin) {
+    this.authService.editUser(id, email, zone, reviewadmin);
   }
 
   deleteUser(id) {
