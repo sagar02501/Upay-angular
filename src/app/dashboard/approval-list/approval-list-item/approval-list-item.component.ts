@@ -171,13 +171,13 @@ export class ApprovalListItemComponent implements OnInit {
   }
 
   printApproval() {
-
+    
     const approvalData =
     `<h3>Approval Data</h3>
       <div class="print-approval">
       <div>
       <label>Approval Id</label>
-      <span>${this.approval.approvalId}</span>
+      <span>${this.approval.claimId || this.approval.approvalId}</span>
       </div>
       <div>
       <label>Name</label>
