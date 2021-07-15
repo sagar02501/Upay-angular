@@ -148,10 +148,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     approvalForm.value.vendors = this.vendors;
     approvalForm.value.salaries = this.salaries;
     console.log(approvalForm.value)
-    if(approvalForm.value.approval == 0 ||approvalForm.value.approval == 1  || approvalForm.value.approval == 3 ){
+    if(approvalForm.value.approval == 0 ){
        /* 0 - In Principle or Admin Approval
-          1 - Advance or Imprest
-          3 - Claim
+         
        */
       this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
     }else{
@@ -159,6 +158,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
        /* 2 - Claim against advance/PO
           4 - Award Approval
           5 - Salary
+          
+          Changes Done on 23/06/2021
+          1 - Advance or Imprest
+          3 - Claim
        */
       //console.log(approvalForm.value.advanceId)
       console.log("submit form 2",approvalForm.value);

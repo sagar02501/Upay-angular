@@ -147,6 +147,13 @@ export class ApprovalFormService {
         });
         this.formSubmitSubject.next(res);
       }
+      if(data.approval == 1 || data.approval == 3 ){
+        data.bills.forEach(bill => {
+          console.log("inside bills");
+          this.submitBills(approvalId,null,bill,bill.file); 
+        });
+        this.formSubmitSubject.next(res);
+      }
       if(data.approval == 4){
         data.vendors.forEach(vendor => {
           this.submitAward(approvalId,vendor,vendor.file); 

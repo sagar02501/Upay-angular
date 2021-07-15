@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     const userZone = this.authService.getUserZone();
     const reviewAdmin = this.authService.getReviewUserZone();
-    if (userZone === 'admin' || (userZone === 'central' && reviewAdmin === 'false')) {
+    if (userZone === 'admin' && reviewAdmin ==='false') {
       this.showSettings = true;
     }
   }

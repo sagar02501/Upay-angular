@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   allApprovalData;
 
   ngOnInit() {
+    console.log("NG Onint");
     this.approvalFormService.getApprovalStatusData();
     this.approvalFormService.getApproval();
     this.settingsService.getApproverList();
@@ -90,7 +91,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.success = (res as any).isSuccess;
           this.openSnackBar((res as any).message);
         }
-        setTimeout(() => { this.approvalFormService.getApproval();
+        setTimeout(() => { 
+                      //this.approvalFormService.getApproval();
+                      this.sortApproval(this.searchText,this.sortBy,this.statusfilters,this.zonefilters,this.approvaltypefilters);
                       this.approvalFormService.getApprovalStatusData();
                     }, 500);
       }
@@ -102,6 +105,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+  
   sortApproval(searchText?, sortBy?,status?, zones?,approvaltype?, pageSize?) {
     this.sortOrder === 1 ? this.sortOrder = -1 : this.sortOrder = 1;
     this.searchText = searchText;

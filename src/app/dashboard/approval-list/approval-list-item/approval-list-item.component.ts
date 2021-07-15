@@ -454,7 +454,7 @@ export class ApprovalListItemComponent implements OnInit {
             
             <tr>
                 <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
-                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.netbillamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${(parseInt(awardPodata.netbillamount) || 0)+ (parseInt(awardPodata.shipping_handling_chrg) || 0)+(parseInt(awardPodata.gst_tax) || 0)}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>

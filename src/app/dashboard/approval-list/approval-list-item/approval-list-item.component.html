@@ -49,6 +49,8 @@
       <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
       <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" target="_blank" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
       <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" target="_blank" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" target="_blank" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Advance or Imprest'" target="_blank" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
   </div>
   <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}" class="approval-status">
       {{approval.status | uppercase }}
@@ -63,6 +65,10 @@
   <p><strong>Approval Details: </strong><pre>{{approval.body}}</pre><br>
   <p *ngIf="approval.payment_details"><strong>Payment Details: </strong><pre>{{approval.payment_details}}</pre><br>
   <p *ngIf="approval.advance_details"><strong>Advance Details: </strong><pre>{{approval.advance_details}}</pre>
+    <div><label>A/C: </label> <span>{{approval?.account_no}}</span></div>
+    <div><label>Bank Name </label><span>{{approval?.bank_name}}</span></div>
+    <div><label>Payee Name: </label> <span>{{approval?.payee_name}}</span></div>
+    <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
 </div>
 <mat-menu #actionMenu="matMenu">
     <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"  (click)="sendToApprover()">Send to Approver</button>
