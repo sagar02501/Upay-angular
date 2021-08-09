@@ -147,7 +147,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     approvalForm.value.bills = this.bills;
     approvalForm.value.vendors = this.vendors;
     approvalForm.value.salaries = this.salaries;
-    console.log(approvalForm.value)
+    //console.log(approvalForm.value)
     if(approvalForm.value.approval == 0 ){
        /* 0 - In Principle or Admin Approval
          
@@ -164,7 +164,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
           3 - Claim
        */
       //console.log(approvalForm.value.advanceId)
-      console.log("submit form 2",approvalForm.value);
+      //console.log("submit form 2",approvalForm.value);
       this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
     }
     
@@ -188,13 +188,13 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.accountnoPlaceholder = 'L1 Vendor Account Number';
       this.banknamePlaceholder = 'L1 Vendor Bank Name';
       this.ifscPlaceholder = 'L1 Vendor Bank IFSC';
-      this.approvalPlaceholder = 'L1 Vendors Details with account number / admin approval Id / price comparison';
+      this.approvalPlaceholder = 'Approval/Utilization Details';
     } else {
       this.payeePlaceholder = 'Payee Name';
       this.accountnoPlaceholder = 'Account Number';
       this.banknamePlaceholder = 'Bank Name';
       this.ifscPlaceholder = 'Bank IFSC';
-      this.approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
+      this.approvalPlaceholder = 'Approval/Utilization Details';
     }
     if(value == 0){
       this.approvalPlaceholder = 'Justify your approval request';

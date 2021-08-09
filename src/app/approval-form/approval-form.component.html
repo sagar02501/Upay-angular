@@ -114,7 +114,7 @@
                 placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required>
                 <mat-error *ngIf="subjectInput.invalid"> Please provide subject </mat-error>
               </mat-form-field>
-              <mat-form-field *ngIf="approvalInput.value == 0 ">
+              <mat-form-field >
                 <textarea matInput
                 [placeholder]="approvalPlaceholder" name="body" ngModel #bodyInput="ngModel" required minlength="20"></textarea>
                 <mat-error *ngIf="bodyInput.invalid"> Please provide Approval/Utilization Details (min character 20)</mat-error>

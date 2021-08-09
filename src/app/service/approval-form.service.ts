@@ -34,7 +34,7 @@ export class ApprovalFormService {
       postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/bill`, postData).subscribe((res:any) => {
-      console.log(res.message)
+      //console.log(res.message)
     },
     (err) => {
       console.log(err);
@@ -53,7 +53,7 @@ export class ApprovalFormService {
       postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/salary`, postData).subscribe((res:any) => {
-      console.log(res.message)
+      //console.log(res.message)
 
     },
     (err) => {
@@ -82,7 +82,7 @@ export class ApprovalFormService {
       postData.append('file', file, data.file.name);
     }
     this.http.post(this.url+`/awardtable`, postData).subscribe((res:any) => {
-      console.log(res.message)
+      //console.log(res.message)
     },
     (err) => {
       console.log(err.message);
@@ -94,9 +94,9 @@ export class ApprovalFormService {
   url = environment.backendURL + 'api/approvals';
   
   submitForm2(data,approvalTypes){
-    console.log("Submit Form 2", data);
+    //console.log("Submit Form 2", data);
     const postData1 = new FormData();
-    console.log("Submit form 2",data);
+    //console.log("Submit form 2",data);
     postData1.append('name', data.name);
     postData1.append('zone', data.zone);
     postData1.append('designation', data.designation);
@@ -142,7 +142,7 @@ export class ApprovalFormService {
       let approvalId = res.approvalId;
       if(data.approval == 2){
         data.bills.forEach(bill => {
-          console.log("inside bills");
+         // console.log("inside bills");
           this.submitBills(data.advanceId,claimid,bill,bill.file); 
         });
         this.formSubmitSubject.next(res);
