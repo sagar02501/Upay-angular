@@ -39,6 +39,7 @@ export class AuthService {
     this.http.post<{token: string, expiresIn: number, userId: string, zone: string, reviewadmin: string}>(this.url + 'login', authData)
       .subscribe(response => {
         this.token = response.token;
+        console.log(this.parseJwt(this.token))
         if (this.token) {
           const expiresIn = response.expiresIn;
           this.setAuthTimer(expiresIn);

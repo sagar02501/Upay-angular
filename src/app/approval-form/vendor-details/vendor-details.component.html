@@ -29,20 +29,20 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
             <mat-error *ngIf="paymenttermsInput.invalid"> Please enter payment terms</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="text" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
+            <input matInput type="number" placeholder="Unit Price" name="unitprice" [(ngModel)]="vendor.unitprice" value="unitprice" #unitpriceInput="ngModel" required>
             <mat-error *ngIf="unitpriceInput.invalid"> Please enter unit price</mat-error>     
         </mat-form-field>
         <mat-form-field class="sizee">
-            <input matInput type="text" placeholder="Basic Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
+            <input matInput type="number" placeholder="Basic Biil/Quotation amount" name="netamount" [(ngModel)]="vendor.netamount" value="netamount" #netamountInput="ngModel" required>
             <mat-error *ngIf="netamountInput.invalid"> Please enter net bill/quotation amount</mat-error>     
         </mat-form-field>
     </div>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="other/Shipping Charges" name="shipping" [(ngModel)]="vendor.shipping" value="shipping" #shippingInput="ngModel" required>
+        <input matInput type="number" placeholder="other/Shipping Charges" name="shipping" [(ngModel)]="vendor.shipping" value="shipping" #shippingInput="ngModel" required>
         <mat-error *ngIf="shippingInput.invalid"> Please enter other/Shipping Charges</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="GST" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
+        <input matInput type="number" placeholder="GST" name="tax" [(ngModel)]="vendor.tax" value="tax" #taxInput="ngModel" required>
         <mat-error *ngIf="taxInput.invalid"> Please enter GST</mat-error>     
     </mat-form-field>
     <mat-form-field class="sizee">
