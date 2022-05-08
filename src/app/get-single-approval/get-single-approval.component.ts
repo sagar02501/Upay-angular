@@ -32,19 +32,16 @@ export class GetSingleApprovalComponent implements OnInit {
     private approvalForwardService: ApprovalFormService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar, private settingsService: SettingsService,private authService: AuthService) { }
+    private snackBar: MatSnackBar, private settingsService: SettingsService, private authService: AuthService) { }
 
   ngOnInit() {
     this.settingsService.getApproverList('true'); //forward = true
- 
-   
-    
     this.token = this.route.snapshot.queryParams['token'];
     this.approvalId = this.route.snapshot.queryParams['approvalId'];
-    
+
     this.claimId = this.route.snapshot.queryParams['claimId'];
     //console.log("this.claimId",this.claimId)
-    
+
     if (this.approvalId) {
       this.getSingleApprovalData();
     }
@@ -65,7 +62,7 @@ export class GetSingleApprovalComponent implements OnInit {
         this.timeline = this.approval.timeline.split('\n');
       }
     });
-    
+
     this.approverSubscription = this.settingsService.getApproverSubjectListener().subscribe((res) => {
       this.approverList = res;
     });
@@ -78,26 +75,31 @@ export class GetSingleApprovalComponent implements OnInit {
       panelClass: type
     });
   }
-  
+
   sendToApprover() {
     const dialogRef = this.dialog.open(ActionDialogComponent,
-       {data: {
-         approverList: this.approverList,
-        title: 'Send to Approver'}});
+      {
+        data: {
+          approverList: [{ email: this.approval.email }],
+
+          title: 'Forward',
+          to: 'Initiator'
+        }
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sendForApproval({forward: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
+        this.sendForApproval({ forward: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks });
       }
     });
   }
-  
+
   sendForApproval(e) {
-      this.approvalForwardService.sendApproval(e);
+    this.approvalForwardService.sendApproval(e);
   }
 
-  getSingleApprovalData(trackflag:boolean = false) {
-    this.approvalService.getSingleApproval(this.approvalId || this.trackId,this.claimId,trackflag);
+  getSingleApprovalData(trackflag: boolean = false) {
+    this.approvalService.getSingleApproval(this.approvalId || this.trackId, this.claimId, trackflag);
   }
 
   trackById() {
@@ -110,8 +112,11 @@ export class GetSingleApprovalComponent implements OnInit {
   }
 
   openConfirmatinDialog(text, remarks) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
       data: {
+        approverList: [{ email: this.approval.email }],
+        title: `${text}`,
+        to: 'Initiator',
         header: 'Confirm',
         message: `Are you sure you want to ${text} this approval?`,
         buttonTextPrimary: 'Yes',

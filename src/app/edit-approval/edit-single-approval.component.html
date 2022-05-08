@@ -1,0 +1,253 @@
+<div class="approval-form">
+  <a class="logo" href="https://www.upay.org.in/"><img class="upay-logo" src="../../assets/images/upay-logo.png"
+      alt="Upay Logo"></a>
+  <mat-tab-group [color]="'primary'">
+    <mat-tab label="Edit Approval Form" aria-selected="true">
+      <mat-card>
+        <div class="approval">
+          <div class="approval__search">
+            <mat-form-field>
+              <input matInput type="text" [placeholder]="'Edit with Approval Id'" name="remarks" [(ngModel)]="trackId"
+                #remarksInput="ngModel" required>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="trackById()">Search</button>
+          </div>
+          <div class="approval__actions" *ngIf="approval">
+            <form (submit)="onSubmit(approvalForm)" #approvalForm="ngForm">
+
+              <div class="approval__body">
+                <h3>Approval Details</h3><br>
+                <mat-form-field>
+                  <input disabled required matInput class="form-control" type="text" placeholder="Approval Id"
+                    name="approvalId" value="{{approval.approvalId}}">
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled required matInput class="form-control" type="text" placeholder="Claim Id"
+                    name="claimId" value="{{approval?.claimId}}">
+                </mat-form-field>
+                <!-- <div><label>Claim Id: </label><span>{{approval?.claimId}}</span></div> -->
+                <!-- <div [ngClass]="{'bold': !token}"><label>Status: </label><span>{{approval?.status}}</span></div> -->
+                <mat-form-field>
+                  <input [ngClass]="{'bold': !token}" disabled required matInput class="form-control" type="text"
+                    placeholder="Status" name="claimId" value="{{approval?.status}}">
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled required matInput class="form-control" type="text" placeholder="Name" name="name"
+                    value="{{approval?.name}}">
+                  <!-- <mat-error ngModel #nameInput="ngModel" *ngIf="nameInput.invalid"> Please provide Name </mat-error> -->
+                </mat-form-field>
+                <!-- <div><label>Email: </label><span>
+                    <!-<input matInput type="email" placeholder="{{approval?.email}}" name="email" ngModel
+                      #emailInput="ngModel">->
+                    <input matInput type="email" placeholder="Email" class="form-control" type="text"
+                      value="{{approval.email}}">
+                  </span></div> -->
+                <mat-form-field>
+                  <input disabled required matInput class="form-control" type="text" placeholder="Email" name="email"
+                    value="{{approval?.email}}">
+                  <!-- <mat-error ngModel #nameInput="ngModel" *ngIf="nameInput.invalid"> Please provide Name </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled matInput type="text" placeholder="Designation" name="designation"
+                    value="{{approval?.designation}}" required>
+                  <!-- <mat-error *ngIf="designationInput.invalid"> Please provide designation </mat-error> -->
+                </mat-form-field>
+                <!-- <mat-form-field>
+                  <input disabled type="number" matInput placeholder="Contact" name="contact"
+                    value="{{approval?.contact}}" required>
+                  <!- <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error> ->
+                </mat-form-field> -->
+                <!-- 
+
+
+
+ -->
+
+                <mat-form-field>
+                  <input disabled type="number" matInput placeholder="Contact" name="contact"
+                    value="{{approval?.contact}}" required>
+                  <!-- <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error> -->
+                </mat-form-field>
+                <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1"
+                  (click)="sendOTP(approval?.contact)">Verify Contact</button>
+                <div id="otp-input" *ngIf="isOTP && isOTPVerified != 1">
+
+                  <mat-form-field>
+                    <input matInput placeholder="OTP" type="number" #otp name="otp" ngModel class="form-control"
+                      required>
+                  </mat-form-field>
+                  <button id="otp-button" mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
+                </div>
+                <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p><br>
+
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Requisite amount" name="amount"
+                    value="{{approval?.amount}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled matInput type="text" placeholder="Approval Type" name="approval_type"
+                    value="{{approval?.approval_type}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled matInput type="text" placeholder="Subject" name="subject"
+                    value="{{approval?.subject}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Payee Name" name="payeeName" value="{{approval?.payee_name}}"
+                    required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Bank Name" name="bankName" value="{{approval?.bank_name}}"
+                    required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="IFSC code" oninput="this.value = this.value.toUpperCase()"
+                    name="bankIfsc" value="{{approval?.ifsc_code}}" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="A/C Number" inputmode="numeric" pattern="[0-9]*" digitOnly
+                    name="accountNumber" value="{{approval?.account_no}}" minlength="8" maxlength="18">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Award Value" name="awardValue"
+                    value="{{approval?.awardvalue}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <textarea matInput placeholder="Approval Details" name="body" value="{{approval?.body}}" required
+                    minlength="20"></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="text" placeholder="Payment Details" name="payment_details"
+                    value="{{approval?.payment_details}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled matInput type="text" placeholder="Remarks by mediator" name="mediator_remarks"
+                    value="{{approval?.mediator_remarks}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+                <mat-form-field>
+                  <input disabled matInput type="text" placeholder="Remarks by approver" name="approver_remarks"
+                    value="{{approval?.approver_remarks}}" required>
+                  <!-- <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error> -->
+                </mat-form-field>
+
+                <!-- <div><label>Approval Type: </label><span> -->
+                <!-- 
+                    <mat-form-field>
+                      <mat-label>Approval Type</mat-label>
+                      <mat-select name="approval" ngModel #approvalInput="ngModel"
+                        (valueChange)="approvalChanged($event)" required>
+                        <mat-option ng-disabled>Please select approval type</mat-option>
+                        <mat-option *ngFor="let approval of approvals" [value]="approval.value">
+                          {{approval.name}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="approvalInput.invalid"> Please provide type of Approval </mat-error>
+                    </mat-form-field>-->
+                <!-- <mat-form-field>
+                      <mat-select name="approval" ngModel #approvalInput="ngModel"
+                        placeholder="{{approval?.approval_type}}">
+                        <mat-option value="In Principle or Admin Approval">In Principle or Admin Approval</mat-option>
+                        <mat-option value="Advance or Imprest">Advance or Imprest</mat-option>
+                        <mat-option value="Claim against advance/PO">Claim against advance/PO</mat-option>
+                        <mat-option value="Claim">Claim</mat-option>
+                        <mat-option value="Award Approval">Award Approval</mat-option>
+                        <mat-option value="Salary">Salary</mat-option>
+
+                      </mat-select>
+                    </mat-form-field>
+                  </span></div> -->
+
+                <!-- <div><label>Subject: </label><span>
+                    <input matInput type="text" placeholder="{{approval?.subject}}" name="subject" ngModel
+                      #subjectInput="ngModel">
+                  </span></div> -->
+                <!-- <div><label>Approval Details: </label><span>
+                    <input matInput type="text" placeholder="{{approval?.body}}" name="subject" ngModel
+                      #bodyInput="ngModel">
+
+                  </span></div>
+                <div><label>Payment Details: </label><span>
+                    <input matInput type="text" placeholder="{{approval?.payment_details}}" name="subject" ngModel
+                      #payment_detailsInput="ngModel">
+
+                  </span></div> -->
+                <!-- <div><label>A/C: </label> <span>
+                    <input matInput type="text" placeholder="{{approval?.account_no}}" inputmode="numeric"
+                      pattern="[0-9]*" digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel"
+                      minlength="8" maxlength="18">
+
+                  </span></div> -->
+                <!-- <div><label>Bank Name </label><span>
+                    <input matInput type="text" placeholder="{{approval?.bank_name}}" name="bankName" ngModel
+                      #bankNameInput="ngModel">
+                  </span></div> -->
+                <!-- <div><label>Payee Name: </label> <span>
+                    <input matInput type="text" placeholder="{{approval?.payee_name}}" name="payeeName" ngModel
+                      #payeeNameInput="ngModel">
+                  </span></div> -->
+                <!-- <div><label>IFSC code </label><span>
+                    <input matInput type="text" placeholder="{{approval?.ifsc_code}}"
+                      oninput="this.value = this.value.toUpperCase()" name="bankIfsc" ngModel #bankIfscInput="ngModel"
+                      pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
+
+                  </span></div> -->
+                <!-- <div><label>Award Value: </label><span>
+                    <input matInput type="number" placeholder="{{approval?.awardvalue}}" name="awardValue" ngModel
+                      #awardValueInput="ngModel"> -->
+
+                <!-- </span></div>
+                <div><label>Amount: </label><span>
+                    <input matInput type="number" placeholder="{{approval?.amount}}" name="amount" ngModel
+                      #amountInput="ngModel"> -->
+
+                <!-- </span></div> -->
+                <!-- <div><label>Remarks by mediator: </label><span>{{approval?.mediator_remarks}}</span></div> -->
+                <!-- <div><label>Timeline: </label><span>
+                    <ul>
+                      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
+                    </ul>
+                  </span></div> -->
+                <!-- <div class="approval-file"><label>File: </label><span>
+                    <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+                    <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'"
+                      href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+                    <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'"
+                      href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+                  </span>
+                </div> -->
+                <!-- <div><label>Remarks by approver:
+                  </label><span>{{approval?.approver_remarks}}</span></div> -->
+              </div>
+              <!--<div *ngIf="approvalInput.value == 0 " class="file-input">
+                <input type="file" #fileInput (change)="onImagePicked($event)">
+                <p>Upload bills/quotations/utilization (if any)<br>Supported formats -
+                  pdf/jpg/jpeg/png</p>
+                <!- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> ->
+              </div>-->
+              <div class="file-input">
+                <input type="file" #fileInput (change)="onImagePicked($event)">
+                <button class="filebtn file-upload-button" color="primary"
+                  (click)="$event.preventDefault();fileInput.click()"
+                  style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>
+                <p>Upload bills/quotations/utilization (if any)<br>Supported formats -
+                  pdf/jpg/jpeg/png</p>
+                <!-- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> -->
+              </div>
+
+              <button mat-raised-button color="primary" type="Submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>

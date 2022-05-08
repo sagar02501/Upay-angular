@@ -1,12 +1,13 @@
 import { DateRangePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { BrowserModule } from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTableModule, MatSortModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-import { MatInputModule,
+import {
+  MatInputModule,
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
@@ -18,8 +19,8 @@ import { MatInputModule,
   MatTooltipModule,
   MatMenuModule,
   MatChipsModule,
- } from '@angular/material';
- import { MatPaginatorModule } from '@angular/material/paginator';
+} from '@angular/material';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
@@ -35,6 +36,7 @@ import { ZonesSettingComponent } from './settings/zones-setting/zones-setting.co
 import { ApproversSettingComponent } from './settings/approvers-setting/approvers-setting.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
+import { EditSingleApprovalComponent } from './edit-approval/edit-single-approval.component';
 import { UtilizationDetailsComponent } from './approval-form/utilization-details/utilization-details.component';
 import { SalaryDetailsComponent } from './approval-form/salary-details/salary-details.component';
 import { VendorDetailsComponent } from './approval-form/vendor-details/vendor-details.component';
@@ -61,6 +63,7 @@ import { BillListItemComponent } from './bill-dashboard/bill-list/bill-list-item
     ApproversSettingComponent,
     ConfirmDialogComponent,
     GetSingleApprovalComponent,
+    EditSingleApprovalComponent,
     UtilizationDetailsComponent,
     SalaryDetailsComponent,
     VendorDetailsComponent,
@@ -100,6 +103,6 @@ import { BillListItemComponent } from './bill-dashboard/bill-list/bill-list-item
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ActionDialogComponent, ConfirmDialogComponent,UtilizationDetailsComponent,SalaryDetailsComponent,VendorDetailsComponent]
+  entryComponents: [ActionDialogComponent, ConfirmDialogComponent, UtilizationDetailsComponent, SalaryDetailsComponent, VendorDetailsComponent]
 })
 export class AppModule { }

@@ -1,12 +1,12 @@
 <div class="approvals-list__item">
   <div class="approval-id">
     {{ approval.claimId || approval.approvalId || '-'}}
-    </div>
+  </div>
   <div class="approval-name">
     {{approval.name || '-'}}
   </div>
   <div class="approval-email">
-      {{approval.email || '-'}}
+    {{approval.email || '-'}}
   </div>
   <div class="approval-type">
     {{approval.approval_type || '-'}}
@@ -16,45 +16,59 @@
     <div class="arrow-icon" [ngClass]="{'icon-rotate': openBody}"></div>
   </div>
   <div class="approval-designation">
-      {{approval.designation || '-'}}
+    {{approval.designation || '-'}}
   </div>
   <div class="approval-contact">
-      {{approval.contact || '-'}}
+    {{approval.contact || '-'}}
   </div>
   <div class="approval-createdAt">
     {{approvalCreatedDate || '-'}}
+  </div>
+  <div class="approval-fundTransDate">
+    {{fundTransferDateDashboard || '-'}}
   </div>
   <div class="approval-amount">
     {{approval.awardvalue || '-'}}
   </div>
   <div class="approval-amount">
-      {{approval.amount || '-'}}
+    {{approval.amount || '-'}}
   </div>
   <div class="approval-amount">
-    {{approval.amount_transferred  || '-'}}
-  </div> 
+    {{approval.amount_transferred || '-'}}
+  </div>
   <div class="approval-amount">
     {{approval.claimamount || '-'}}
   </div>
   <div class="approval-amount">
     {{approval.utilizedamount || '-'}}
-  </div> 
+  </div>
   <div class="approval-amount">
     {{approval.unutilizedamount || '-'}}
   </div>
+  <div class="audited-status">
+    <div *ngIf="approval.isAudit">{{'Yes'}}</div>
+    <div *ngIf="!approval.isAudit">{{'No'}}</div>
+  </div>
   <div class="approval-zone">
-      {{approval.zone || '-'}}
+    {{approval.zone || '-'}}
   </div>
   <div class="approval-file">
-      <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" target="_blank" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" target="_blank" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" target="_blank" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Advance or Imprest'" target="_blank" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+    <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+    <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" target="_blank"
+      href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+    <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" target="_blank"
+      href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+    <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" target="_blank"
+      href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+    <a *ngIf="!approval.filePath && approval.approval_type =='Advance or Imprest'" target="_blank"
+      href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
   </div>
-  <div (click)="openTimeline()" [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}" class="approval-status">
-      {{approval.status | uppercase }}
-      <div *ngIf="approval.status != 'new' && approval.mediator_remarks" class="remarks-icon" [matTooltip]="approval.mediator_remarks">?</div>
+  <div (click)="openTimeline()"
+    [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}"
+    class="approval-status">
+    {{approval.status | uppercase }}
+    <div *ngIf="approval.status != 'new' && approval.mediator_remarks" class="remarks-icon"
+      [matTooltip]="approval.mediator_remarks">?</div>
   </div>
   <div class="approval-action">
     <div class="action-icon" [matMenuTriggerFor]="actionMenu"></div>
@@ -62,21 +76,32 @@
 </div>
 <div class="approval-body-item" *ngIf="openBody">
   <p><strong>Approval Subject: </strong>{{approval.subject}}</p><br>
-  <p><strong>Approval Details: </strong><pre>{{approval.body}}</pre><br>
-  <p *ngIf="approval.payment_details"><strong>Payment Details: </strong><pre>{{approval.payment_details}}</pre><br>
-  <p *ngIf="approval.advance_details"><strong>Advance Details: </strong><pre>{{approval.advance_details}}</pre>
-    <div><label>A/C: </label> <span>{{approval?.account_no}}</span></div>
-    <div><label>Bank Name </label><span>{{approval?.bank_name}}</span></div>
-    <div><label>Payee Name: </label> <span>{{approval?.payee_name}}</span></div>
-    <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
+  <p><strong>Approval Details: </strong>
+  <pre>{{approval.body}}</pre><br>
+  <p *ngIf="approval.payment_details"><strong>Payment Details: </strong>
+  <pre>{{approval.payment_details}}</pre><br>
+  <p *ngIf="approval.advance_details"><strong>Advance Details: </strong>
+  <pre>{{approval.advance_details}}</pre>
+  <div><label>A/C: </label> <span>{{approval?.account_no}}</span></div>
+  <div><label>Bank Name </label><span>{{approval?.bank_name}}</span></div>
+  <div><label>Payee Name: </label> <span>{{approval?.payee_name}}</span></div>
+  <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
 </div>
 <mat-menu #actionMenu="matMenu">
-    <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"  (click)="sendToApprover()">Send to Approver</button>
-    <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
-    <button mat-menu-item (click)="notifyInitiator()">Notify Initiator</button>
-    <button mat-menu-item [disabled]="approval.approval_type != 'Award Approval' || approval.status == 'new' || approval.status == 'pending'" (click)="printPo()">Generate P.O.</button>
-    <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="withoutfundTransfer()">Settle Without Fund Transfer</button>
-    <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
-    <button mat-menu-item (click)="printApproval()">Print</button>
-    <button mat-menu-item [disabled]="reviewdasboard != 'false'" (click)="deleteApproval()">Delete</button>
+  <button mat-menu-item
+    [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"
+    (click)="sendToApprover()">Send to Approver</button>
+  <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
+  <button mat-menu-item (click)="notifyInitiator()">
+    Notify Initiator/Approver</button>
+  <!-- <button mat-menu-item (click)="returnEditable()">Return approval</button> -->
+  <button mat-menu-item (click)="confirmAudited()">Mark Audited</button>
+  <button mat-menu-item
+    [disabled]="approval.approval_type != 'Award Approval' || approval.status == 'new' || approval.status == 'pending'"
+    (click)="printPo()">Generate P.O.</button>
+  <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="withoutfundTransfer()">Settle Without Fund
+    Transfer</button>
+  <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
+  <button mat-menu-item (click)="printApproval()">Print</button>
+  <button mat-menu-item [disabled]="reviewdasboard != 'false'" (click)="deleteApproval()">Delete</button>
 </mat-menu>

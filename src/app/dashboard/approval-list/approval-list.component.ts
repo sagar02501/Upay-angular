@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { NgForm} from '@angular/forms';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material';
+import { DatePipe } from '@angular/common';
+import { ApprovalFormService } from './../../service/approval-form.service';
 
 
 @Component({
@@ -13,9 +16,13 @@ import { NgForm} from '@angular/forms';
 
 
 export class ApprovalListComponent implements OnInit {
-  public start: Date = new Date ("07/07/2020"); 
-    public end: Date = new Date ("07/08/2020");
-  constructor() { }
+  public month: number = new Date().getMonth();
+  public fullYear: number = new Date().getFullYear();
+  public start: Date = new Date(this.fullYear, this.month - 1, 7);
+  public end: Date = new Date(this.fullYear, this.month, 25);
+ 
+  constructor() {
+  }
   selectedStatus;
   selectedZone;
   selectedApprovalType;
@@ -31,42 +38,65 @@ export class ApprovalListComponent implements OnInit {
   approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
   @Output() exportExcelFired: EventEmitter<any> = new EventEmitter()
-  
-  status ='';
-  zones ='';
-  approvaltype = '';
-  openedChange(opened: boolean) {
-    
-    if(opened == true){ console.log('selecting zone or status');}
-    else{
-      if( (this.selectedStatus instanceof Array ) && this.selectedStatus.length >= 0 )
-         {
-          this.status = this.selectedStatus.toString();
-          //console.log(this.selectedStatus.toString())
-         }
-      if( (this.selectedZone instanceof Array ) && this.selectedZone.length >= 0 )
-         {
-          this.zones = this.selectedZone.toString();
-         // console.log(this.selectedZone.toString())
-         } 
 
-         if( (this.selectedApprovalType instanceof Array ) && this.selectedApprovalType.length >= 0 )
-         {
-          this.approvaltype = this.selectedApprovalType.toString();
-         // console.log(this.selectedZone.toString())
-         } 
-         //console.log(zones + ' , '+ status)
-         this.filterApproval(this.zones,this.status,this.approvaltype);
-     }
-    
- }
+  status = '';
+  zones = '';
+  approvaltype = '';
+
+  openedChange(opened: boolean) {
+
+    if (opened == true) { console.log('selecting zone or status'); }
+    else {
+      if ((this.selectedStatus instanceof Array) && this.selectedStatus.length >= 0) {
+        this.status = this.selectedStatus.toString();
+        //console.log(this.selectedStatus.toString())
+      }
+      if ((this.selectedZone instanceof Array) && this.selectedZone.length >= 0) {
+        this.zones = this.selectedZone.toString();
+        // console.log(this.selectedZone.toString())
+      }
+
+      if ((this.selectedApprovalType instanceof Array) && this.selectedApprovalType.length >= 0) {
+        this.approvaltype = this.selectedApprovalType.toString();
+        // console.log(this.selectedZone.toString())
+      }
+      //console.log(zones + ' , '+ status)
+      this.filterApproval(this.zones, this.status, this.approvaltype);
+    }
+
+  }
+  onDateChange(e) {
+    console.log("date function");
+    const d1 = new Date(e[0]).getDate()
+    const d2 = new Date(e[1]).getDate()
+    this.start = new Date(this.fullYear, this.month - 1, d1);
+    this.end = new Date(this.fullYear, this.month, d2);
+    //   public start: Date = new Date(this.fullYear, this.month - 1, 7);
+    // public end: Date = new Date(this.fullYear, this.month, 25);
+    console.log(this.start, this.end);
+
+    // console.log(" staer" + this.start);
+    // console.log("end" + this.end);
+
+    this.filterApproval(this.zones, this.status, this.approvaltype);
+  }
+
   ngOnInit() {
     this.approvalSearchSubject.pipe(debounceTime(500)).subscribe((e) => {
       this.sortApproval();
     });
+
+
   }
+  //akshay date 
 
 
+
+
+  // applyFilter() {
+  //   //this.dataSource.filter = '' + 0;
+  // }
+  //akshay date
   handleEvent(e) {
     this.actionOccured.emit(e);
   }
@@ -81,15 +111,16 @@ export class ApprovalListComponent implements OnInit {
       this.sortDateAsc ? this.sortDateAsc = false : this.sortDateAsc = true;
     }
     if (sortBy === 'amount') {
-      this.sortAmountAsc ? this.sortAmountAsc = false : this.sortAmountAsc = true;
+      this.sortDateAsc ? this.sortDateAsc = false : this.sortDateAsc = true;
+      // this.sortAmountAsc ? this.sortAmountAsc = false : this.sortAmountAsc = true;
     }
-    this.filterApproval(this.zones,this.status,this.approvaltype);
+    this.filterApproval(this.zones, this.status, this.approvaltype);
     //this.actionOccured.emit({searchText: this.searchText, sortBy: sortBy,status: this.selectedStatus instanceof Array  ? this.selectedStatus.toString():'', zones:  this.selectedZone instanceof Array ? this.selectedZone.toString():''});
   }
 
-  filterApproval(zone?,status?,approvaltype?) {
-   // console.log('filterEmit', zone, status)
-    this.actionOccured.emit({searchText: this.searchText, sortBy: this.sortBy !== undefined? this.sortBy :'date' ,status: status, zones: zone,approvaltype:approvaltype});
+  filterApproval(zone?, status?, approvaltype?) {
+    console.log('filterEmit', this.start, this.end);
+    this.actionOccured.emit({ searchText: this.searchText, sortBy: this.sortBy !== undefined ? this.sortBy : 'date', status: status, zones: zone, approvaltype: approvaltype, start: this.start, end: this.end, sortDateAsc: this.sortDateAsc });
   }
 
   openBodyAndCreatePdf() {
@@ -219,10 +250,10 @@ export class ApprovalListComponent implements OnInit {
     win.document.close();
 
     win.print();
-}
+  }
 
-createExcelReport() {
-  this.exportExcelFired.emit(true);
-}
+  createExcelReport() {
+    this.exportExcelFired.emit(true);
+  }
 
 }

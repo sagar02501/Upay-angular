@@ -8,17 +8,19 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ApprovalFormComponent } from './approval-form/approval-form.component';
 import { AuthGuard } from './service/auth.guard';
 import { GetSingleApprovalComponent } from './get-single-approval/get-single-approval.component';
+import { EditSingleApprovalComponent } from './edit-approval/edit-single-approval.component';
 
 const routes: Routes = [
-  { path: '', component: ApprovalFormComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'track', component: GetSingleApprovalComponent},
-  { path: 'approve', component: GetSingleApprovalComponent},
-  { path: 'award-dashboard', component: AwardDashboardComponent},
-  { path: 'bill-dashboard', component: BillDashboardComponent},
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  { path: '**', component: LoginComponent},
+  { path: '', component: ApprovalFormComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'track', component: GetSingleApprovalComponent },
+  { path: 'edit', component: EditSingleApprovalComponent },
+  { path: 'approve', component: GetSingleApprovalComponent },
+  { path: 'award-dashboard', component: AwardDashboardComponent },
+  { path: 'bill-dashboard', component: BillDashboardComponent },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: '**', component: LoginComponent },
 ];
 
 @NgModule({

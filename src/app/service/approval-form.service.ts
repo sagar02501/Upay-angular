@@ -17,34 +17,43 @@ export class ApprovalFormService {
   private otpVerificationSubject = new Subject();
   private formSubmitSubject = new Subject();
   otpURI = '';
-  
+
   billssucces: any[]
   salarysuccess: any[]
   awardsuccess: any[]
-  submitBills(approvalId,claimid,data,file){
+  
+  url = environment.backendURL + 'api/approvals';
+
+  constructor(public http: HttpClient) { }
+
+  submitBills(approvalId, claimid, data, file) {
     const postData = new FormData();
     //claimId
-    postData.append('approvalId', approvalId); 
-    postData.append('claimId', claimid);  
+    postData.append('approvalId', approvalId);
+    postData.append('claimId', claimid);
     postData.append('billnumber', data.number);
     postData.append('billamount', data.amount);
     postData.append('vendorname', data.vendor);
     postData.append('description', data.itemDesc);
+    postData.append('assetdetails', data.assetDetails);
+    postData.append('assetvalue', data.assetValue);
+    postData.append('assetcodes', data.assetCodes);
     if (file) {
       postData.append('file', file, data.file.name);
     }
-    this.http.post(this.url+`/bill`, postData).subscribe((res:any) => {
+    this.http.post(this.url + `/bill`, postData).subscribe((res: any) => {
       //console.log(res.message)
     },
-    (err) => {
-      console.log(err);
-      console.log(err.message)
-    }
+      (err) => {
+        console.log(err);
+        console.log(err.message)
+      }
     );
   }
-  submitSalary(approvalId,data,file){
+
+  submitSalary(approvalId, data, file) {
     const postData = new FormData();
-    postData.append('approvalId', approvalId);  
+    postData.append('approvalId', approvalId);
     postData.append('salarynumber', data.number);
     postData.append('salaryamount', data.amount);
     postData.append('employeename', data.employee);
@@ -52,19 +61,20 @@ export class ApprovalFormService {
     if (file) {
       postData.append('file', file, data.file.name);
     }
-    this.http.post(this.url+`/salary`, postData).subscribe((res:any) => {
+    this.http.post(this.url + `/salary`, postData).subscribe((res: any) => {
       //console.log(res.message)
 
     },
-    (err) => {
-      console.log(err);
-      console.log(err.message)
-    }
+      (err) => {
+        console.log(err);
+        console.log(err.message)
+      }
     );
   }
-  submitAward(approvalId,data,file){
+
+  submitAward(approvalId, data, file) {
     const postData = new FormData();
-    postData.append('approvalId', approvalId);  
+    postData.append('approvalId', approvalId);
     postData.append('billnumber', data.number);
     postData.append('billamount', data.amount);
     postData.append('vendorname', data.vendorname);
@@ -77,23 +87,21 @@ export class ApprovalFormService {
     postData.append('otherAndshipping', data.shipping);
     postData.append('tax', data.tax);
     postData.append('vendorAdd', data.vendorAdd);
-       
+
     if (file) {
       postData.append('file', file, data.file.name);
     }
-    this.http.post(this.url+`/awardtable`, postData).subscribe((res:any) => {
+    this.http.post(this.url + `/awardtable`, postData).subscribe((res: any) => {
       //console.log(res.message)
     },
-    (err) => {
-      console.log(err.message);
-      
-    }
+      (err) => {
+        console.log(err.message);
+
+      }
     );
   }
-  constructor(public http: HttpClient) { }
-  url = environment.backendURL + 'api/approvals';
-  
-  submitForm2(data,approvalTypes){
+
+  submitForm2(data, approvalTypes) {
     //console.log("Submit Form 2", data);
     const postData1 = new FormData();
     //console.log("Submit form 2",data);
@@ -107,7 +115,7 @@ export class ApprovalFormService {
     if (approvalTypes[data.approval]) {
       postData1.append('type', approvalTypes[data.approval].name);
     }
-    if(data.advanceId){
+    if (data.advanceId) {
       postData1.append('advanceid', data.advanceId);
     }
     if (data.payeeName) {
@@ -134,47 +142,47 @@ export class ApprovalFormService {
     if (data.awardValue) {
       postData1.append('awardValue', data.awardValue);
     }
-   
-    
-    this.http.post(this.url+`/create/`+data.advanceId, postData1).subscribe((res:any) => {
-      
+
+
+    this.http.post(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
+
       let claimid = res.claimid;
       let approvalId = res.approvalId;
-      if(data.approval == 2){
+      if (data.approval == 2) {
         data.bills.forEach(bill => {
-         // console.log("inside bills");
-          this.submitBills(data.advanceId,claimid,bill,bill.file); 
+          // console.log("inside bills");
+          this.submitBills(data.advanceId, claimid, bill, bill.file);
         });
         this.formSubmitSubject.next(res);
       }
-      if(data.approval == 1 || data.approval == 3 ){
+      if (data.approval == 1 || data.approval == 3) {
         data.bills.forEach(bill => {
           console.log("inside bills");
-          this.submitBills(approvalId,null,bill,bill.file); 
+          this.submitBills(approvalId, null, bill, bill.file);
         });
         this.formSubmitSubject.next(res);
       }
-      if(data.approval == 4){
+      if (data.approval == 4) {
         data.vendors.forEach(vendor => {
-          this.submitAward(approvalId,vendor,vendor.file); 
+          this.submitAward(approvalId, vendor, vendor.file);
         });
         this.formSubmitSubject.next(res);
       }
-      if(data.approval == 5){
+      if (data.approval == 5) {
         data.salaries.forEach(salary => {
-          this.submitSalary(approvalId,salary,salary.file); 
-        });  
+          this.submitSalary(approvalId, salary, salary.file);
+        });
         this.formSubmitSubject.next(res);
       }
-      
+
     },
-    (err) => {
-      console.log(err);
-      this.formSubmitSubject.next(2);
-    }
+      (err) => {
+        console.log(err);
+        this.formSubmitSubject.next(2);
+      }
     );
   }
-
+  
   submitForm(data, file, approvalTypes) {
     //console.log(data, file);
     const postData = new FormData();
@@ -189,38 +197,19 @@ export class ApprovalFormService {
     if (approvalTypes[data.approval]) {
       postData.append('type', approvalTypes[data.approval].name);
     }
-     /*
-  Code ID: 003
-  Author: join.eb@gmail.com Elvin Baghele
-  Add new fields:  
-    payeeName
-    accountNumber
-    bankName
-    bankIfsc */
-  // Commented out code:
-  if (data.payeeName) {
-    postData.append('payeeName', data.payeeName);
-  }
-  if (data.accountNumber) {
-    postData.append('accountNumber', data.accountNumber);
-  }
-  if (data.bankName) {
-    postData.append('bankName', data.bankName);
-  }
-  if (data.bankIfsc) {
-    postData.append('bankIfsc', data.bankIfsc);
-  }
-   // Commented out code:
-  /* 
-    if (data.advanceDetails) {
-        postData.append('advanceDetails', data.advanceDetails);
-      }
-    if (data.paymentDetails) {
-      postData.append('paymentDetails', data.paymentDetails);
-    }
-  */
-  // Finish Code ID 003
 
+    if (data.payeeName) {
+      postData.append('payeeName', data.payeeName);
+    }
+    if (data.accountNumber) {
+      postData.append('accountNumber', data.accountNumber);
+    }
+    if (data.bankName) {
+      postData.append('bankName', data.bankName);
+    }
+    if (data.bankIfsc) {
+      postData.append('bankIfsc', data.bankIfsc);
+    }
 
     if (file) {
       postData.append('file', file, data.name);
@@ -229,76 +218,78 @@ export class ApprovalFormService {
     this.http.post(this.url, postData).subscribe((res) => {
       this.formSubmitSubject.next(res);
     },
-    (err) => {
-      console.log(err);
-      this.formSubmitSubject.next(2);
-    }
+      (err) => {
+        console.log(err);
+        this.formSubmitSubject.next(2);
+      }
     );
   }
 
-  getAllApproval(search?, sort?, order = -1, pageSize = Math.pow(10, 10), pageNum = 0, status?, zones?,approvaltype?) {
+  getAllApproval(search?, sort?, order = -1, pageSize = Math.pow(10, 10), pageNum = 0, status?, zones?, approvaltype?) {
     sort = sort || 'date';
     this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}&approvaltype=${approvaltype}`).subscribe((res) => {
       this.allApprovalSubject.next(res);
     },
-    (err) => {console.log(err); }
-    );
-  }
- 
-  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0,status?, zones?,approvaltype?) {
-    sort = sort || 'date';
-    //console.log(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}`)
-    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}&approvaltype=${approvaltype}`).subscribe((res) => {
-      this.approvalSubject.next(res);
-    },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
-  getSingleApproval(id,claimId,trackflag) {
+  getApproval(search?, sort?, order = -1, pageSize = 10, pageNum = 0, status?, zones?, approvaltype?, start?, end?) {
+    sort = sort || 'date';
+    this.http.get(this.url + `?search=${search}&sort=${sort}&order=${order}&pageSize=${pageSize}&pageNum=${pageNum}&zones=${zones}&status=${status}&approvaltype=${approvaltype}&start=${start}&end=${end}`).subscribe((res) => {
+      this.approvalSubject.next(res);
+    },
+      (err) => { console.log(err); }
+    );
+  }
+
+  getSingleApproval(id, claimId, trackflag) {
     this.http.get(this.url + `/getSingleApproval/${id}/${claimId}/${trackflag}`).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-    (err) => { this.approvalSubject.next(err.error); }
+      (err) => { this.approvalSubject.next(err.error); }
     );
   }
+
   getAwardApproval(id) {
     this.http.get(this.url + `/getAwardApproval/${id}`).subscribe((res) => {
       this.awardSubject.next(res);
     },
-    (err) => { this.awardSubject.next(err.error); }
+      (err) => { this.awardSubject.next(err.error); }
     );
   }
+
   getBillApproval(id) {
     this.http.get(this.url + `/getBillApproval/${id}`).subscribe((res) => {
       this.billSubject.next(res);
     },
-    (err) => { this.billSubject.next(err.error); }
+      (err) => { this.billSubject.next(err.error); }
     );
   }
+
   getUnutilizedamt(id) {
     this.http.get(this.url + `/getUnutilizedamt/${id}`).subscribe((res) => {
       this.unutilizedamtSubject.next(res);
     },
-    (err) => { this.unutilizedamtSubject.next(err.error); }
+      (err) => { this.unutilizedamtSubject.next(err.error); }
     );
   }
 
   approveApproval(token, remarks) {
-    const data = {remarks: remarks};
+    const data = { remarks: remarks };
     this.http.post(this.url + `/confirmation/approved/${token}`, data).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
   rejectApproval(token, remarks) {
-    const data = {remarks};
+    const data = { remarks };
     this.http.post(this.url + `/confirmation/rejected/${token}`, data).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
@@ -306,65 +297,163 @@ export class ApprovalFormService {
     this.http.get(this.url + '/approvalStatusData').subscribe((res) => {
       this.approvalStatusSubject.next(res);
     },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
   sendApproval(data) {
     let link = '/approve';
-    if(data.forward != undefined && data.forward == true){
+    if (data.forward != undefined && data.forward == true) {
       link = '/forward';
     }
-    this.http.post(this.url + link, data).subscribe((res) => {
+    const postData2 = new FormData();
+          postData2.append('approvalData', data.approvalData);
+          postData2.append('emailId', data.emailId);
+          postData2.append('useremailId', data.approvalData.email);
+          postData2.append('remarks', data.remarks);
+          if (data.file) {
+            postData2.append('file', data.file, data.file.name);
+          }
+          postData2.append('zone', data.zone);
+     console.log("data:  " , data);
+      this.http.post(this.url + link, postData2).subscribe((res) => {
       this.approvalSubject.next('sentToApproverTrue');
     },
-    (err) => {
-      console.log(err);
-      this.approvalSubject.next('sentToApproverFalse');
-    }
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('sentToApproverFalse');
+      }
     );
   }
 
   sendToCentral(data) {
-    console.log("data",data)
-    this.http.post(this.url + '/approve/central', data).subscribe((res) => {
+    console.log("data in service", data)
+    const postData2 = new FormData();
+    postData2.append('approvalData', data.approvalData);
+    postData2.append('emailId', data.emailId);
+    postData2.append('remarks', data.remarks);
+    if (data.po) {
+      postData2.append('po', data.po);
+    }
+    if (data.file) {
+      postData2.append('file', data.file, data.file.name);
+    }
+    postData2.append('approvalId', data.approvalData.approvalId);
+    if (data.approvalData.claimId)
+      postData2.append('claimId', data.approvalData.claimId);
+    postData2.append('approval_type', data.approvalData.approval_type);
+    postData2.append('subject', data.approvalData.subject);
+    postData2.append('status', data.approvalData.status);
+    postData2.append('amount_transferred', data.approvalData.amount_transferred);
+    postData2.append('timeline', data.approvalData.timeline);
+    postData2.append('_id', data.approvalData._id);
+    postData2.append('zone', data.zone);
+    this.http.post(this.url + '/approve/central', postData2).subscribe((res) => {
       this.approvalSubject.next('sentToCentralTrue');
     },
-    (err) => {
-      console.log(err);
-      this.approvalSubject.next('sentToCentralFalse');
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('sentToCentralFalse');
+      }
+    );
+  }
+
+  sendToAudit(data) {
+    console.log("data in service", data)
+    const postData2 = new FormData();
+    postData2.append('approvalData', data.approvalData);
+    postData2.append('emailId', data.emailId);
+    postData2.append('remarks', data.remarks);
+    if (data.po) {
+      postData2.append('po', data.po);
     }
+    if (data.file) {
+      postData2.append('file', data.file, data.file.name);
+    }
+    postData2.append('approvalId', data.approvalData.approvalId);
+    if (data.approvalData.claimId)
+      postData2.append('claimId', data.approvalData.claimId);
+    postData2.append('approval_type', data.approvalData.approval_type);
+    postData2.append('subject', data.approvalData.subject);
+    postData2.append('status', data.approvalData.status);
+    postData2.append('amount_transferred', data.approvalData.amount_transferred);
+    postData2.append('timeline', data.approvalData.timeline);
+    postData2.append('_id', data.approvalData._id);
+    ///postData2.append('emailId', data.emailId);
+    // ///postData2.append('remarks', data.remarks);
+    // if (data.file) {
+    //   postData2.append('file', data.file, data.file.name);
+    // }
+
+    this.http.post(this.url + '/approve/audit', postData2).subscribe((res) => {
+      this.approvalSubject.next('sentToAuditTrue');
+    },
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('sentToAuditFalse');
+      }
+    );
+  }
+
+  returnEditable(data) {
+    //console.log("daat",data);
+    const postData2 = new FormData();
+    postData2.append('approvalData', data.approvalData);
+    postData2.append('emailId', data.emailId);
+    postData2.append('remarks', data.remarks);
+    if (data.po) {
+      postData2.append('po', data.po);
+    }
+    if (data.file) {
+      postData2.append('file', data.file, data.file.name);
+    }
+    postData2.append('approvalId', data.approvalData.approvalId);
+    if (data.approvalData.claimId)
+      postData2.append('claimId', data.approvalData.claimId);
+    postData2.append('approval_type', data.approvalData.approval_type);
+    postData2.append('subject', data.approvalData.subject);
+    postData2.append('status', data.approvalData.status);
+    postData2.append('amount_transferred', data.approvalData.amount_transferred);
+    postData2.append('timeline', data.approvalData.timeline);
+    postData2.append('_id', data.approvalData._id);
+    this.http.post(this.url + '/approve/editable', postData2).subscribe((res) => {
+      this.approvalSubject.next('editableTrue');
+    },
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('editableFalse');
+      }
     );
   }
 
   notifyInitiator(data) {
     //console.log("daat",data);
     const postData2 = new FormData();
-    postData2.append('approvalData',data.approvalData);
-    postData2.append('emailId',data.emailId);
-    postData2.append('remarks',data.remarks);
-    if(data.po){
-      postData2.append('po',data.po);
+    postData2.append('approvalData', data.approvalData);
+    postData2.append('emailId', data.emailId);
+    postData2.append('remarks', data.remarks);
+    if (data.po) {
+      postData2.append('po', data.po);
     }
-    if(data.file){
-      postData2.append('file',data.file,data.file.name);
+    if (data.file) {
+      postData2.append('file', data.file, data.file.name);
     }
-    postData2.append('approvalId',data.approvalData.approvalId);
-    if(data.approvalData.claimId)
-       postData2.append('claimId',data.approvalData.claimId);
-    postData2.append('approval_type',data.approvalData.approval_type);
-    postData2.append('subject',data.approvalData.subject);
-    postData2.append('status',data.approvalData.status);
-    postData2.append('amount_transferred',data.approvalData.amount_transferred);
-    postData2.append('timeline',data.approvalData.timeline);
-    postData2.append('_id',data.approvalData._id);
+    postData2.append('approvalId', data.approvalData.approvalId);
+    if (data.approvalData.claimId)
+      postData2.append('claimId', data.approvalData.claimId);
+    postData2.append('approval_type', data.approvalData.approval_type);
+    postData2.append('subject', data.approvalData.subject);
+    postData2.append('status', data.approvalData.status);
+    postData2.append('amount_transferred', data.approvalData.amount_transferred);
+    postData2.append('timeline', data.approvalData.timeline);
+    postData2.append('_id', data.approvalData._id);
     this.http.post(this.url + '/approve/notify', postData2).subscribe((res) => {
       this.approvalSubject.next('notifyTrue');
     },
-    (err) => {
-      console.log(err);
-      this.approvalSubject.next('notifyFalse');
-    }
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('notifyFalse');
+      }
     );
   }
 
@@ -372,65 +461,73 @@ export class ApprovalFormService {
     this.http.post(this.url + '/approve/fundTransfer', data).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-    (err) => {
-      this.approvalSubject.next(err.error);
-    }
+      (err) => {
+        this.approvalSubject.next(err.error);
+      }
     );
   }
 
   deleteApproval(data) {
-    this.http.delete(this.url + '/' + data.approvalId+ '/' + data.approval_id + '/' + data.claim_Id).subscribe((res) => {
+    this.http.delete(this.url + '/' + data.approvalId + '/' + data.approval_id + '/' + data.claim_Id).subscribe((res) => {
       this.approvalSubject.next('deleteTrue');
     },
-    (err) => {
-      console.log(err);
-      this.approvalSubject.next('deleteFalse');
-    }
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next('deleteFalse');
+      }
     );
   }
 
   sendOTP(data) {
-    this.http.get(this.url + `/otp/send/${data}`).subscribe((res: {uri: string}) => {
+    this.http.get(this.url + `/otp/send/${data}`).subscribe((res: { uri: string }) => {
       this.otpURI = res.uri;
     },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
   verifyOTP(otp) {
     const otpURI = this.otpURI;
-    this.http.get(this.url + `/otp/verify/${otpURI}/${otp}`).subscribe((res: {uri: string}) => {
+    this.http.get(this.url + `/otp/verify/${otpURI}/${otp}`).subscribe((res: { uri: string }) => {
       this.otpVerificationSubject.next(1);
     },
-    (err) => {
-      console.log(err);
-      this.otpVerificationSubject.next(2);
-    }
+      (err) => {
+        console.log(err);
+        this.otpVerificationSubject.next(2);
+      }
     );
   }
 
   getApprovalListener() {
     return this.approvalSubject.asObservable();
   }
+
   getAllApprovalListener() {
     return this.allApprovalSubject.asObservable();
   }
+
   getAwardListener() {
     return this.awardSubject.asObservable();
   }
+
   getBillListener() {
     return this.billSubject.asObservable();
   }
-  getUnutilizedamtListner(){
+
+  getUnutilizedamtListner() {
     return this.unutilizedamtSubject.asObservable();
   }
+
   getApprovalStatusListener() {
     return this.approvalStatusSubject.asObservable();
   }
+
   getOTPVerificationListener() {
     return this.otpVerificationSubject.asObservable();
   }
+
   getFormSubmitListener() {
     return this.formSubmitSubject.asObservable();
   }
+
 }
