@@ -37,6 +37,7 @@ export class ApprovalListItemComponent implements OnInit {
     }
     const userZone = this.authService.getUserZone();
     this.reviewdasboard = this.authService.getReviewUserZone();
+    
     if (userZone === 'central') {
       this.zone = 'Zonal';
     } else {

@@ -5,7 +5,7 @@
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>{{to}}</mat-label>
-      <mat-select name="approver" ngModel #approverInput="ngModel" required>
+      <mat-select name="approver" ngModel #approverInput="ngModel" required multiple>
         <mat-option *ngFor="let approver of approverList" [value]="approver.email">
           {{approver.email}}
         </mat-option>

@@ -106,12 +106,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.success = (res as any).isSuccess;
             this.openSnackBar((res as any).message);
           }
-          setTimeout(() => {
+          
             //this.approvalFormService.getApproval();
             this.sortApproval(this.searchText, this.sortBy, this.statusfilters, this.zonefilters, this.approvaltypefilters);//Todo: reslove issue ,pass missing param
 
             this.approvalFormService.getApprovalStatusData();
-          }, 500);
+          
         }
 
       });
@@ -125,7 +125,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   sortApproval(searchText?, sortBy?, status?, zones?, approvaltype?, pageSize?, start?, end?, sortDateAsc?) {
     //if sortby exist sortOrder
     this.sortDateAsc = sortDateAsc;
-    this.sortDateAsc === true ? this.sortOrder = -1 : this.sortOrder = 1;
+    if(sortBy !== undefined )
+        this.sortDateAsc === true ? this.sortOrder = -1 : this.sortOrder = 1;
     this.searchText = searchText;
     this.sortBy = sortBy;
     this.zonefilters = zones;

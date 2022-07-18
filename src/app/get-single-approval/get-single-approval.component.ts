@@ -29,7 +29,6 @@ export class GetSingleApprovalComponent implements OnInit {
 
   constructor(
     private approvalService: ApprovalFormService,
-    private approvalForwardService: ApprovalFormService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar, private settingsService: SettingsService, private authService: AuthService) { }
@@ -66,6 +65,7 @@ export class GetSingleApprovalComponent implements OnInit {
     this.approverSubscription = this.settingsService.getApproverSubjectListener().subscribe((res) => {
       this.approverList = res;
     });
+
   }
 
   openSnackBar(message, type) {
@@ -80,22 +80,22 @@ export class GetSingleApprovalComponent implements OnInit {
     const dialogRef = this.dialog.open(ActionDialogComponent,
       {
         data: {
-          approverList: [{ email: this.approval.email }],
+          approverList: this.approverList,
 
           title: 'Forward',
-          to: 'Initiator'
+          to: 'Select Approvers'
         }
       });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.sendForApproval({ forward: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks });
+        this.sendForApproval({ forward: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file });
       }
     });
   }
 
   sendForApproval(e) {
-    this.approvalForwardService.sendApproval(e);
+    this.approvalService.sendApproval(e);
   }
 
   getSingleApprovalData(trackflag: boolean = false) {
@@ -112,7 +112,7 @@ export class GetSingleApprovalComponent implements OnInit {
   }
 
   openConfirmatinDialog(text, remarks) {
-    const dialogRef = this.dialog.open(ActionDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         approverList: [{ email: this.approval.email }],
         title: `${text}`,

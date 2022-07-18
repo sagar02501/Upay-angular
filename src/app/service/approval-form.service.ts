@@ -307,15 +307,16 @@ export class ApprovalFormService {
       link = '/forward';
     }
     const postData2 = new FormData();
-          postData2.append('approvalData', data.approvalData);
+          postData2.append('approvalData', JSON.stringify(data.approvalData));
           postData2.append('emailId', data.emailId);
           postData2.append('useremailId', data.approvalData.email);
           postData2.append('remarks', data.remarks);
+          postData2.append("_id", data.approvalData._id)
           if (data.file) {
             postData2.append('file', data.file, data.file.name);
           }
-          postData2.append('zone', data.zone);
-     console.log("data:  " , data);
+          postData2.append('zone', data.approvalData.zone);
+          console.log("data:  " , data.approvalData);
       this.http.post(this.url + link, postData2).subscribe((res) => {
       this.approvalSubject.next('sentToApproverTrue');
     },
@@ -375,15 +376,11 @@ export class ApprovalFormService {
       postData2.append('claimId', data.approvalData.claimId);
     postData2.append('approval_type', data.approvalData.approval_type);
     postData2.append('subject', data.approvalData.subject);
-    postData2.append('status', data.approvalData.status);
+    postData2.append('Current Status', data.approvalData.status);
     postData2.append('amount_transferred', data.approvalData.amount_transferred);
     postData2.append('timeline', data.approvalData.timeline);
     postData2.append('_id', data.approvalData._id);
-    ///postData2.append('emailId', data.emailId);
-    // ///postData2.append('remarks', data.remarks);
-    // if (data.file) {
-    //   postData2.append('file', data.file, data.file.name);
-    // }
+    
 
     this.http.post(this.url + '/approve/audit', postData2).subscribe((res) => {
       this.approvalSubject.next('sentToAuditTrue');

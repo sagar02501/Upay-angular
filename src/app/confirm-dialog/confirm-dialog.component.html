@@ -17,32 +17,15 @@
       cdkFocusInitial>{{buttonTextPrimary}}</button>
   </form>
 </div>
+
 <div *ngIf="!resetPwd && !isSendPO && !isAuditBtn" mat-dialog-actions>
   <button mat-button [mat-dialog-close]="0">{{buttonTextSecondary}}</button>
   <button mat-button [mat-dialog-close]="1" cdkFocusInitial>{{buttonTextPrimary}}</button>
 </div>
+
 <div *ngIf="isSendPO">
   <div mat-dialog-content>
-    <!-- <mat-form-field>
-      <input matInput type="text" placeholder="Account No" name="account_no" ngModel #account_noInput="ngModel"
-        value="{{approval?.account_no}}">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="IFSC Code" name="ifsc_code" ngModel #ifsc_codeInput="ngModel"
-        value="{{approval?.ifsc_code}}">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Vendor Address" name="vendor_addr" ngModel #vendor_addrInput="ngModel"
-        value="{{awardPodata?.vendor_addr}}">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Subject" name="subject" ngModel #subjectnoInput="ngModel"
-        value="{{approval?.subject}}">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" placeholder="Shipping Address" name="shipping_addr" ngModel
-        #shipping_addrInput="ngModel" value="{{approval?.shipping_addr}}">
-    </mat-form-field> -->
+    
     <mat-form-field>
       <mat-label>Initiator</mat-label>
 
