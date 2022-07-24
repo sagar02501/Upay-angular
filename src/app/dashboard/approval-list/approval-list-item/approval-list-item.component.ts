@@ -37,6 +37,7 @@ export class ApprovalListItemComponent implements OnInit {
     }
     const userZone = this.authService.getUserZone();
     this.reviewdasboard = this.authService.getReviewUserZone();
+    
     if (userZone === 'central') {
       this.zone = 'Zonal';
     } else {
@@ -205,9 +206,9 @@ export class ApprovalListItemComponent implements OnInit {
           fundTransfer: true, approvalData: this.approval,
           transactionId: result.transactionId, transferredAmount: result.transferredAmount,
           notes: {
-            budget_head: result.budgetHeadInput,
-            budget_subhead: result.budgetSubHeadInput,
-            expenditure_code: result.expCodeInput
+            budget_head: result.budgetHeadInput || 'N\A',
+            budget_subhead: result.budgetSubHeadInput  || 'N\A',
+            expenditure_code: result.expCodeInput  || 'N\A'
           }
         });
       }

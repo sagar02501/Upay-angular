@@ -5,7 +5,7 @@
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>{{to}}</mat-label>
-      <mat-select name="approver" ngModel #approverInput="ngModel" required>
+      <mat-select name="approver" ngModel #approverInput="ngModel" required multiple>
         <mat-option *ngFor="let approver of approverList" [value]="approver.email">
           {{approver.email}}
         </mat-option>
@@ -154,63 +154,78 @@
 <div *ngIf="isFundTransfer && !isNew" class="fund">
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput type="text" placeholder="Transaction Id" name="tranx" ngModel #tranxInput="ngModel" required>
+      <input matInput type="text" placeholder="Transaction Id" name="tranx1" ngModel #tranxInput1="ngModel" required>
     </mat-form-field>
   </div>
   <div mat-dialog-content>
     <mat-form-field>
-      <input matInput type="number" placeholder="Transferred Amount" name="transAmt" ngModel #transAmtInput="ngModel"
+      <input matInput type="number" placeholder="Transferred Amount" name="transAmt1" ngModel #transAmtInput1="ngModel"
         required>
     </mat-form-field>
   </div>
-  <div mat-dialog-content *ngIf="isManualFundHide">
-    <mat-form-field>
-      <mat-label>Budget Head</mat-label>
-      <mat-select name="budgetHeadId" ngModel #budgetHeadInput="ngModel"
-        (selectionChange)="budgetHeadChanged($event.value)" required>
-        <mat-option>
-          Pick a Budget Head..
-        </mat-option>
-        <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
-          {{bh.friendlyName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div *ngIf="isManualFundHide">
+      <div mat-dialog-content >
+        <mat-form-field>
+          <mat-label>Budget Head</mat-label>
+          <mat-select name="budgetHeadId1" ngModel #budgetHeadInput1="ngModel"
+            (selectionChange)="budgetHeadChanged($event.value)" required>
+            <mat-option>
+              Pick a Budget Head..
+            </mat-option>
+            <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
+              {{bh.friendlyName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div mat-dialog-content>
+        <mat-form-field>
+          <mat-label>Budget Sub Head</mat-label>
+          <mat-select name="budgedSubHeadId1" ngModel #budgetSubHeadInput1="ngModel" required>
+            <mat-option>
+              Pick a Budget Sub Head..
+            </mat-option>
+            <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
+              {{bsh.friendlyName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div mat-dialog-content>
+        <mat-form-field>
+          <mat-label>Expenditure Code</mat-label>
+          <mat-select name="expCode1" ngModel #expCodeInput1="ngModel" required>
+            <mat-option *ngFor="let expCode of expCodes" [value]="expCode">
+              {{expCode}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="0">Cancel</button>
+        <button mat-button
+          [disabled]="!transAmtInput1.value"
+          [mat-dialog-close]="{
+          transactionId: tranxInput1.value,
+          transferredAmount: transAmtInput1.value,
+          budgetHeadInput: budgetHeadInput1.value,
+          budgetSubHeadInput: budgetSubHeadInput1.value,
+          expCodeInput: expCodeInput1.value
+        }" cdkFocusInitial>Transfer</button>
+      </div>
   </div>
-  <div mat-dialog-content *ngIf="isManualFundHide">
-    <mat-form-field>
-      <mat-label>Budget Sub Head</mat-label>
-      <mat-select name="budgedSubHeadId" ngModel #budgetSubHeadInput="ngModel" required>
-        <mat-option>
-          Pick a Budget Sub Head..
-        </mat-option>
-        <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
-          {{bsh.friendlyName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-content *ngIf="isManualFundHide">
-    <mat-form-field>
-      <mat-label>Expenditure Code</mat-label>
-      <mat-select name="expCode" ngModel #expCodeInput="ngModel" required>
-        <mat-option *ngFor="let expCode of expCodes" [value]="expCode">
-          {{expCode}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions *ngIf="!isManualFundHide">
+<div  *ngIf="!isManualFundHide">
+  <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
-    <button mat-button [disabled]="!tranxInput.value || !transAmtInput.value"
-      [mat-dialog-close]="{transactionId: tranxInput.value, transferredAmount: transAmtInput.value}"
-      cdkFocusInitial>Done</button>
+    <button mat-button
+      [disabled]="!transAmtInput1.value "
+      [mat-dialog-close]="{
+        transactionId: tranxInput1.value,
+          transferredAmount: transAmtInput1.value
+      }" cdkFocusInitial>Transfer</button>
   </div>
-  <div mat-dialog-actions *ngIf="isManualFundHide">
-    <button mat-button [mat-dialog-close]="0">Cancel</button>
-    <button mat-button [disabled]="!tranxInput.value || !transAmtInput.value" [mat-dialog-close]="{transactionId: tranxInput.value, transferredAmount: transAmtInput.value,
-        budgetHeadInput: budgetHeadInput.value,
-      budgetSubHeadInput: budgetSubHeadInput.value,
-      expCodeInput: expCodeInput.value}" cdkFocusInitial>Done</button>
-  </div>
+</div>
+  
+  
 </div>
