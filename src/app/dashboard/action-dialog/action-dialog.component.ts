@@ -16,7 +16,7 @@ export class ActionDialogComponent implements OnInit {
   isFundTransfer;
   approval
   isNew = true;
-  isManualFundHide = false;
+  isManualFundHide;
   placeholder;
   modeList = ["NEFT", "RTGS", "IMPS", "UPI"];
   expCodes = ["Center", "Zonal", "Central"];
@@ -204,11 +204,12 @@ export class ActionDialogComponent implements OnInit {
     } else {
       this.placeholder = 'Remarks/DOP Clause';
     }
-    console.log("app type:" + this.approval.approval_type);
+    console.log("app type:" + this.data.approval.approval_type);
     // if (this.approval.approval_type == "In Principle or Admin Approval") {
     //   this.isManualFundHide = true;
     // }
-    if (this.approval.approval_type == "Claim against advance/PO" || this.approval.approval_type == "Claim") {
+    this.isManualFundHide = false;
+    if (this.data.approval.approval_type == "Claim against advance/PO" || this.data.approval.approval_type == "Claim") {
       this.isManualFundHide = true;
     }
 

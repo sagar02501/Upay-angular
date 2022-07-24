@@ -319,6 +319,7 @@ export class ApprovalFormService {
           console.log("data:  " , data.approvalData);
       this.http.post(this.url + link, postData2).subscribe((res) => {
       this.approvalSubject.next('sentToApproverTrue');
+      
     },
       (err) => {
         console.log(err);
