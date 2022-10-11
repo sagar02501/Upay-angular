@@ -12,30 +12,40 @@ import { ConfirmDialogComponent } from 'src/app/confirm-dialog/confirm-dialog.co
   styleUrls: ['./approval-list-item.component.css']
 })
 export class ApprovalListItemComponent implements OnInit {
-  ApprovalFormService: any;
   awardList;
   timeline;
   awardPodata;
   awardCreatedDate;
+  approvalForm;
+
+  approvals = [];
 
   private awardSubscription: Subscription;
-  constructor(private dialog: MatDialog, private authService: AuthService,private approvalService: ApprovalFormService,private snackBar: MatSnackBar) { }
+  constructor(private dialog: MatDialog, private authService: AuthService, private approvalService: ApprovalFormService, private snackBar: MatSnackBar, public approvalFormService: ApprovalFormService) { }
   @Input() approval;
   @Input() approverList;
   @Output() actionOccured: EventEmitter<any> = new EventEmitter();
   @Input() openBody = false;
   approvalCreatedDate;
+  fundTransferDateDashboard = null;
   zone;
   reviewdasboard;
   ngOnInit() {
     this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
+    if (this.approval.fundTransferDate) {
+      this.fundTransferDateDashboard = new Date(this.approval.fundTransferDate).toLocaleString();
+    }
     const userZone = this.authService.getUserZone();
     this.reviewdasboard = this.authService.getReviewUserZone();
+    
     if (userZone === 'central') {
       this.zone = 'Zonal';
     } else {
       this.zone = 'Central';
     }
+    // console.log("Audit :" + this.approval.isAudit);
+
+
   }
 
   openTimeline() {
@@ -51,60 +61,118 @@ export class ApprovalListItemComponent implements OnInit {
   }
 
   confirmSend() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
       data: {
-        header: 'Confirm',
-        message: `Are you sure you want to send this approval to ${this.zone}?`,
-        buttonTextPrimary: 'Send',
-        buttonTextSecondary: 'Cancel'
+        title: `Are you sure you want to send this approval to ${this.zone}?`,
+        approverList: [{ email: this.approval.email }],
+        to: 'Initiator'
+        // buttonTextPrimary: 'Send',
+        // buttonTextSecondary: 'Cancel'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({send: true,approval_type:this.approval.approval_type, approvalId: this.approval._id, approval_id: this.approval.approvalId, claim_Id : this.approval.claimId, zone: this.zone, timeline: this.approval.timeline});
+        this.actionOccured.emit({ send: true, approval_id: this.approval.approvalId, zone: this.zone, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file });
+        //this.actionOccured.emit({ send: true, approval_type: this.approval.approval_type, approvalId: this.approval._id, approval_id: this.approval.approvalId, claim_Id: this.approval.claimId, zone: this.zone, timeline: this.approval.timeline, emailId: result.email, remarks: result.remarks, file: result.file });
+        // this.actionOccured.emit({ send: true, approval_type: this.approval.approval_type, approvalId: this.approval._id, approval_id: this.approval.approvalId, claim_Id: this.approval.claimId, zone: this.zone, timeline: this.approval.timeline, emailId: result.email, remarks: result.remarks, file: result.file });
+        //this.actionOccured.emit({ send: true, approval_id: this.approval.approvalId, approvalData: this.approval, zone: this.zone, emailId: result.email, remarks: result.remarks, file: result.file });
       }
     });
   }
 
+
+  //confirm Audited start
+
+  confirmAudited() {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
+      data: {
+        approverList: [{ email: this.approval.email }],
+        title: 'Audited',
+        to: 'Audit'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.actionOccured.emit({ audit: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file });
+
+      }
+    });
+  }
+  //confirm Audited end
+  //@akshay retru edit code start
+
+  returnEditable() {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
+      data: {
+        approverList: [{ email: this.approval.email }],
+        title: 'Return Approval',
+        to: 'Editable'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("results", result);
+        this.actionOccured.emit({ editable: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file || null });
+      }
+    });
+  }
+
+  //@end return code 
   notifyInitiator() {
-    const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
-      approverList: [{email: this.approval.email}],
-      title: 'Notify Initiator',
-      to: 'Initiator'
-    }});
-    
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-       // console.log("results",result);
-        this.actionOccured.emit({notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file});
-      }
-    });
-  }
-  withoutfundTransfer(){
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
       data: {
-        header: 'Settle Without Fund Transfer',
-        message: `Are you sure you want to settle this approval without fund transfer ?`,
-        buttonTextPrimary: 'Yes',
-        buttonTextSecondary: 'No'
+        approverList: [{ email: this.approval.email }],
+        title: 'Notify Initiator/Approver',
+        to: 'Initiator'
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
-          transactionId: 'WithoutFundTransfer', transferredAmount:0});
+        // console.log("results",result);
+        this.actionOccured.emit({ notify: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file });
       }
     });
-    
+  }
+  withoutfundTransfer() {
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
+      data: {
+        approverList: [{ email: this.approval.email }],
+        title: 'Settle Without Fund Transfer',
+        header: 'Settle Without Fund Transfer',
+        to: 'Initiator',
+        message: `Are you sure you want to settle this approval without fund transfer ?`,
+        // buttonTextPrimary: 'Yes',
+        // buttonTextSecondary: 'No'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.actionOccured.emit({
+          fundTransfer: true, approvalData: this.approval,
+          emailId: result.email, remarks: result.remarks, file: result.file,
+          transactionId: 'WithoutFundTransfer', transferredAmount: 0
+        });
+        // this.actionOccured.emit({
+        //   fundTransfer: true, approvalData: this.approval,
+        //   transactionId: 'WithoutFundTransfer', transferredAmount: 0
+        // });
+      }
+    });
+
   }
   fundTransfer() {
-    const dialogRef = this.dialog.open(ActionDialogComponent, {data: {
-      title: 'Fund Transfer',
-      isFundTransfer: true,
-      approval :this.approval
-    }});
+    const dialogRef = this.dialog.open(ActionDialogComponent, {
+      data: {
+        title: 'Fund Transfer',
+        isFundTransfer: true,
+        approval: this.approval
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result && !result.transactionId) {
         const cnf = confirm("You are going to transfer Rs." + result.transferredAmount + " to contact Id " + result.fundAccountIdInput);
@@ -129,12 +197,20 @@ export class ApprovalListItemComponent implements OnInit {
               invoice_id: result.invoiceInput,
               approval_id: this.approval.approvalId,
               approval_type: this.approval.approval_type
-            }
+            },
+            file: result.file
           });
         }
-      } else if(result && result.transactionId) {
-        this.actionOccured.emit({fundTransfer: true, approvalData: this.approval,
-          transactionId: result.transactionId, transferredAmount: result.transferredAmount});
+      } else if (result && result.transactionId) {
+        this.actionOccured.emit({
+          fundTransfer: true, approvalData: this.approval,
+          transactionId: result.transactionId, transferredAmount: result.transferredAmount,
+          notes: {
+            budget_head: result.budgetHeadInput || 'N\A',
+            budget_subhead: result.budgetSubHeadInput  || 'N\A',
+            expenditure_code: result.expCodeInput  || 'N\A'
+          }
+        });
       }
     });
   }
@@ -151,21 +227,24 @@ export class ApprovalListItemComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({delete: true, approvalId: this.approval._id,approval_id: this.approval.approvalId,claim_Id : this.approval.claimId});
+        this.actionOccured.emit({ delete: true, approvalId: this.approval._id, approval_id: this.approval.approvalId, claim_Id: this.approval.claimId });
       }
     });
   }
 
   sendToApprover() {
     const dialogRef = this.dialog.open(ActionDialogComponent,
-       {data: {
-         approverList: this.approverList,
+      {
+        data: {
+          approverList: this.approverList,
           zone: this.zone,
-        title: 'Send to Approver'}});
+          title: 'Send to Approver'
+        }
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.actionOccured.emit({send: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks});
+        this.actionOccured.emit({ send: true, approvalData: this.approval, emailId: result.email, remarks: result.remarks, file: result.file });
       }
     });
   }
@@ -173,7 +252,7 @@ export class ApprovalListItemComponent implements OnInit {
   printApproval() {
     
     const approvalData =
-    `<h3>Approval Data</h3>
+      `<h3>Approval Data</h3>
       <div class="print-approval">
       <div>
       <label>Approval Id</label>
@@ -198,6 +277,10 @@ export class ApprovalListItemComponent implements OnInit {
       <div>
       <label>Created Date</label>
       <span>${this.approvalCreatedDate}</span>
+      </div>
+      <div>
+      <label>Fund Transfer Date</label>
+      <span>${this.fundTransferDateDashboard}</span>
       </div>
       <div>
       <label>Contact</label>
@@ -285,8 +368,8 @@ export class ApprovalListItemComponent implements OnInit {
 
     win.print();
   }
-  
-  printPo() {  
+
+  printPo() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         header: 'Confirm',
@@ -295,7 +378,7 @@ export class ApprovalListItemComponent implements OnInit {
         buttonTextSecondary: 'Cancel'
       }
     });
-   
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.approval.approvalId) {
@@ -314,17 +397,17 @@ export class ApprovalListItemComponent implements OnInit {
           this.awardList = res;
           //console.log(this.approval);
           for (let i = 0; i < this.awardList.length; i++) {
-            if (this.awardList[i].vendor_preference  == 'L1'){
-                this.awardPodata = this.awardList[i];
-              }
-              //console.log(this.awardList);
-              this.printpurchaseorder(this.approval,this.awardPodata)
+            if (this.awardList[i].vendor_preference == 'L1') {
+              this.awardPodata = this.awardList[i];
+            }
+            //console.log(this.awardList);
+            this.printpurchaseorder(this.approval, this.awardPodata)
           }
         });
       }
     });
-  // }
-}
+    // }
+  }
   openSnackBar(message, type) {
     this.snackBar.open(message, null, {
       duration: 3000,
@@ -335,27 +418,28 @@ export class ApprovalListItemComponent implements OnInit {
   getAwardData(approvalId) {
     this.approvalService.getAwardApproval(approvalId);
   }
-  printpurchaseorder(approval,awardPodata){
+  printpurchaseorder(approval, awardPodata) {
     //console.log(approval)
     // converts ISO 8601 to date
     console.log(awardPodata)
     let date = new Date(awardPodata.date);
     let year = date.getFullYear();
-    let months = date.getMonth()+1;
+    let months = date.getMonth() + 1;
     let dts = date.getDate();
     let dt = ''
     let month = ''
     if (dts < 10) {
       dt = '0' + dts.toString();
-    }else{
-      dt =  dts.toString();
+    } else {
+      dt = dts.toString();
     }
     if (months < 10) {
       month = '0' + months.toString();
-    }else{
-      month =  months.toString();
+    } else {
+      month = months.toString();
     }
-    var approvaldate=(dt+'-' + month + '-'+year.toString());
+    var approvaldate = (dt + '-' + month + '-' + year.toString());
+
     const ap = `<div class="poouterblock" style="box-sizing: border-box;height: 11in;margin: 0 auto;overflow: hidden;padding: 0.5in;width: 8.5in;background: #FFF;border-radius: 1px;box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); border:10px black solid;">
     <header style="margin: 0 0 3em;">
     
@@ -410,7 +494,7 @@ export class ApprovalListItemComponent implements OnInit {
             <tbody>
             <tr>
                 <td class="inventoryheadertd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approvaldate}</span></td>
-                <td class="inventoryheadertd"   style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.name + '\n'+ approval.contact}</span></td>
+                <td class="inventoryheadertd"   style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.name + '\n' + approval.contact}</span></td>
                 <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">NA</span></td>
                 <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.deliveryschedule}</span></td>
                 <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span>${awardPodata.payterms}</span></td>
@@ -454,7 +538,7 @@ export class ApprovalListItemComponent implements OnInit {
             
             <tr>
                 <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
-                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${parseInt(awardPodata.netbillamount)+parseInt(awardPodata.shipping_handling_chrg)+parseInt(awardPodata.gst_tax)}</span></td>
+                <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${(parseInt(awardPodata.netbillamount) || 0) + (parseInt(awardPodata.shipping_handling_chrg) || 0) + (parseInt(awardPodata.gst_tax) || 0)}</span></td>
             </tr>
         </table>
         <p>Notes to us that pertain to your purchase</p>
@@ -466,14 +550,136 @@ export class ApprovalListItemComponent implements OnInit {
     </aside>
     <center><span>This is a computer-generated document. No signature is required.</span></center>
     </div>`
-    
+
+
+    //   const ap = `<form (submit)="onSubmit(approvalForm)">
+    //   <div class="poouterblock" style="box-sizing: border-box;height: 12.5in;margin: 0 auto;overflow: hidden;padding: 0.5in;width: 8.5in;background: #FFF;border-radius: 1px;box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); border:10px black solid;">
+
+    //       <header style="margin: 0 0 3em;">
+    //         <address class="poaddress" contenteditable style="float: left;font-size: 50%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
+    //           <h2 class="poaddressh2" style="font-size: 15px">Under Privileged Advancement by Youth</h2>
+    //           <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">C/O PRATIK KAMBLE</p>
+    //           <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">BANK COLONY, SHIVAJI WARD</p>
+    //           <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;">BHANDARA, MAHARASHTRA, 441904</p>
+    //           <p class="poaddressp" style="font-size: 13px;margin: 0 0 0.25em;"><b>Phone</b> 9403964873 <strong>EMAIL:</strong> ngoupay@gmail.com</p>
+    //         </address>
+    //         <div class="pologo"  style="margin-left:100px; float:right;">
+    //               <center>
+    //                 <img src="https://www.upay.org.in/wp-content/uploads/2020/03/cropped-logo-1.png"  alt="UPAY">
+    //                 <h3 class="pologotitle"  style="color: gray;">Purchase Order</h2>
+    //               </center>
+    //             </div>
+    //             <div style="clear:both";></div>
+    //             <address class="poship"  contenteditable style="font-size: 80%;font-style: normal;line-height: 1.25;margin: 0 1em 1em 0;border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;">
+    //               <h4>The following number must appear on all related correspondence,<br> shipping papers, and invoices:</h4>
+    //                 <p style="font-size: 13px;margin: 0 0 0.25em;">APPROVAL DOC NUMBER:${awardPodata.approvalId}<br>
+    //                   P.O. NUMBER: [UPAY/ZONE/YEAR/SN): UPAY/${(approval.zone).toUpperCase()}/${year}/${(awardPodata.approvalId).match(/(\d+)/)[0]}</p>
+    //             </address>
+    //           </header>
+    //           <article style="margin: 0 0 3em;">
+    //             <div class="povendor"  style="float:left; width:450px;">
+    //               <h1 class="povendorh1"  style="font: bold 100% sans-serif;letter-spacing: 0.5em;text-transform: uppercase;clip: rect(0 0 0 0);">To,</h1>
+    //               <address class="povendoraddr"   style="margin: 0 0 3em;font-size: 81%;font-weight: bold;">
+    //                 <p class="povendoraddrp"  style="font-size:13px;font-style: normal;">Vendor Name: ${awardPodata.vendorname}</p>
+    //                 <p class="povendoraddrp" style="font-size:13px; font-style: normal;">Account no: ${approval.account_no}</p>
+    //                 <div><label> Account no: <label><input type="text" name="account_no" ngModel #accountNoInput="ngModel" value=" ${approval.account_no}"></div>
+    //                 <p class="povendoraddrp" style="font-size:13px; font-style: normal;">Ifsc code: ${approval.ifsc_code}</p>
+    //                 <div><label> Ifsc code: <label><input type="text" name="ifsc_code" ngModel #ifsc_codeInput="ngModel" value=" ${approval.ifsc_code}"></div>
+    //                 <p class="povendoraddrp" style="font-size:13px; font-style: normal;"> Vendor Address: ${awardPodata.vendor_addr}</p>
+    //                 <div><label> Vendor Address: <label><input type="text" name="vendor_addr" ngModel #vendor_addrInput="ngModel" value="  ${awardPodata.vendor_addr}"></div>
+    //                 <p class="povendoraddrp" style="font-size:13px; font-style: normal;"> Subject: ${approval.subject}</p>
+    //                 <div><label> Subject: <label><input type="text" name="subject" ngModel #subjectInput="ngModel" value="${approval.subject}"></div>
+    //               </address>
+    //           </div>
+    //    <div class="poshipaddr"  style="float:left;">
+    //    <label style="width: 40%">Shipping Address:</label>
+    //    <p class="poshipaddrp" style="width: 40%">${approval.shipping_addr}</p>
+    //    </div>
+
+
+    //       <table class="inventoryheader" style="font-size: 75%;table-layout: fixed;width: 100%;border-collapse: separate;border-spacing: 0px;">
+    //           <thead>
+    //           <tr>
+    //               <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">P.O. Date</span></th>
+    //               <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Procurer name and contact number</span></th>
+    //               <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Warranty if any</span></th>
+    //               <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Delivery Schedule</span></th>
+    //               <th class="inventoryheaderth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Payment Terms</span></th>
+    //           </tr>
+    //           </thead>
+    //           <tbody>
+    //           <tr>
+    //               <td class="inventoryheadertd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approvaldate}</span></td>
+    //               <td class="inventoryheadertd"   style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.name + '\n' + approval.contact}</span></td>
+    //               <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">NA</span></td>
+    //               <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.deliveryschedule}</span></td>
+    //               <td class="inventoryheadertd"  style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);"><span>${awardPodata.payterms}</span></td>
+    //           </tr>
+    //           </tbody>
+    //       </table>
+    //       <br>
+    //       <table class="inventory" style="font-size: 75%;table-layout: fixed;width: 100%;border-collapse: separate;border-spacing: 0px;margin: 0 0 3em;clear: both;">
+    //           <thead>
+    //           <tr>
+    //               <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Quantity</span></th>
+    //               <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit</span></th>
+    //               <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Description</span></th>
+    //               <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Unit Price</span></th>
+    //               <th class="inventoryth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: center;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);font-weight: bold;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Total</span></th>
+    //           </tr>
+    //           </thead>
+    //           <tbody>
+    //           <tr>
+    //               <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 26%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardquantity}</span></td>
+    //               <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 38%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Number</span></td>
+    //               <td class="inventorytd" style="text-align: center;text-justify: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${approval.awardItemDesc}p</span></td>
+    //               <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.unitprice}</span></td>
+    //               <td class="inventorytd" style="text-align: center;border-width: 1px;padding: 0.5em;position: relative;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 12%;"><span data-prefix>₹</span><span>${awardPodata.netbillamount}</span></td>
+    //           </tr>
+    //           </tbody>
+    //       </table>
+    //       <table class="balance" style="font-size: 75%;table-layout: fixed;width: 36%;border-collapse: separate;border-spacing: 0px;float: right;">
+    //           <tr>
+    //               <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Sub Total</span></th>
+    //               <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${awardPodata.netbillamount}</span></td>
+    //           </tr>
+    //           <tr>
+    //               <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">GST</span></th>
+    //               <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.gst_tax}</span></td>
+    //           </tr>
+    //           <tr>
+    //               <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Shipping & Handling</span></th>
+    //               <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">${awardPodata.shipping_handling_chrg}</span></td>
+    //           </tr>
+
+    //           <tr>
+    //               <th class="balanceth" style="border-width: 1px;padding: 0.5em;position: relative;text-align: left;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span contenteditable style="border-radius: 0.25em;min-width: 1em;outline: 0;cursor: pointer;display: inline-block;">Grand Total</span></th>
+    //               <td class="balancetd" style="border-width: 1px;padding: 0.5em;position: relative;text-align: right;border-radius: 0px;border-style: solid;border-color: rgba(62, 62, 62, 0.99);width: 50%;"><span data-prefix>₹</span><span>${(parseInt(awardPodata.netbillamount) || 0) + (parseInt(awardPodata.shipping_handling_chrg) || 0) + (parseInt(awardPodata.gst_tax) || 0)}</span></td>
+    //           </tr>
+    //       </table>
+    //       <p>Notes to us that pertain to your purchase</p>
+    //   </article>
+    //   <aside>
+    //     <p>Authorized By : Zonal Secretory Finance/ Director Finance </p>
+    //      <p>Accepted By Vendor</p>
+    //       <p>Date: ${new Date()} </p>
+    //   </aside>
+    //   <center><span>This is a computer-generated document. No signature is required.</span><br><br>
+    //   <br>
+    //   <button mat-raised-button color="primary" type="Submit">Submit</button></center>
+    //   </form>
+    //   </div>
+    //  `
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         header: 'PO Preview',
-        message:'',
+        message: '',
         htmlBody: ap,
-        isSendPO:true,
-        approverList: [{email: this.approval.email}],
+        isSendPO: true,
+        awardPodata: this.awardPodata,
+        approval: this.approval,
+        approverList: [{ email: this.approval.email }],
         buttonTextPrimary: 'Send',
         buttonTextSecondary: 'Cancel'
       },
@@ -487,9 +693,9 @@ export class ApprovalListItemComponent implements OnInit {
     // win.document.write('</head>');
     // win.document.write('<body>');
     // win.document.write(ap);
-    
+
     // win.document.write('</body></html>');
-    
+
     // setTimeout(function() {
     //   win.document.close();
     //   //win.print();
@@ -499,16 +705,19 @@ export class ApprovalListItemComponent implements OnInit {
     //   title: 'Notify Initiator',
     //   to: 'Initiator'
     // }});
-    
+
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //console.log("this.approval",this.approval);
-        this.actionOccured.emit({notify: true, approvalData: this.approval, po:ap, emailId: result.email, remarks: result.remarks});
+        this.actionOccured.emit({ notify: true, approvalData: this.approval, po: ap, emailId: result.email, remarks: result.remarks, account_no: result.account_no, file: result.file });
       }
     });
-    
-    
-  }
 
+
+  }
+  // onSubmit(approvalForm) {
+  //   this.approvalForm = approvalForm;
+  //   this.approvalFormService.updatePO(approvalForm.value);
+  // }
 }

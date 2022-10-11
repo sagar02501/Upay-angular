@@ -1,30 +1,53 @@
 <h4 style="padding-bottom: 19px;
 padding-top: 7px;">Provide Bill(s) detail</h4>
-<div class="floating" >
+<div class="floating">
     <mat-form-field class="sizee">
-        <input matInput type="text"  placeholder="Bill Number" name="billNumber" [(ngModel)]="bill.number" value="number" #billNumberInput="ngModel" required>
-        <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>     
+        <input matInput type="text" placeholder="Bill Number" name="billNumber" [(ngModel)]="bill.number" value="number"
+            #billNumberInput="ngModel" required>
+        <mat-error *ngIf="billNumberInput.invalid"> Please enter bill number</mat-error>
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="number" placeholder="Bill Amount" name="billAmount" [(ngModel)]="bill.amount" value="amount" #billAmountInput="ngModel" required>
-        <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>     
+        <input matInput type="number" placeholder="Bill Amount" name="billAmount" [(ngModel)]="bill.amount"
+            value="amount" #billAmountInput="ngModel" required>
+        <mat-error *ngIf="billAmountInput.invalid"> Please enter bill Amount</mat-error>
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="Vendor" name="vendor" [(ngModel)]="bill.vendor" value="vendor" #vendorInput="ngModel" required>
-        <mat-error *ngIf="vendorInput.invalid"> Please enter vendor</mat-error>     
+        <input matInput type="text" placeholder="Vendor" name="vendor" [(ngModel)]="bill.vendor" value="vendor"
+            #vendorInput="ngModel" required>
+        <mat-error *ngIf="vendorInput.invalid"> Please enter vendor</mat-error>
     </mat-form-field>
     <mat-form-field class="sizee">
-        <input matInput type="text" placeholder="item Discription"  name="body" [(ngModel)]="bill.itemDesc" value="itemDesc" #DiscriptionInput="ngModel" required minlength="20">
+        <input matInput type="text" placeholder="item Discription" name="body" [(ngModel)]="bill.itemDesc"
+            value="itemDesc" #DiscriptionInput="ngModel" required minlength="20">
         <mat-error *ngIf="DiscriptionInput.invalid"> Please provide Discription (min character 20)</mat-error>
     </mat-form-field>
-    <div class="file-input mt-10 mb-10"> 
+    <div>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Asset Details" name="assetdetails" [(ngModel)]="bill.assetDetails"
+                value="assetDetails" #assetDetailsInput="ngModel" required>
+            <mat-error *ngIf="billNumberInput.invalid"> Please enter Asset Details</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="number" placeholder="Asset Value" name="assetvalue" [(ngModel)]="bill.assetValue"
+                value="assetValue" #assetValueInput="ngModel" required>
+            <mat-error *ngIf="billNumberInput.invalid"> Please enter Asset Value</mat-error>
+        </mat-form-field>
+        <mat-form-field class="sizee">
+            <input matInput type="text" placeholder="Asset Codes" name=" assetcodes" [(ngModel)]="bill.assetCodes"
+                value=" assetCodes" #assetCodesInput="ngModel" required>
+            <mat-error *ngIf="billNumberInput.invalid"> Please enter Asset Codes</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="file-input mt-10 mb-10">
         <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
-        
-         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()" style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
-         <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachment</p>
-        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;"*ngIf="bill.file">{{bill.file.name}}</p>
-        
-        <button style= "font-weight: 500;
+
+        <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()"
+            style="color: white;font-size: 13px;margin-bottom: 10px;">⇪</button>
+        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;">Attachment</p>
+        <p class="filename" style="padding:10px; margin-top:10px; max-width:250px;" *ngIf="bill.file">{{bill.file.name}}
+        </p>
+
+        <button style="font-weight: 500;
         color: #7ca3e4;
         font-size: 15px;
         background: transparent;
@@ -33,13 +56,9 @@ padding-top: 7px;">Provide Bill(s) detail</h4>
         float: right;
         position: relative;
         left: 20px;
-        "
-(click)="$event.preventDefault(); removebillItem(b)" > - Remove bill </button>
+        " (click)="$event.preventDefault(); removebillItem(b)"> - Remove bill </button>
     </div>
 </div>
 <div>
-<hr>
-<div>
-        
-
-
+    <hr>
+    <div>

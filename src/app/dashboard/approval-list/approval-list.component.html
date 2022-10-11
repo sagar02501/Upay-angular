@@ -1,25 +1,21 @@
 <section class="approvals-list__header">
-    <div class="approvals-list__header--title">
-      <strong>Approvals List</strong>
-    </div>
-    <div class="approval-search">
-      <input type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchApproval()"/>
-    </div>
-    <div class="approval-calender">
-      <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'></ejs-daterangepicker>
-
-     <!-- <mat-form-field>
-     <input matInput [matDatepicker]="myDatePicker">
-     <mat-datepicker-toggle [for]="myDatePicker" matSuffix></mat-datepicker-toggle>
-     <mat-datepicker #myDatePicker></mat-datepicker>
-    </mat-form-field> -->
-    </div>
-    <div>
-      <button mat-raised-button color='primary' class='function-button' (click)="openBodyAndCreatePdf()">Print</button>
-      <button mat-raised-button color='warn' class='function-button' (click)="createExcelReport()">Export Excel</button>
-    </div>
-  </section>
-  <div class="a-table">
+  <div class="approvals-list__header--title">
+    <strong>Approvals List</strong>
+  </div>
+  <div class="approval-search">
+    <input type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="searchApproval()" />
+  </div>
+  <div class="approval-calender">
+    <ejs-daterangepicker id='daterangepicker' placeholder='Select a range' [startDate]='start' [endDate]='end'
+      (valueChange)="onDateChange($event)">
+    </ejs-daterangepicker>
+  </div>
+  <div>
+    <button mat-raised-button color='primary' class='function-button' (click)="openBodyAndCreatePdf()">Print</button>
+    <button mat-raised-button color='warn' class='function-button' (click)="createExcelReport()">Export Excel</button>
+  </div>
+</section>
+<div class="a-table">
   <section class="approvals-table">
     <div class="approvals-table__header">
       <div class="approval-id">
@@ -32,18 +28,20 @@
         Email
       </div>
       <div class="approval-type">
-        <button mat-button class="approval-status" (click)="selectApproval.open()" >
+        <button mat-button class="approval-status" (click)="selectApproval.open()">
           Approval Type
-          <mat-select class="approval-type1"  #selectApproval [(ngModel)]="selectedApprovalType" multiple (openedChange)="openedChange($event)" >
-            <mat-option  (click)="selectedApprovalType = undefined; selectApproval.open();" >Clear All</mat-option>
+          <mat-select class="approval-type1" #selectApproval [(ngModel)]="selectedApprovalType" multiple
+            (openedChange)="openedChange($event)">
+            <mat-option (click)="selectedApprovalType = undefined; selectApproval.open();">Clear All</mat-option>
             <mat-option value="Claim against advance">Claim against advance</mat-option>
-            <mat-option  value="Advance or Imprest">Advance or Imprest</mat-option>
-            <mat-option  value="Claim">Claim</mat-option>
-            <mat-option  value="In Principle or Admin Approval">In Principle or Admin Approval</mat-option>
-            <mat-option  value="Award Approval">Award Approval</mat-option>
+            <mat-option value="Advance or Imprest">Advance or Imprest</mat-option>
+            <mat-option value="Claim">Claim</mat-option>
+            <mat-option value="In Principle or Admin Approval">In Principle or Admin Approval</mat-option>
+            <mat-option value="Award Approval">Award Approval</mat-option>
+            <mat-option value="Salary">Salary</mat-option>
           </mat-select>
-       </button>
-      
+        </button>
+
       </div>
       <div class="approval-body">
         Approval Details
@@ -58,6 +56,10 @@
         Created At
         <div [ngClass]="{'i-rotate': sortDateAsc}" class="arrow-icon"></div>
       </div>
+      <div class="approval-fundTransDate" (click)="sortApproval('date')">
+        Fund Transfer Date
+        <div [ngClass]="{'i-rotate': sortDateAsc}" class="arrow-icon"></div>
+      </div>
       <div class="approval-amount" (click)="sortApproval('amount')">
         Award Value
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
@@ -67,7 +69,7 @@
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-amount" (click)="sortApproval('amount')">
-        Advance/Transferred Amount
+        Advance / Transferred Amount
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
       <div class="approval-amount" (click)="sortApproval('amount')">
@@ -82,47 +84,53 @@
         Unutilized Amount
         <div [ngClass]="{'i-rotate': sortAmountAsc}" class="arrow-icon"></div>
       </div>
+      <div class="audited-status">
+        Audited Status
+      </div>
       <div class="approval-zone">
         <button mat-button class="approval-zone" (click)=zoneInput.open()>
           Zone
-            <!-- <mat-label></mat-label> -->
-            <mat-select class="approval-zone1" name="zone" [(ngModel)]="selectedZone" #zoneInput  multiple (openedChange)="openedChange($event)">
-              <mat-option  (click)="selectedZone = undefined; zoneInput.open();" >Clear All</mat-option>
-              <mat-option *ngFor="let zone of zonesList" [value]="zone.name">
-                {{zone.name}}
-              </mat-option>
-            </mat-select>
-            
-       </button>
+          <!-- <mat-label></mat-label> -->
+          <mat-select class="approval-zone1" name="zone" [(ngModel)]="selectedZone" #zoneInput multiple
+            (openedChange)="openedChange($event)">
+            <mat-option (click)="selectedZone = undefined; zoneInput.open();">Clear All</mat-option>
+            <mat-option *ngFor="let zone of zonesList" [value]="zone.name">
+              {{zone.name}}
+            </mat-option>
+          </mat-select>
+
+        </button>
       </div>
       <div class="approval-file">
         File
       </div>
       <div class="approval-status">
-        <button mat-button class="approval-status" (click)="selectStatus.open()" >
+        <button mat-button class="approval-status" (click)="selectStatus.open()">
           Status
-          <mat-select class="approval-status1" #selectStatus [(ngModel)]="selectedStatus" multiple (openedChange)="openedChange($event)" >
-            <mat-option  (click)="selectedStatus = undefined; selectStatus.open();" >Clear All</mat-option>
+          <mat-select class="approval-status1" #selectStatus [(ngModel)]="selectedStatus" multiple
+            (openedChange)="openedChange($event)">
+            <mat-option (click)="selectedStatus = undefined; selectStatus.open();">Clear All</mat-option>
             <mat-option value="new">NEW</mat-option>
-            <mat-option  value="pending">PENDING</mat-option>
-            <mat-option  value="rejected">REJECTED</mat-option>
-            <mat-option  value="transferred">TRANSFERRED</mat-option>
-            <mat-option  value="approved">APPROVED</mat-option>
-            <mat-option  value="to Central">TO CENTRAL</mat-option>
-            <mat-option  value="fund transferred utilization pending">Fund transferred utilization pending</mat-option>
-            <mat-option  value="partiall utilization done">Partiall utilization done</mat-option>
-            <mat-option  value="partially settled with extra claim">Partially settled with extra claim</mat-option>
-            <mat-option  value="fully settled">Fully settled</mat-option>
-            <mat-option  value="fully settled with extra claim">Fully settled with extra claim</mat-option>
+            <mat-option value="pending">PENDING</mat-option>
+            <mat-option value="rejected">REJECTED</mat-option>
+            <mat-option value="transferred">TRANSFERRED</mat-option>
+            <mat-option value="approved">APPROVED</mat-option>
+            <mat-option value="to Central">TO CENTRAL</mat-option>
+            <mat-option value="fund transferred utilization pending">Fund transferred utilization pending</mat-option>
+            <mat-option value="partiall utilization done">Partiall utilization done</mat-option>
+            <mat-option value="partially settled with extra claim">Partially settled with extra claim</mat-option>
+            <mat-option value="fully settled">Fully settled</mat-option>
+            <mat-option value="fully settled with extra claim">Fully settled with extra claim</mat-option>
           </mat-select>
-       </button>
+        </button>
       </div>
       <div class="approval-action">
         Action
       </div>
     </div>
     <div class="approvals-table__body">
-      <app-approval-list-item *ngFor="let approval of approvalList" [approval]="approval" [approverList]="approverList" [openBody]="openBody" (actionOccured)="handleEvent($event)"></app-approval-list-item>
+      <app-approval-list-item *ngFor="let approval of approvalList" [approval]="approval" [approverList]="approverList"
+        [openBody]="openBody" (actionOccured)="handleEvent($event)"></app-approval-list-item>
     </div>
   </section>
 </div>

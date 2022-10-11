@@ -36,6 +36,7 @@
       <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
       <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
       <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+      <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
     </span>
   </div>
     <div *ngIf="approval?.approver_remarks"><label>Remarks by approver: </label><span>{{approval?.approver_remarks}}</span></div>

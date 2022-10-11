@@ -14,8 +14,9 @@ export class ActionDialogComponent implements OnInit {
   title;
   to;
   isFundTransfer;
+  approval
   isNew = true;
-
+  isManualFundHide;
   placeholder;
   modeList = ["NEFT", "RTGS", "IMPS", "UPI"];
   expCodes = ["Center", "Zonal", "Central"];
@@ -37,161 +38,162 @@ export class ActionDialogComponent implements OnInit {
   }];
 
   budgetHead = [{
-    technicalName:"BH01",
-    friendlyName:"Center Operation"
-  },{
-    technicalName:"BH02",
-    friendlyName:"Center Development"
-  },{
-    technicalName:"BH03",
-    friendlyName:"Child Development Activities"
-  },{
-    technicalName:"BH04",
-    friendlyName:"Social Awareness Events"
-  },{
-    technicalName:"BH05",
-    friendlyName:"Center Expansion"
-  },{
-    technicalName:"BH06",
-    friendlyName:"Fund Raising Events"
-  },{
-    technicalName:"BH07",
-    friendlyName:"Legal and Statutory"
-  },{
-    technicalName:"BH08",
-    friendlyName:"Publicity and Promotional Events"
-  },{
-    technicalName:"BH09",
-    friendlyName:"Training Development and Research"
-  },{
-    technicalName:"BH10",
-    friendlyName:"Administrative Events"
-  },{
-    technicalName:"BH11",
-    friendlyName:"Library Operations"
-  },{
-    technicalName:"BH12",
-    friendlyName:"Skill Development"
-  },{
-    technicalName:"BH13",
-    friendlyName:"Women Empowerment"
+    technicalName: "BH01",
+    friendlyName: "Center Operation"
+  }, {
+    technicalName: "BH02",
+    friendlyName: "Center Development"
+  }, {
+    technicalName: "BH03",
+    friendlyName: "Child Development Activities"
+  }, {
+    technicalName: "BH04",
+    friendlyName: "Social Awareness Events"
+  }, {
+    technicalName: "BH05",
+    friendlyName: "Center Expansion"
+  }, {
+    technicalName: "BH06",
+    friendlyName: "Fund Raising Events"
+  }, {
+    technicalName: "BH07",
+    friendlyName: "Legal and Statutory"
+  }, {
+    technicalName: "BH08",
+    friendlyName: "Publicity and Promotional Events"
+  }, {
+    technicalName: "BH09",
+    friendlyName: "Training Development and Research"
+  }, {
+    technicalName: "BH10",
+    friendlyName: "Administrative Events"
+  }, {
+    technicalName: "BH11",
+    friendlyName: "Library Operations"
+  }, {
+    technicalName: "BH12",
+    friendlyName: "Skill Development"
+  }, {
+    technicalName: "BH13",
+    friendlyName: "Women Empowerment"
   }];
 
   budgetSubHead = [{
-    budgetHeadTechnicalName:"BH01",
-    friendlyName:"Salary and Allowances"
-  },{
-    budgetHeadTechnicalName:"BH01",
-    friendlyName:"Books and Stationary Items"
-  },{
-    budgetHeadTechnicalName:"BH01",
-    friendlyName:"Rental Charges"
-  },{
-    budgetHeadTechnicalName:"BH01",
-    friendlyName:"Miscellaneous"
-  },{
-    budgetHeadTechnicalName:"BH02",
-    friendlyName:"Electrical Works and Appliances"
-  },{
-    budgetHeadTechnicalName:"BH02",
-    friendlyName:"Establishment Cost"
-  },{
-    budgetHeadTechnicalName:"BH02",
-    friendlyName:"Beautification and Advancements"
-  },{
-    budgetHeadTechnicalName:"BH03",
-    friendlyName:"Sports Activities"
-  },{
-    budgetHeadTechnicalName:"BH03",
-    friendlyName:"Counselling and immunization"
-  },{
-    budgetHeadTechnicalName:"BH03",
-    friendlyName:"Nutritional Drives"
-  },{
-    budgetHeadTechnicalName:"BH03",
-    friendlyName:"Cultural Activities"
-  },{
-    budgetHeadTechnicalName:"BH04",
-    friendlyName:"Health, Environment and Sanitization"
-  },{
-    budgetHeadTechnicalName:"BH04",
-    friendlyName:"Protection of Child Abuse Drives"
-  },{
-    budgetHeadTechnicalName:"BH04",
-    friendlyName:"Other Social Awareness Drives"
-  },{
-    budgetHeadTechnicalName:"BH05",
-    friendlyName:"Center Expansion"
-  },{
-    budgetHeadTechnicalName:"BH06",
-    friendlyName:"Fund Raising"
-  },{
-    budgetHeadTechnicalName:"BH06",
-    friendlyName:"Other Fund Raising Events"
-  },{
-    budgetHeadTechnicalName:"BH07",
-    friendlyName:"Legal and Statutory"
-  },{
-    budgetHeadTechnicalName:"BH08",
-    friendlyName:"Social and Other Media"
-  },{
-    budgetHeadTechnicalName:"BH08",
-    friendlyName:"PR Events/Material"
-  },{
-    budgetHeadTechnicalName:"BH09",
-    friendlyName:"Training Research and Development"
-  },{
-    budgetHeadTechnicalName:"BH10",
-    friendlyName:"Employees Salary"
-  },{
-    budgetHeadTechnicalName:"BH10",
-    friendlyName:"Rental Charges"
-  },{
-    budgetHeadTechnicalName:"BH10",
-    friendlyName:"Meetings and Travels"
-  },{
-    budgetHeadTechnicalName:"BH10",
-    friendlyName:"Miscellaneous Office Expenditure"
-  },{
-    budgetHeadTechnicalName:"BH11",
-    friendlyName:"Establishment Cost"
-  },{
-    budgetHeadTechnicalName:"BH11",
-    friendlyName:"Books and Magazines"
-  },{
-    budgetHeadTechnicalName:"BH11",
-    friendlyName:"Librarian's Salary"
-  },{
-    budgetHeadTechnicalName:"BH11",
-    friendlyName:"Rental Charges"
-  },{
-    budgetHeadTechnicalName:"BH12",
-    friendlyName:"Establishment Cost"
-  },{
-    budgetHeadTechnicalName:"BH12",
-    friendlyName:"Material"
-  },{
-    budgetHeadTechnicalName:"BH12",
-    friendlyName:"Trainer's Salary"
-  },{
-    budgetHeadTechnicalName:"BH12",
-    friendlyName:"Rental Charges"
-  },{
-    budgetHeadTechnicalName:"BH13",
-    friendlyName:"Menstrual Hygene"
-  },{
-    budgetHeadTechnicalName:"BH13",
-    friendlyName:"Other Empowerment Drives"
+    budgetHeadTechnicalName: "BH01",
+    friendlyName: "Salary and Allowances"
+  }, {
+    budgetHeadTechnicalName: "BH01",
+    friendlyName: "Books and Stationary Items"
+  }, {
+    budgetHeadTechnicalName: "BH01",
+    friendlyName: "Rental Charges"
+  }, {
+    budgetHeadTechnicalName: "BH01",
+    friendlyName: "Miscellaneous"
+  }, {
+    budgetHeadTechnicalName: "BH02",
+    friendlyName: "Electrical Works and Appliances"
+  }, {
+    budgetHeadTechnicalName: "BH02",
+    friendlyName: "Establishment Cost"
+  }, {
+    budgetHeadTechnicalName: "BH02",
+    friendlyName: "Beautification and Advancements"
+  }, {
+    budgetHeadTechnicalName: "BH03",
+    friendlyName: "Sports Activities"
+  }, {
+    budgetHeadTechnicalName: "BH03",
+    friendlyName: "Counselling and immunization"
+  }, {
+    budgetHeadTechnicalName: "BH03",
+    friendlyName: "Nutritional Drives"
+  }, {
+    budgetHeadTechnicalName: "BH03",
+    friendlyName: "Cultural Activities"
+  }, {
+    budgetHeadTechnicalName: "BH04",
+    friendlyName: "Health, Environment and Sanitization"
+  }, {
+    budgetHeadTechnicalName: "BH04",
+    friendlyName: "Protection of Child Abuse Drives"
+  }, {
+    budgetHeadTechnicalName: "BH04",
+    friendlyName: "Other Social Awareness Drives"
+  }, {
+    budgetHeadTechnicalName: "BH05",
+    friendlyName: "Center Expansion"
+  }, {
+    budgetHeadTechnicalName: "BH06",
+    friendlyName: "Fund Raising"
+  }, {
+    budgetHeadTechnicalName: "BH06",
+    friendlyName: "Other Fund Raising Events"
+  }, {
+    budgetHeadTechnicalName: "BH07",
+    friendlyName: "Legal and Statutory"
+  }, {
+    budgetHeadTechnicalName: "BH08",
+    friendlyName: "Social and Other Media"
+  }, {
+    budgetHeadTechnicalName: "BH08",
+    friendlyName: "PR Events/Material"
+  }, {
+    budgetHeadTechnicalName: "BH09",
+    friendlyName: "Training Research and Development"
+  }, {
+    budgetHeadTechnicalName: "BH10",
+    friendlyName: "Employees Salary"
+  }, {
+    budgetHeadTechnicalName: "BH10",
+    friendlyName: "Rental Charges"
+  }, {
+    budgetHeadTechnicalName: "BH10",
+    friendlyName: "Meetings and Travels"
+  }, {
+    budgetHeadTechnicalName: "BH10",
+    friendlyName: "Miscellaneous Office Expenditure"
+  }, {
+    budgetHeadTechnicalName: "BH11",
+    friendlyName: "Establishment Cost"
+  }, {
+    budgetHeadTechnicalName: "BH11",
+    friendlyName: "Books and Magazines"
+  }, {
+    budgetHeadTechnicalName: "BH11",
+    friendlyName: "Librarian's Salary"
+  }, {
+    budgetHeadTechnicalName: "BH11",
+    friendlyName: "Rental Charges"
+  }, {
+    budgetHeadTechnicalName: "BH12",
+    friendlyName: "Establishment Cost"
+  }, {
+    budgetHeadTechnicalName: "BH12",
+    friendlyName: "Material"
+  }, {
+    budgetHeadTechnicalName: "BH12",
+    friendlyName: "Trainer's Salary"
+  }, {
+    budgetHeadTechnicalName: "BH12",
+    friendlyName: "Rental Charges"
+  }, {
+    budgetHeadTechnicalName: "BH13",
+    friendlyName: "Menstrual Hygene"
+  }, {
+    budgetHeadTechnicalName: "BH13",
+    friendlyName: "Other Empowerment Drives"
   }];
-  
+
   subBudgetHeadChangeEvent = []
   budgetHeadChanged(value) {
-    this.subBudgetHeadChangeEvent = this.budgetSubHead.filter( sb => sb.budgetHeadTechnicalName == value);
+    this.subBudgetHeadChangeEvent = this.budgetSubHead.filter(sb => sb.budgetHeadTechnicalName == value);
   }
   advanceAmountInput = 0;
   ngOnInit() {
-    if(this.data.approval !== undefined )
-    this.advanceAmountInput = this.data.approval.amount || 0;
+    this.approval = this.data.approval || '';
+    if (this.data.approval !== undefined)
+      this.advanceAmountInput = this.data.approval.amount || 0;
     //console.log(this.advanceAmountInput);
     this.approverList = this.data.approverList || [];
     this.title = this.data.title || '';
@@ -202,11 +204,20 @@ export class ActionDialogComponent implements OnInit {
     } else {
       this.placeholder = 'Remarks/DOP Clause';
     }
+    console.log("app type:" + this.data.approval.approval_type);
+    // if (this.approval.approval_type == "In Principle or Admin Approval") {
+    //   this.isManualFundHide = true;
+    // }
+    this.isManualFundHide = false;
+    if (this.data.approval.approval_type == "Claim against advance/PO" || this.data.approval.approval_type == "Claim") {
+      this.isManualFundHide = true;
+    }
+
   }
   file: File | null
   onImagePicked(event: Event) {
-   this.file = (event.target as HTMLInputElement).files[0];
- }
+    this.file = (event.target as HTMLInputElement).files[0];
+  }
   openPaymentDashboard() {
     window.open('https://x.razorpay.com/contacts', '_blank')
   }
