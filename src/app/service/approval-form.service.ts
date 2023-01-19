@@ -21,7 +21,7 @@ export class ApprovalFormService {
   billssucces: any[]
   salarysuccess: any[]
   awardsuccess: any[]
-  
+
   url = environment.backendURL + 'api/approvals';
 
   constructor(public http: HttpClient) { }
@@ -182,7 +182,7 @@ export class ApprovalFormService {
       }
     );
   }
-  
+
   submitForm(data, file, approvalTypes) {
     //console.log(data, file);
     const postData = new FormData();
@@ -307,19 +307,20 @@ export class ApprovalFormService {
       link = '/forward';
     }
     const postData2 = new FormData();
-          postData2.append('approvalData', JSON.stringify(data.approvalData));
-          postData2.append('emailId', data.emailId);
-          postData2.append('useremailId', data.approvalData.email);
-          postData2.append('remarks', data.remarks);
-          postData2.append("_id", data.approvalData._id)
-          if (data.file) {
-            postData2.append('file', data.file, data.file.name);
-          }
-          postData2.append('zone', data.approvalData.zone);
-          console.log("data:  " , data.approvalData);
-      this.http.post(this.url + link, postData2).subscribe((res) => {
+    postData2.append('approvalData', JSON.stringify(data.approvalData));
+    postData2.append('emailId', data.emailId);
+    postData2.append('useremailId', data.approvalData.email);
+    postData2.append('remarks', data.remarks);
+    postData2.append("_id", data.approvalData._id)
+    postData2.append('approvalId', data.approvalData.approvalId);
+    if (data.file) {
+      postData2.append('file', data.file, data.file.name);
+    }
+    postData2.append('zone', data.approvalData.zone);
+    console.log("data:  ", data.approvalData);
+    this.http.post(this.url + link, postData2).subscribe((res) => {
       this.approvalSubject.next('sentToApproverTrue');
-      
+
     },
       (err) => {
         console.log(err);
@@ -381,7 +382,7 @@ export class ApprovalFormService {
     postData2.append('amount_transferred', data.approvalData.amount_transferred);
     postData2.append('timeline', data.approvalData.timeline);
     postData2.append('_id', data.approvalData._id);
-    
+
 
     this.http.post(this.url + '/approve/audit', postData2).subscribe((res) => {
       this.approvalSubject.next('sentToAuditTrue');
