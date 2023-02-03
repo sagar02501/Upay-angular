@@ -47,18 +47,25 @@ export class GetSingleApprovalComponent implements OnInit {
     this.approvalSubscription = this.approvalService.getApprovalListener().subscribe((res) => {
       if ((res as any).error_message) {
         this.openSnackBar((res as any).error_message, 'failure');
+        if ((res as any).res) {
+          this.approval = (res as any).res;
+          this.setTimelineAndApprovalCreatedDate(this.approval);
+        }
         return;
       }
+
       if ((res as any).message) {
         this.openSnackBar((res as any).message, 'success');
-        this.approval = res;
+        if ((res as any).res) {
+          this.approval = (res as any).res;
+          this.setTimelineAndApprovalCreatedDate(this.approval);
+        }
         return;
       }
-      this.approval = res;
-      //console.log(res);
-      if (this.approval) {
-        this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
-        this.timeline = this.approval.timeline.split('\n');
+
+      if ((res as any)._id) {
+        this.approval = res;
+        this.setTimelineAndApprovalCreatedDate(this.approval);
       }
     });
 
@@ -133,6 +140,11 @@ export class GetSingleApprovalComponent implements OnInit {
         }
       }
     });
+  }
+
+  setTimelineAndApprovalCreatedDate(approval) {
+    this.approvalCreatedDate = new Date(approval.date).toLocaleString();
+    this.timeline = approval.timeline.split('\n');
   }
 
 }

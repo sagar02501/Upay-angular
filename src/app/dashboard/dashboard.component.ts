@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   statusfilters;
   approvaltypefilters;
   allApprovalData;
+  sortApprovalInterval = null;
 
   ngOnInit() {
     console.log("NG Onint");
@@ -106,12 +107,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.success = (res as any).isSuccess;
             this.openSnackBar((res as any).message);
           }
-          
-            //this.approvalFormService.getApproval();
-            this.sortApproval(this.searchText, this.sortBy, this.statusfilters, this.zonefilters, this.approvaltypefilters);//Todo: reslove issue ,pass missing param
 
-            this.approvalFormService.getApprovalStatusData();
-          
+          //this.approvalFormService.getApproval();
+          this.sortApproval(this.searchText, this.sortBy, this.statusfilters, this.zonefilters, this.approvaltypefilters, this.pageSize, this.start, this.end, this.sortDateAsc);//Todo: reslove issue ,pass missing param
+          this.approvalFormService.getApprovalStatusData();
+
         }
 
       });
@@ -119,14 +119,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.approverSubscription = this.settingsService.getApproverSubjectListener().subscribe((res) => {
       this.approverList = res;
     });
+
+    this.sortApprovalInterval = setInterval(() => {
+      this.sortApproval(this.searchText, this.sortBy, this.statusfilters, this.zonefilters, this.approvaltypefilters, this.pageSize, this.start, this.end, this.sortDateAsc)
+    }, 300000)
   }
 
 
   sortApproval(searchText?, sortBy?, status?, zones?, approvaltype?, pageSize?, start?, end?, sortDateAsc?) {
     //if sortby exist sortOrder
     this.sortDateAsc = sortDateAsc;
-    if(sortBy !== undefined )
-        this.sortDateAsc === true ? this.sortOrder = -1 : this.sortOrder = 1;
+    if (sortBy !== undefined)
+      this.sortDateAsc === true ? this.sortOrder = -1 : this.sortOrder = 1;
     this.searchText = searchText;
     this.sortBy = sortBy;
     this.zonefilters = zones;
@@ -191,7 +195,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   sendForApproval(e) {
-   
+
     if (e.approval_id) {
       this.approvalFormService.sendToCentral(e);
     } else {
@@ -237,5 +241,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.approverSubscription.unsubscribe();
     //this.allApprovalSubscription.unsubscribe();
     this.zoneSub.unsubscribe();
+    clearInterval(this.sortApprovalInterval);
   }
 }

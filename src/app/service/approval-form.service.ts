@@ -280,7 +280,7 @@ export class ApprovalFormService {
     this.http.post(this.url + `/confirmation/approved/${token}`, data).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-      (err) => { console.log(err); }
+      (err) => { console.log(err); this.approvalSubject.next(err.error); }
     );
   }
 
@@ -289,7 +289,7 @@ export class ApprovalFormService {
     this.http.post(this.url + `/confirmation/rejected/${token}`, data).subscribe((res) => {
       this.approvalSubject.next(res);
     },
-      (err) => { console.log(err); }
+      (err) => { console.log(err); this.approvalSubject.next(err.error); }
     );
   }
 
@@ -319,12 +319,12 @@ export class ApprovalFormService {
     postData2.append('zone', data.approvalData.zone);
     console.log("data:  ", data.approvalData);
     this.http.post(this.url + link, postData2).subscribe((res) => {
-      this.approvalSubject.next('sentToApproverTrue');
+      this.approvalSubject.next(res);
 
     },
       (err) => {
         console.log(err);
-        this.approvalSubject.next('sentToApproverFalse');
+        this.approvalSubject.next(err.error);
       }
     );
   }
