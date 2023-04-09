@@ -66,7 +66,7 @@
   <div (click)="openTimeline()"
     [ngClass]="{'approved': approval.status == 'approved' || approval.status == 'transferred', 'rejected': approval.status == 'rejected'}"
     class="approval-status">
-    {{approval.status | uppercase }}
+    <i class="fa-solid fa-eye" style="padding-right: 0.5em;"></i> {{approval.status | uppercase }}
     <div *ngIf="approval.status != 'new' && approval.mediator_remarks" class="remarks-icon"
       [matTooltip]="approval.mediator_remarks">?</div>
   </div>

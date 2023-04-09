@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-action-dialog',
   templateUrl: './action-dialog.component.html',
@@ -8,7 +8,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ActionDialogComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private snackBar: MatSnackBar) { }
   budgetSubHeadInput;
   approverList;
   title;
@@ -217,6 +217,15 @@ export class ActionDialogComponent implements OnInit {
   file: File | null
   onImagePicked(event: Event) {
     this.file = (event.target as HTMLInputElement).files[0];
+    if (this.file.size > 10485760) {
+      this.file = null;
+      (event.target as HTMLInputElement).value = null
+      this.snackBar.open("File size should be less than 10MB", null, {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: 'failure'
+      });
+    }
   }
   openPaymentDashboard() {
     window.open('https://x.razorpay.com/contacts', '_blank')

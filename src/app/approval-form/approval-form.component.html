@@ -142,9 +142,9 @@
             <input type="file" #fileInput (change)="onImagePicked($event)">
             <button class="filebtn file-upload-button" color="primary"
               (click)="$event.preventDefault();fileInput.click()"
-              style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>
+              style="color: white;font-size: 13px;margin-bottom: 10px;cursor: pointer;">⇪</button>
             <p *ngIf="approvalInput.value != 4">Upload bills/quotations/utilization (if any)<br>Supported formats -
-              pdf/jpg/jpeg/png</p>
+              pdf/jpg/jpeg/png<br>Maximum upload file size: 10MB</p>
             <!-- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> -->
           </div>
           <div *ngIf="approvalInput.value == 2 || approvalInput.value == 1 || approvalInput.value == 3"
@@ -191,7 +191,9 @@
               [salary]="salary"></app-salary-details>
           </div>
           <br>
-          <p class="filename" *ngIf="approvalFile">{{approvalFile.name}}</p>
+          <p class="filename" style="padding-bottom: 1em;" *ngIf="approvalFile">{{approvalFile.name}} <i
+              class="fa-solid fa-x" style="color: red;padding-left: 0.5em;cursor: pointer;" (click)="removeFile()"></i>
+          </p>
           <button mat-raised-button color="primary"
             [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit"
             *ngIf="!isLoading">Submit</button>

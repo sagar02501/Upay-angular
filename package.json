@@ -26,8 +26,6 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
     "@syncfusion/ej2-angular-calendars": "^18.2.54",
-    "bcrypt": "^3.0.6",
-    "bcryptjs": "^2.4.3",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.5",
     "jsonwebtoken": "^8.5.1",
