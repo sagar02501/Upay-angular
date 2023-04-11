@@ -25,7 +25,7 @@
 
 <div *ngIf="isSendPO">
   <div mat-dialog-content>
-    
+
     <mat-form-field>
       <mat-label>Initiator</mat-label>
 
@@ -41,6 +41,7 @@
     </mat-form-field>
     <input type="file" accept=".doc,.docx,.txt,.pdf" placeholder="Upload Attachement" name="input-file" ngModel
       #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
+    <p>Maximum upload file size: 10MB</p>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="openMailPreview()"> Mail Preview</button>

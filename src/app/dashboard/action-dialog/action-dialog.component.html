@@ -18,6 +18,7 @@
 
     <input type="file" accept=".doc,.docx,.txt,.pdf" placeholder="Upload Attachement" name="input-file" ngModel
       #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
+    <p>Maximum upload file size: 10MB</p>
   </div>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
@@ -130,6 +131,7 @@
   </div>
   <input type="file" accept=".doc,.docx,.txt,.pdf" placeholder="Upload Attachement" name="input-file" ngModel
     #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
+  <p>Maximum upload file size: 10MB</p>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
     <button mat-button
@@ -164,68 +166,64 @@
     </mat-form-field>
   </div>
   <div *ngIf="isManualFundHide">
-      <div mat-dialog-content >
-        <mat-form-field>
-          <mat-label>Budget Head</mat-label>
-          <mat-select name="budgetHeadId1" ngModel #budgetHeadInput1="ngModel"
-            (selectionChange)="budgetHeadChanged($event.value)" required>
-            <mat-option>
-              Pick a Budget Head..
-            </mat-option>
-            <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
-              {{bh.friendlyName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Budget Head</mat-label>
+        <mat-select name="budgetHeadId1" ngModel #budgetHeadInput1="ngModel"
+          (selectionChange)="budgetHeadChanged($event.value)" required>
+          <mat-option>
+            Pick a Budget Head..
+          </mat-option>
+          <mat-option *ngFor="let bh of budgetHead" [value]="bh.technicalName">
+            {{bh.friendlyName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-      <div mat-dialog-content>
-        <mat-form-field>
-          <mat-label>Budget Sub Head</mat-label>
-          <mat-select name="budgedSubHeadId1" ngModel #budgetSubHeadInput1="ngModel" required>
-            <mat-option>
-              Pick a Budget Sub Head..
-            </mat-option>
-            <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
-              {{bsh.friendlyName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div mat-dialog-content>
-        <mat-form-field>
-          <mat-label>Expenditure Code</mat-label>
-          <mat-select name="expCode1" ngModel #expCodeInput1="ngModel" required>
-            <mat-option *ngFor="let expCode of expCodes" [value]="expCode">
-              {{expCode}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="0">Cancel</button>
-        <button mat-button
-          [disabled]="!transAmtInput1.value"
-          [mat-dialog-close]="{
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Budget Sub Head</mat-label>
+        <mat-select name="budgedSubHeadId1" ngModel #budgetSubHeadInput1="ngModel" required>
+          <mat-option>
+            Pick a Budget Sub Head..
+          </mat-option>
+          <mat-option *ngFor="let bsh of subBudgetHeadChangeEvent" [value]="bsh.friendlyName">
+            {{bsh.friendlyName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Expenditure Code</mat-label>
+        <mat-select name="expCode1" ngModel #expCodeInput1="ngModel" required>
+          <mat-option *ngFor="let expCode of expCodes" [value]="expCode">
+            {{expCode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="0">Cancel</button>
+      <button mat-button [disabled]="!transAmtInput1.value" [mat-dialog-close]="{
           transactionId: tranxInput1.value,
           transferredAmount: transAmtInput1.value,
           budgetHeadInput: budgetHeadInput1.value,
           budgetSubHeadInput: budgetSubHeadInput1.value,
           expCodeInput: expCodeInput1.value
         }" cdkFocusInitial>Transfer</button>
-      </div>
+    </div>
   </div>
-<div  *ngIf="!isManualFundHide">
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="0">Cancel</button>
-    <button mat-button
-      [disabled]="!transAmtInput1.value "
-      [mat-dialog-close]="{
+  <div *ngIf="!isManualFundHide">
+    <div mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="0">Cancel</button>
+      <button mat-button [disabled]="!transAmtInput1.value " [mat-dialog-close]="{
         transactionId: tranxInput1.value,
           transferredAmount: transAmtInput1.value
       }" cdkFocusInitial>Transfer</button>
+    </div>
   </div>
-</div>
-  
-  
+
+
 </div>
