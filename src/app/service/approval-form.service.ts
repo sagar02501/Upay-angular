@@ -112,6 +112,7 @@ export class ApprovalFormService {
     postData1.append('email', data.email);
     postData1.append('amount', data.amount);
     postData1.append('subject', data.subject);
+    postData1.append('body', data.body);
     if (approvalTypes[data.approval]) {
       postData1.append('type', approvalTypes[data.approval].name);
     }
