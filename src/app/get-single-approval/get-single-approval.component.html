@@ -1,9 +1,8 @@
 <div class="approval">
   <div class="approval__search" *ngIf="!token">
     <mat-form-field>
-      <input matInput
-      type="text"
-      [placeholder]="'Track with Approval Id'" name="remarks" [(ngModel)]="trackId" #remarksInput="ngModel" required>
+      <input matInput type="text" [placeholder]="'Track with Approval Id'" name="remarks" [(ngModel)]="trackId"
+        #remarksInput="ngModel" required>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="trackById()">Search</button>
   </div>
@@ -29,28 +28,35 @@
     <div><label>Amount: </label><span>{{approval?.amount}}</span></div>
     <div><label>Remarks by mediator: </label><span>{{approval?.mediator_remarks}}</span></div>
     <div><label>Timeline: </label><span>
-      <ul>
-      <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
-    </ul></span></div>
+        <ul>
+          <li *ngFor="let item of timeline">{{item.split('GMT')[0]}}</li>
+        </ul>
+      </span></div>
     <div class="approval-file"><label>File: </label><span>
-      <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
-      <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
-    </span>
-  </div>
-    <div *ngIf="approval?.approver_remarks"><label>Remarks by approver: </label><span>{{approval?.approver_remarks}}</span></div>
+        <a *ngIf="approval.filePath" href="{{approval.filePath}}" target="_blank">File</a>
+        <a *ngIf="!approval.filePath && approval.approval_type =='Award Approval'" target="_blank"
+          href="../award-dashboard?id={{approval.approvalId }}">Vendor dashboard</a>
+        <a *ngIf="!approval.filePath && approval.approval_type =='Claim against advance/PO'" target="_blank"
+          href="../bill-dashboard?id={{approval.claimId }}">Bills dashboard</a>
+        <a *ngIf="!approval.filePath && approval.approval_type =='Claim'" target="_blank"
+          href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+        <a *ngIf="!approval.filePath && approval.approval_type =='Advance or Imprest'" target="_blank"
+          href="../bill-dashboard?id={{approval.approvalId }}">Bills dashboard</a>
+      </span>
+    </div>
+    <div *ngIf="approval?.approver_remarks"><label>Remarks by approver:
+      </label><span>{{approval?.approver_remarks}}</span></div>
   </div>
   <div class="approval__actions" *ngIf="approval && token">
     <mat-form-field>
-      <input matInput
-      type="text"
-      [placeholder]="'Remarks'" name="remarks" ngModel #remarksInput="ngModel">
+      <input matInput type="text" [placeholder]="'Remarks'" name="remarks" ngModel #remarksInput="ngModel">
     </mat-form-field>
     <div>
-      <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Approve', remarksInput.value)" cdkFocusInitial>Approve</button>
+      <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Approve', remarksInput.value)"
+        cdkFocusInitial>Approve</button>
       <button mat-raised-button color="primary" (click)="sendToApprover()" cdkFocusInitial>Forward</button>
-      <button mat-raised-button color="primary" (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
+      <button mat-raised-button color="primary"
+        (click)="openConfirmatinDialog('Reject', remarksInput.value)">Reject</button>
     </div>
   </div>
 </div>
