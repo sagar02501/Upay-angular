@@ -21,22 +21,22 @@ export class AuthService {
 
   constructor(public http: HttpClient, public router: Router, private snackBar: MatSnackBar) { }
 
-  createUser(email: string, password: string, zone: string, reviewadmin : string) {
-    const authData: AuthData = { email: email, password: password, zone: zone, reviewadmin:reviewadmin };
+  createUser(email: string, password: string, zone: string, reviewadmin: string) {
+    const authData: AuthData = { email: email, password: password, zone: zone, reviewadmin: reviewadmin };
     this.http.post(this.url + 'signup', authData)
       .subscribe((res) => {
         this.openSnackBar((res as any).message, 1);
-    },
-    (err) => {
-      this.openSnackBar(err.error.message, 0);
-    }
-   );
-   setTimeout(() => this.getUserList(), 1000);
+      },
+        (err) => {
+          this.openSnackBar(err.error.message, 0);
+        }
+      );
+    setTimeout(() => this.getUserList(), 1000);
   }
 
   login(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password, zone: '',reviewadmin:'false' };
-    this.http.post<{token: string, expiresIn: number, userId: string, zone: string, reviewadmin: string}>(this.url + 'login', authData)
+    const authData: AuthData = { email: email, password: password, zone: '', reviewadmin: 'false' };
+    this.http.post<{ token: string, expiresIn: number, userId: string, zone: string, reviewadmin: string }>(this.url + 'login', authData)
       .subscribe(response => {
         this.token = response.token;
         console.log(this.parseJwt(this.token))
@@ -52,52 +52,52 @@ export class AuthService {
           this.router.navigate(['/dashboard']);
         }
       },
-      error => {
-        this.authStatusListener.next(false);
-      });
+        error => {
+          this.authStatusListener.next(false);
+        });
   }
 
   getUserList() {
     this.http.get(this.url).subscribe((res) => {
       this.userListSubject.next(res);
     },
-    (err) => {console.log(err); }
+      (err) => { console.log(err); }
     );
   }
 
   editUser(id, email, zone, reviewadmin) {
-    const data = {id: id, email: email, zone: zone, reviewadmin:reviewadmin};
+    const data = { id: id, email: email, zone: zone, reviewadmin: reviewadmin };
     this.http.post(this.url + 'edit', data).subscribe((res) => {
       this.openSnackBar((res as any).message, 1);
     },
-    (err) => {
-      this.openSnackBar(err.error.message, 0);
-    }
-   );
-   setTimeout(() => this.getUserList(), 1000);
+      (err) => {
+        this.openSnackBar(err.error.message, 0);
+      }
+    );
+    setTimeout(() => this.getUserList(), 1000);
   }
 
   resetPwd(id, pwd) {
-    const data = {id: id, password: pwd};
+    const data = { id: id, password: pwd };
     this.http.post(this.url + 'resetPassword', data).subscribe((res) => {
       this.openSnackBar((res as any).message, 1);
     },
-    (err) => {
-      this.openSnackBar(err.error.message, 0);
-    }
-   );
-   setTimeout(() => this.getUserList(), 1000);
+      (err) => {
+        this.openSnackBar(err.error.message, 0);
+      }
+    );
+    setTimeout(() => this.getUserList(), 1000);
   }
 
   deleteUser(id) {
     this.http.delete(this.url + id).subscribe((res) => {
       this.openSnackBar((res as any).message, 1);
     },
-    (err) => {
-      this.openSnackBar(err.error.message, 0);
-    }
-   );
-   setTimeout(() => this.getUserList(), 1000);
+      (err) => {
+        this.openSnackBar(err.error.message, 0);
+      }
+    );
+    setTimeout(() => this.getUserList(), 1000);
   }
 
   getToken() {
@@ -113,12 +113,16 @@ export class AuthService {
   }
 
   parseJwt(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = decodeURIComponent(atob(base64Url).split('').map(function(c) {
+    if (token) {
+      const base64Url = token.split('.')[1];
+      const base64 = decodeURIComponent(atob(base64Url).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+      }).join(''));
 
-    return JSON.parse(base64);
+      return JSON.parse(base64);
+    } else {
+      return ""
+    }
   }
 
   getUsersListener() {
@@ -134,18 +138,18 @@ export class AuthService {
   }
 
   logout() {
-    
+
     this.token = null;
-    
+
     this.isAuthenticated = false;
     // this.authStatusListener.next(false);
-    
+
     this.userId = null;
-    
+
     clearTimeout(this.tokenTimer);
-    
+
     this.clearAuthData();
-    
+
     this.router.navigate(['/login']);
   }
 
