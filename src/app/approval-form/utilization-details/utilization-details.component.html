@@ -39,7 +39,8 @@ padding-top: 7px;">Provide Bill(s) detail</h4>
         </mat-form-field>
     </div>
     <div class="file-input mt-10 mb-10">
-        <input type="file" name="file" #billInput observeFiles (change)="onbillImagePicked($event,b)" />
+        <input type="file" accept=".doc,.docx,.txt,.pdf,.jpg,.jpeg,.png" name="file" #billInput observeFiles
+            (change)="onbillImagePicked($event,b)" />
         <mat-error *ngIf="!bills[b].file" style="position: absolute;left: 5.5em;bottom: 0.5em;font-size: 0.7em;"> Please
             upload bill file (Maximum upload file size: 10MB)</mat-error>
         <button class="filebtn file-upload-button" color="primary" (click)="$event.preventDefault(); billInput.click()"

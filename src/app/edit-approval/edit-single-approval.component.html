@@ -234,7 +234,8 @@
                 <!- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> ->
               </div>-->
               <div class="file-input">
-                <input type="file" #fileInput (change)="onImagePicked($event)">
+                <input type="file" accept=".doc,.docx,.txt,.pdf,.jpg,.jpeg,.png" #fileInput
+                  (change)="onImagePicked($event)">
                 <button class="filebtn file-upload-button" color="primary"
                   (click)="$event.preventDefault();fileInput.click()"
                   style="color: white;font-size: 13px;margin-bottom: 10px;">⇪ </button>

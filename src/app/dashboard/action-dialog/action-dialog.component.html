@@ -16,8 +16,8 @@
       <input matInput type="text" [placeholder]="placeholder" name="remarks" ngModel #remarksInput="ngModel">
     </mat-form-field>
 
-    <input type="file" accept=".doc,.docx,.txt,.pdf" placeholder="Upload Attachement" name="input-file" ngModel
-      #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
+    <input type="file" accept=".doc,.docx,.txt,.pdf,.jpg,.jpeg,.png" placeholder="Upload Attachement" name="input-file"
+      ngModel #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
     <p>Maximum upload file size: 10MB</p>
   </div>
   <div mat-dialog-actions>
@@ -129,8 +129,8 @@
       <input matInput type="text" placeholder="Centre/Zone Name" name="centreId" ngModel #centreInput="ngModel">
     </mat-form-field>
   </div>
-  <input type="file" accept=".doc,.docx,.txt,.pdf" placeholder="Upload Attachement" name="input-file" ngModel
-    #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
+  <input type="file" accept=".doc,.docx,.txt,.pdf,.jpg,.jpeg,.png" placeholder="Upload Attachement" name="input-file"
+    ngModel #fileInput="ngModel" observeFiles (change)="onImagePicked($event)">
   <p>Maximum upload file size: 10MB</p>
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>

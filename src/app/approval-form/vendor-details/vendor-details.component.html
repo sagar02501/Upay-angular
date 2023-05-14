@@ -75,7 +75,8 @@ padding-top: 7px;">Provide Vendor(s) detail</h4>
         <mat-error *ngIf="preferanceInput.invalid"> Please select preferance </mat-error>
     </mat-form-field>
     <div class="file-input mb-10 mt-10">
-        <input type="file" name="file" #vendorInput observeFiles (change)="onvendorImagePicked($event,b)" />
+        <input type="file" accept=".doc,.docx,.txt,.pdf,.jpg,.jpeg,.png" name="file" #vendorInput observeFiles
+            (change)="onvendorImagePicked($event,b)" />
         <mat-error *ngIf="!vendors[b].file" style="position: absolute;left: 5.5em;bottom: 0.5em;font-size: 0.7em;">
             Please upload vendor file (Maximum upload file size: 10MB)</mat-error>
         <button class="filebtn file-upload-button" color="primary"
