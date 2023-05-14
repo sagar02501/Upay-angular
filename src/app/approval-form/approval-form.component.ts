@@ -97,6 +97,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   isSubmitted;
   isLoading = false;
   approvalForm;
+  approvalInputValue = 0;
   approvalPlaceholder = 'Approval/Utilization Details (Item, Amount, Vendor and Bill Details)';
   private otpVerificationSubscription: Subscription;
   private formSubmitSubscription: Subscription;
@@ -211,7 +212,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     if (value == 0) {
       this.approvalPlaceholder = 'Justify your approval request';
     }
-
+    this.approvalInputValue = value
   }
 
   sendOTP(phone) {
@@ -275,6 +276,28 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     }
     this.bills.push(newBill);
     //console.log(this.bills);
+  }
+
+  validateBillsFiles() {
+    if (this.bills && (this.approvalInputValue == 2 || this.approvalInputValue == 3)) {
+      for (let bill of this.bills) {
+        if (!bill.file) {
+          return false
+        }
+      }
+    }
+    return true
+  }
+
+  validateVendorFiles() {
+    if (this.vendors && this.approvalInputValue == 4) {
+      for (let vendor of this.vendors) {
+        if (!vendor.file) {
+          return false
+        }
+      }
+    }
+    return true
   }
 
   getUntilizedamt(event: any) {

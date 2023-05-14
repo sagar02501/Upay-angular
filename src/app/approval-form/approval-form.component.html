@@ -194,9 +194,8 @@
           <p class="filename" style="padding-bottom: 1em;" *ngIf="approvalFile">{{approvalFile.name}} <i
               class="fa-solid fa-x" style="color: red;padding-left: 0.5em;cursor: pointer;" (click)="removeFile()"></i>
           </p>
-          <button mat-raised-button color="primary"
-            [ngClass]="{'disabled': approvalForm.invalid || isOTPVerified !== 1}" type="Submit"
-            *ngIf="!isLoading">Submit</button>
+          <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading"
+            [disabled]="approvalForm.invalid || isOTPVerified !== 1 || !validateBillsFiles() || !validateVendorFiles()">Submit</button>
           <!-- <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading">Submit</button> -->
         </form>
       </mat-card>
