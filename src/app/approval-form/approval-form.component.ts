@@ -105,6 +105,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   zones = [];
   approvals = [];
   approvalFile;
+  invalidAdvanceID = false;
 
 
   /* no change */
@@ -142,6 +143,14 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   onSubmit(approvalForm) {
     if (approvalForm.invalid || this.isOTPVerified !== 1) {
       return;
+    }
+    if (this.approvalInputValue == 2 && this.invalidAdvanceID) {
+      this.snackBar.open("Invalid Advance ID", null, {
+        duration: 5000,
+        verticalPosition: 'top',
+        panelClass: 'failure'
+      });
+      return
     }
     this.isLoading = true;
     this.approvalForm = approvalForm;
@@ -309,9 +318,12 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.unutilizedSubscription = this.approvalService.getUnutilizedamtListner().subscribe((res) => {
       if ((res as any).error_message) {
         this.unutilizedAmount = "Approval Id does not exist"
+        this.invalidAdvanceID = true
       }
-      else
+      else {
         this.unutilizedAmount = (res as any).unutilizedamount;
+        this.invalidAdvanceID = false
+      }
       //console.log(this.unutilizedAmount, res);
     });
   }
