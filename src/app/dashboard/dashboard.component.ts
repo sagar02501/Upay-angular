@@ -59,9 +59,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.approvalStatusSubscription = this.approvalFormService.getApprovalStatusListener()
       .subscribe((res) => {
         if (res) {
-          this.count = res;
-          this.count = JSON.parse(JSON.stringify(this.count.count));
-          this.total = this.count.new + this.count.pending + this.count.transferred + this.count.rejected + this.count.approved;
+          //Changed this.count to count to show count based on current list
+          let count = res as any;
+          count = JSON.parse(JSON.stringify(count.count));
+          this.total = count.new + count.pending + count.transferred + count.rejected + count.approved;
         }
       });
     this.zoneSub = this.settingsService.getZoneSubjectListener().subscribe((res) => {
@@ -71,6 +72,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (typeof (res) !== 'string' && (res as any).isSuccess == undefined) {
           this.approvalList = res;
+          //Show count based on current list
+          this.count = { new: 0, pending: 0, rejected: 0, approved: 0, transferred: 0 };
+          for (const approval of this.approvalList) {
+            if (approval.status == "new") {
+              this.count.new++
+            } else if (approval.status == "pending") {
+              this.count.pending++
+            } else if (approval.status == "rejected") {
+              this.count.rejected++
+            } else if (approval.status == "approved") {
+              this.count.approved++
+            } else if (approval.status == "transferred") {
+              this.count.transferred++
+            }
+          }
           console.log("this.approvalList", this.approvalList)
         } else {
           if (res === 'sentToCentralTrue') {
