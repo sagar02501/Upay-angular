@@ -7,6 +7,7 @@ import { SettingsService } from './../service/settings.service';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { DecimalPipe } from '@angular/common';
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-approval-form',
@@ -57,7 +58,24 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   }
 
   vendors: any[];
-  constructor(public approvalFormService: ApprovalFormService, private approvalService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar) {
+  //Update form 
+  updateApproval: any;
+  public queryData: {
+    id: string;
+    claimId: string;
+    trackflag: string
+  };
+  constructor(public approvalFormService: ApprovalFormService, private approvalService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar, private route: ActivatedRoute) {
+    if (
+      this.route.snapshot.queryParams.approvalId
+    ) {
+      this.queryData = {
+        id: this.route.snapshot.queryParams.approvalId,
+        claimId: this.route.snapshot.queryParams.claimid || 'undefined',
+        trackflag: this.route.snapshot.queryParams.claimid || 'true',
+      };
+    }
+
     this.bill = {
       number: "",
       amount: "",
@@ -138,6 +156,28 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     this.approvals.push({ name: 'Claim', value: 3 });
     this.approvals.push({ name: 'Award Approval', value: 4 });
     this.approvals.push({ name: 'Salary', value: 5 });
+
+    if (this.queryData) {
+      this.getApprovalData();
+      this.getBillData();
+
+      this.approvalService
+        .getApprovalListener()
+        .subscribe((res: any) => {
+          this.updateApproval = res;
+          if (this.updateApproval.fileName) {
+            this.approvalFile = {
+              name: this.updateApproval.fileName.replace(/^[^-]+-/, "")
+            }
+          }
+        });
+
+      this.approvalService
+        .getBillListener()
+        .subscribe((res: any) => {
+        });
+    }
+
   }
 
   onSubmit(approvalForm) {
@@ -158,11 +198,15 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     approvalForm.value.vendors = this.vendors;
     approvalForm.value.salaries = this.salaries;
     //console.log(approvalForm.value)
+    let data = { ...approvalForm.value };
+    if (this.updateApproval && this.updateApproval.approvalId) {
+      data.approvalId = this.updateApproval.approvalId
+    }
     if (approvalForm.value.approval == 0) {
       /* 0 - In Principle or Admin Approval
         
       */
-      this.approvalFormService.submitForm(approvalForm.value, this.approvalFile, this.approvals);
+      this.approvalFormService.submitForm(data, this.approvalFile, this.approvals, this.queryData);
     } else {
       //console.log('TODO: New api',this.approvals[approvalForm.value.approval]);
       /* 2 - Claim against advance/PO
@@ -175,7 +219,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       */
       //console.log(approvalForm.value.advanceId)
       //console.log("submit form 2",approvalForm.value);
-      this.approvalFormService.submitForm2(approvalForm.value, this.approvals);
+      this.approvalFormService.submitForm2(data, this.approvals, this.queryData);
     }
 
   }
@@ -326,5 +370,27 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       }
       //console.log(this.unutilizedAmount, res);
     });
+  }
+
+  getApprovalData() {
+    this.approvalService.getSingleApproval(
+      this.queryData.id,
+      this.queryData.claimId,
+      this.queryData.trackflag
+    );
+  }
+
+  getBillData() {
+    this.approvalService.getBillApproval(this.queryData.id);
+  }
+
+  filterApprovals(value) {
+    let approvalVal = this.approvals.find(item => item.name === value);
+    if (approvalVal) {
+      this.approvalChanged(approvalVal.value);
+      return approvalVal.value;
+    } else {
+      return "";
+    }
   }
 }

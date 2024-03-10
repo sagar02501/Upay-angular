@@ -101,7 +101,7 @@ export class ApprovalFormService {
     );
   }
 
-  submitForm2(data, approvalTypes) {
+  submitForm2(data, approvalTypes, queryData?) {
     //console.log("Submit Form 2", data);
     const postData1 = new FormData();
     //console.log("Submit form 2",data);
@@ -144,47 +144,50 @@ export class ApprovalFormService {
       postData1.append('awardValue', data.awardValue);
     }
 
+    if (queryData !== undefined) {
+      console.log("fromdata2");
+    } else {
+      this.http.post(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
 
-    this.http.post(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
+        let claimid = res.claimid;
+        let approvalId = res.approvalId;
+        if (data.approval == 2) {
+          data.bills.forEach(bill => {
+            // console.log("inside bills");
+            this.submitBills(data.advanceId, claimid, bill, bill.file);
+          });
+          this.formSubmitSubject.next(res);
+        }
+        if (data.approval == 1 || data.approval == 3) {
+          data.bills.forEach(bill => {
+            console.log("inside bills");
+            this.submitBills(approvalId, null, bill, bill.file);
+          });
+          this.formSubmitSubject.next(res);
+        }
+        if (data.approval == 4) {
+          data.vendors.forEach(vendor => {
+            this.submitAward(approvalId, vendor, vendor.file);
+          });
+          this.formSubmitSubject.next(res);
+        }
+        if (data.approval == 5) {
+          data.salaries.forEach(salary => {
+            this.submitSalary(approvalId, salary, salary.file);
+          });
+          this.formSubmitSubject.next(res);
+        }
 
-      let claimid = res.claimid;
-      let approvalId = res.approvalId;
-      if (data.approval == 2) {
-        data.bills.forEach(bill => {
-          // console.log("inside bills");
-          this.submitBills(data.advanceId, claimid, bill, bill.file);
-        });
-        this.formSubmitSubject.next(res);
-      }
-      if (data.approval == 1 || data.approval == 3) {
-        data.bills.forEach(bill => {
-          console.log("inside bills");
-          this.submitBills(approvalId, null, bill, bill.file);
-        });
-        this.formSubmitSubject.next(res);
-      }
-      if (data.approval == 4) {
-        data.vendors.forEach(vendor => {
-          this.submitAward(approvalId, vendor, vendor.file);
-        });
-        this.formSubmitSubject.next(res);
-      }
-      if (data.approval == 5) {
-        data.salaries.forEach(salary => {
-          this.submitSalary(approvalId, salary, salary.file);
-        });
-        this.formSubmitSubject.next(res);
-      }
-
-    },
-      (err) => {
-        console.log(err);
-        this.formSubmitSubject.next(2);
-      }
-    );
+      },
+        (err) => {
+          console.log(err);
+          this.formSubmitSubject.next(2);
+        }
+      );
+    }
   }
 
-  submitForm(data, file, approvalTypes) {
+  submitForm(data, file, approvalTypes, queryData?) {
     //console.log(data, file);
     const postData = new FormData();
     postData.append('name', data.name);
@@ -212,18 +215,35 @@ export class ApprovalFormService {
       postData.append('bankIfsc', data.bankIfsc);
     }
 
-    if (file) {
-      postData.append('file', file, data.name);
+    if (file instanceof File) {
+      postData.append('file', file, data.name + '-' + file.name);
     }
 
-    this.http.post(this.url, postData).subscribe((res) => {
-      this.formSubmitSubject.next(res);
-    },
-      (err) => {
-        console.log(err);
-        this.formSubmitSubject.next(2);
-      }
-    );
+    if (data.approvalId) {
+      postData.append('approvalId', data.approvalId);
+    }
+
+    if (queryData !== undefined) {
+      this.http.put(this.url, postData).subscribe((res) => {
+        this.formSubmitSubject.next(res);
+      },
+        (err) => {
+          console.log(err);
+          this.formSubmitSubject.next(2);
+        }
+      );
+    } else {
+      this.http.post(this.url, postData).subscribe((res) => {
+        this.formSubmitSubject.next(res);
+      },
+        (err) => {
+          console.log(err);
+          this.formSubmitSubject.next(2);
+        }
+      );
+    }
+
+
   }
 
   getAllApproval(search?, sort?, order = -1, pageSize = Math.pow(10, 10), pageNum = 0, status?, zones?, approvaltype?) {

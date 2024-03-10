@@ -11,12 +11,13 @@
         <form (submit)="onSubmit(approvalForm)" *ngIf="!isLoading && (!isSubmitted || isSubmitted == 2)"
           #approvalForm="ngForm">
           <mat-form-field>
-            <input matInput type="text" placeholder="Name" name="name" ngModel #nameInput="ngModel" required>
+            <input matInput type="text" placeholder="Name" name="name" ngModel #nameInput="ngModel" required
+              [ngModel]="updateApproval?.name || ''">
             <mat-error *ngIf="nameInput.invalid"> Please provide name </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Zone</mat-label>
-            <mat-select name="zone" ngModel #zoneInput="ngModel" required>
+            <mat-select name="zone" ngModel #zoneInput="ngModel" required [ngModel]="updateApproval?.zone || ''">
               <mat-option *ngFor="let zone of zones" [value]="zone.name">
                 {{zone.name}}
               </mat-option>
@@ -25,37 +26,39 @@
           </mat-form-field>
           <mat-form-field>
             <input matInput type="email" placeholder="Email Id" name="email" ngModel #emailInput="ngModel" required
-              email>
+              [ngModel]="updateApproval?.email || ''" email>
             <mat-error *ngIf="emailInput.invalid"> Please provide email </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input matInput type="text" placeholder="Designation" name="designation" ngModel #designationInput="ngModel"
-              required>
+              [ngModel]="updateApproval?.designation || ''" required>
             <mat-error *ngIf="designationInput.invalid"> Please provide designation </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input type="number" matInput placeholder="Contact" name="contact" ngModel #contactInput="ngModel" required>
+            <input type="number" matInput placeholder="Contact" name="contact" ngModel #contactInput="ngModel" required
+              [ngModel]="updateApproval?.contact || ''">
             <mat-error *ngIf="contactInput.invalid"> Please provide contact </mat-error>
           </mat-form-field>
           <button mat-raised-button class="verify-btn" *ngIf="isOTPVerified != 1"
             [ngClass]="{'disabled': contactInput.value == ''}" [disabled]="contactInput.value == ''"
-            (click)="sendOTP(contactInput.value)">Verify Contact</button>
+            (click)="sendOTP(contactInput.value)" type="button">Verify Contact</button>
           <div *ngIf="isOTP && isOTPVerified != 1">
             <mat-form-field>
               <input matInput placeholder="OTP" type="number" #otp name="otp" ngModel class="form-control" required>
             </mat-form-field>
-            <button mat-raised-button (click)="verifyOTP(otp.value)">Verify OTP</button>
+            <button mat-raised-button (click)="verifyOTP(otp.value)" type="button">Verify OTP</button>
           </div>
           <p *ngIf="isOTPVerified == 2" class="error">OTP did not match</p>
           <a class="cqc" href="../../assets/DOP.pdf" download>Download DOP</a>
           <mat-form-field>
             <input matInput type="number" placeholder="Requisite amount" name="amount" ngModel #amountInput="ngModel"
-              required>
+              [ngModel]="updateApproval?.amount || ''" required>
             <mat-error *ngIf="amountInput.invalid"> Please provide amount </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Approval Type</mat-label>
-            <mat-select name="approval" ngModel #approvalInput="ngModel" (valueChange)="approvalChanged($event)"
+            <mat-select name="approval" ngModel #approvalInput="ngModel"
+              [ngModel]="filterApprovals(updateApproval?.approval_type)" (valueChange)="approvalChanged($event)"
               required>
               <mat-option ng-disabled>Please select approval type</mat-option>
               <mat-option *ngFor="let approval of approvals" [value]="approval.value">
@@ -72,54 +75,55 @@
               </mat-form-field> -->
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="number" placeholder="Award Value" name="awardValue" ngModel #awardValueInput="ngModel"
-              required>
+              [ngModel]="updateApproval?.awardValue || ''" required>
             <mat-error *ngIf="awardValueInput.invalid"> Please provide award value</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="text" placeholder="Item Discription" name="itemDiscription" ngModel
-              #itemDiscriptionInput="ngModel" required>
+              #itemDiscriptionInput="ngModel" [ngModel]="updateApproval?.itemDiscription || ''" required>
             <mat-error *ngIf="itemDiscriptionInput.invalid"> Please provide Item Discription</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="number" placeholder="Quantity" name="itemQuantity" ngModel
-              #itemQuantityInput="ngModel" required>
+              #itemQuantityInput="ngModel" [ngModel]="updateApproval?.itemQuantity || ''" required>
             <mat-error *ngIf="itemQuantityInput.invalid"> Please provide Item Quantity</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 2">
             <input matInput type="text" placeholder="Advance ID" name="advanceId" (focusout)="getUntilizedamt($event)"
-              ngModel #advanceIdInput="ngModel" required>
+              ngModel #advanceIdInput="ngModel" [ngModel]="updateApproval?.advanceId || ''" required>
             <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 2">
             <input matInput type="text" placeholder="Un-utilized amount" name="unutilizedAmount"
-              [(ngModel)]="unutilizedAmount" value="unutilizedAmount">
+              [(ngModel)]="unutilizedAmount" value="unutilizedAmount"
+              [ngModel]="updateApproval?.unutilizedAmount || ''">
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0">
             <input matInput type="text" [placeholder]="payeePlaceholder" name="payeeName" ngModel
-              #payeeNameInput="ngModel" required>
+              [ngModel]="updateApproval?.payeeName || ''" #payeeNameInput="ngModel" required>
             <mat-error *ngIf="payeeNameInput.invalid"> Please enter your full name </mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value == 4 ">
             <input matInput type="text" placeholder="shipping address" name="shippingAddress" ngModel
-              #shippingAddressInput="ngModel" required>
+              #shippingAddressInput="ngModel" [ngModel]="updateApproval?.shippingAddress || ''" required>
             <mat-error *ngIf="shippingAddressInput.invalid"> Please enter a vendors <address></address>
             </mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0 ">
             <input matInput type="text" [placeholder]="accountnoPlaceholder" inputmode="numeric" pattern="[0-9]*"
               digitOnly name="accountNumber" ngModel #accountNumberInput="ngModel" minlength="8" maxlength="18"
-              required>
+              [ngModel]="updateApproval?.accountNumber || ''" required>
             <mat-error *ngIf="accountNumberInput.invalid"> Please provide account number (min character 8)</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0 ">
             <input matInput type="text" [placeholder]="banknamePlaceholder" name="bankName" ngModel
-              #bankNameInput="ngModel" required>
+              [ngModel]="updateApproval?.bankName || ''" #bankNameInput="ngModel" required>
             <mat-error *ngIf="bankNameInput.invalid"> Please enter bank name </mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0 ">
             <input matInput type="text" [placeholder]="ifscPlaceholder" oninput="this.value = this.value.toUpperCase()"
               placeholder="Bank IFSC code" name="bankIfsc" ngModel #bankIfscInput="ngModel"
-              pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
+              [ngModel]="updateApproval?.bankIfsc || ''" pattern="^[A-Za-z]{4}0[A-Z0-9a-z]{6}$" required>
             <mat-error *ngIf="bankIfscInput.invalid"> Please enter a valid IFSC code </mat-error>
           </mat-form-field>
           <!-- <mat-form-field>
@@ -127,13 +131,14 @@
             <mat-error *ngIf="subjectInput.invalid"> Please provide subject </mat-error>
           </mat-form-field> -->
           <mat-form-field>
-            <textarea matInput placeholder="Subject" name="subject" ngModel #subjectInput="ngModel" required></textarea>
+            <textarea matInput placeholder="Subject" name="subject" ngModel #subjectInput="ngModel"
+              [ngModel]="updateApproval?.subject || ''" required></textarea>
             <mat-error *ngIf="subjectInput.invalid">Please provide subject
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <textarea matInput [placeholder]="approvalPlaceholder" name="body" ngModel #bodyInput="ngModel" required
-              minlength="20"></textarea>
+            <textarea matInput [placeholder]="approvalPlaceholder" name="body" ngModel #bodyInput="ngModel"
+              [ngModel]="updateApproval?.body || ''" required minlength="20"></textarea>
             <mat-error *ngIf="bodyInput.invalid"> Please provide Approval/Utilization Details (min character 20)
             </mat-error>
           </mat-form-field>
@@ -143,7 +148,7 @@
               (change)="onImagePicked($event)">
             <button class="filebtn file-upload-button" color="primary"
               (click)="$event.preventDefault();fileInput.click()"
-              style="color: white;font-size: 13px;margin-bottom: 10px;cursor: pointer;">⇪</button>
+              style="color: white;font-size: 13px;margin-bottom: 10px;cursor: pointer;" type="button">⇪</button>
             <p *ngIf="approvalInput.value != 4">Upload bills/quotations/utilization (if any)<br>Supported formats -
               pdf/jpg/jpeg/png<br>Maximum upload file size: 10MB</p>
             <!-- <p *ngIf="approvalInput.value == 4">Upload Quotation, CQC, and Approval Note<br>Supported formats - pdf/jpg/jpeg/png</p> -->
@@ -157,7 +162,7 @@
                   font-weight: 550;
                   top: 83%;">Provide Bill(s) Details</p></div> -->
             <button mat-icon-button style="margin-left: 144px;position: absolute;" color="primary"
-              (click)="$event.preventDefault();addBills()"><span>+ </span>Add Utilization details</button>
+              (click)="$event.preventDefault();addBills()" type="button"><span>+ </span>Add Utilization details</button>
           </div>
           <div *ngIf="approvalInput.value == 5" style="float:left;">
             <!-- <div><p class="heaading-add" style=" 
@@ -196,7 +201,8 @@
               class="fa-solid fa-x" style="color: red;padding-left: 0.5em;cursor: pointer;" (click)="removeFile()"></i>
           </p>
           <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading"
-            [disabled]="approvalForm.invalid || isOTPVerified !== 1 || !validateBillsFiles() || !validateVendorFiles()">Submit</button>
+            [disabled]="approvalForm.invalid || isOTPVerified !== 1 || !validateBillsFiles() || !validateVendorFiles()">{{updateApproval?.approvalId
+            ? 'Update':'Submit' }}</button>
           <!-- <button mat-raised-button color="primary" type="Submit" *ngIf="!isLoading">Submit</button> -->
         </form>
       </mat-card>
