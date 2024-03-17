@@ -51,6 +51,31 @@ export class ApprovalFormService {
     );
   }
 
+  updateBills(approvalId, claimid, billId, data, file) {
+    const postData = new FormData();
+    //claimId
+    postData.append('approvalId', approvalId);
+    postData.append('claimId', claimid);
+    postData.append('billnumber', data.number);
+    postData.append('billamount', data.amount);
+    postData.append('vendorname', data.vendor);
+    postData.append('description', data.itemDesc);
+    postData.append('assetdetails', data.assetDetails);
+    postData.append('assetvalue', data.assetValue);
+    postData.append('assetcodes', data.assetCodes);
+    if (data.file instanceof File) {
+      postData.append('file', file, data.file.name);
+    }
+    this.http.put(this.url + `/bill/${billId}`, postData).subscribe((res: any) => {
+      //console.log(res.message)
+    },
+      (err) => {
+        console.log(err);
+        console.log(err.message)
+      }
+    );
+  }
+
   submitSalary(approvalId, data, file) {
     const postData = new FormData();
     postData.append('approvalId', approvalId);
@@ -144,8 +169,52 @@ export class ApprovalFormService {
       postData1.append('awardValue', data.awardValue);
     }
 
+    if (data.approvalId) {
+      postData1.append('approvalId', data.approvalId);
+    }
+
     if (queryData !== undefined) {
-      console.log("fromdata2");
+      this.http.put(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
+
+        let claimid = res.claimid;
+        let approvalId = res.approvalId;
+        /*         if (data.approval == 2) {
+                  data.bills.forEach(bill => {
+                    // console.log("inside bills");
+                    this.submitBills(data.advanceId, claimid, bill, bill.file);
+                  });
+                  this.formSubmitSubject.next(res);
+                } */
+        if (data.approval == 1 || data.approval == 3) {
+          data.bills.forEach(bill => {
+            console.log("inside bills");
+            if (bill._id) {
+              this.updateBills(approvalId, null, bill._id, bill, bill.file);
+            } else {
+              this.submitBills(approvalId, null, bill, bill.file);
+            }
+          });
+          this.formSubmitSubject.next(res);
+        }
+        /*         if (data.approval == 4) {
+                  data.vendors.forEach(vendor => {
+                    this.submitAward(approvalId, vendor, vendor.file);
+                  });
+                  this.formSubmitSubject.next(res);
+                }
+                if (data.approval == 5) {
+                  data.salaries.forEach(salary => {
+                    this.submitSalary(approvalId, salary, salary.file);
+                  });
+                  this.formSubmitSubject.next(res);
+                } */
+
+      },
+        (err) => {
+          console.log(err);
+          this.formSubmitSubject.next(2);
+        }
+      );
     } else {
       this.http.post(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
 

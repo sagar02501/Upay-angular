@@ -175,6 +175,28 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
       this.approvalService
         .getBillListener()
         .subscribe((res: any) => {
+          if (res && res.length) {
+            this.bills = [];
+            for (const bill of res) {
+              let _bill = {
+                number: bill.billnumber || "",
+                amount: bill.billamount || "",
+                vendor: bill.vendorname || "",
+                itemDesc: bill.description || "",
+                assetDetails: bill.assetdetails || "",
+                assetValue: bill.assetvalue || "",
+                assetCodes: bill.assetcodes || "",
+                file: null,
+                _id: bill._id
+              }
+              if (bill.fileName) {
+                _bill.file = {
+                  name: bill.fileName
+                }
+              }
+              this.bills.push(_bill);
+            }
+          }
         });
     }
 
