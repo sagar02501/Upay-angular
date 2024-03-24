@@ -170,6 +170,10 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
               name: this.updateApproval.fileName.replace(/^[^-]+-/, "")
             }
           }
+
+          if (this.updateApproval.approval_type == 'Claim against advance/PO') {
+            this.getUntilizedamt(null, this.updateApproval.approvalId);
+          }
         });
 
       this.approvalService
@@ -223,6 +227,9 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     let data = { ...approvalForm.value };
     if (this.updateApproval && this.updateApproval.approvalId) {
       data.approvalId = this.updateApproval.approvalId
+    }
+    if (this.updateApproval && this.updateApproval.claimId) {
+      data.claimId = this.updateApproval.claimId
     }
     if (approvalForm.value.approval == 0) {
       /* 0 - In Principle or Admin Approval
@@ -375,9 +382,8 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
     return true
   }
 
-  getUntilizedamt(event: any) {
-    console.log(event.target.value);
-    var advanceId = event.target.value;
+  getUntilizedamt(event: any, id: any) {
+    var advanceId = event && event.target ? event.target.value : id;
     if (advanceId !== undefined) {
       this.approvalService.getUnutilizedamt(advanceId)
     }

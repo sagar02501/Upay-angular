@@ -173,18 +173,29 @@ export class ApprovalFormService {
       postData1.append('approvalId', data.approvalId);
     }
 
+    if (data.claimId) {
+      postData1.append('claimId', data.claimId);
+    }
+
     if (queryData !== undefined) {
       this.http.put(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
 
-        let claimid = res.claimid;
+        let claimId = res.claimId;
         let approvalId = res.approvalId;
-        /*         if (data.approval == 2) {
-                  data.bills.forEach(bill => {
-                    // console.log("inside bills");
-                    this.submitBills(data.advanceId, claimid, bill, bill.file);
-                  });
-                  this.formSubmitSubject.next(res);
-                } */
+
+        if (data.approval == 2) {
+          data.bills.forEach(bill => {
+            console.log("inside bills");
+            if (bill._id) {
+              this.updateBills(data.advanceId, claimId, bill._id, bill, bill.file);
+            } else {
+              this.submitBills(data.advanceId, claimId, bill, bill.file);
+            }
+          });
+
+          this.formSubmitSubject.next(res);
+        }
+
         if (data.approval == 1 || data.approval == 3) {
           data.bills.forEach(bill => {
             console.log("inside bills");

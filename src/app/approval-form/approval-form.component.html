@@ -90,7 +90,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 2">
             <input matInput type="text" placeholder="Advance ID" name="advanceId" (focusout)="getUntilizedamt($event)"
-              ngModel #advanceIdInput="ngModel" [ngModel]="updateApproval?.advanceId || ''" required>
+              ngModel #advanceIdInput="ngModel" [ngModel]="updateApproval?.approvalId || ''" required>
             <mat-error *ngIf="advanceIdInput.invalid"> Please provide advance Id</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 2">
