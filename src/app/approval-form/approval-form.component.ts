@@ -159,7 +159,6 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
     if (this.queryData) {
       this.getApprovalData();
-      this.getBillData();
 
       this.approvalService
         .getApprovalListener()
@@ -174,32 +173,99 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
           if (this.updateApproval.approval_type == 'Claim against advance/PO') {
             this.getUntilizedamt(null, this.updateApproval.approvalId);
           }
-        });
 
-      this.approvalService
-        .getBillListener()
-        .subscribe((res: any) => {
-          if (res && res.length) {
-            this.bills = [];
-            for (const bill of res) {
-              let _bill = {
-                number: bill.billnumber || "",
-                amount: bill.billamount || "",
-                vendor: bill.vendorname || "",
-                itemDesc: bill.description || "",
-                assetDetails: bill.assetdetails || "",
-                assetValue: bill.assetvalue || "",
-                assetCodes: bill.assetcodes || "",
-                file: null,
-                _id: bill._id
-              }
-              if (bill.fileName) {
-                _bill.file = {
-                  name: bill.fileName
+          if (this.updateApproval.approval_type === 'Advance or Imprest' || this.updateApproval.approval_type === 'Claim against advance/PO' || this.updateApproval.approval_type === 'Claim') {
+            this.getBillData();
+            this.approvalService
+              .getBillListener()
+              .subscribe((res: any) => {
+                if (res && res.length) {
+                  this.bills = [];
+                  for (const bill of res) {
+                    let _bill = {
+                      number: bill.billnumber || "",
+                      amount: bill.billamount || "",
+                      vendor: bill.vendorname || "",
+                      itemDesc: bill.description || "",
+                      assetDetails: bill.assetdetails || "",
+                      assetValue: bill.assetvalue || "",
+                      assetCodes: bill.assetcodes || "",
+                      file: null,
+                      _id: bill._id
+                    }
+                    if (bill.fileName) {
+                      _bill.file = {
+                        name: bill.fileName
+                      }
+                    }
+                    this.bills.push(_bill);
+                  }
                 }
-              }
-              this.bills.push(_bill);
-            }
+              });
+
+          } else if (this.updateApproval.approval_type === 'Award Approval') {
+            this.getVendorData();
+            this.approvalService
+              .getAwardListener()
+              .subscribe((res: any) => {
+                console.log(res);
+                if (res && res.length) {
+                  this.vendors = [];
+                  for (const vendor of res) {
+                    let _vendor = {
+                      number: vendor.billnumber || "",
+                      amount: vendor.billamount || 0.0,
+                      vendorname: vendor.vendorname || "",
+                      vendorAdd: vendor.vendor_addr || "",
+                      preferance: vendor.vendor_preference || "",
+                      deliveryschedule: vendor.deliveryschedule || "",
+                      paymentterms: vendor.payterms || "",
+                      unitprice: vendor.unitprice || "",
+                      netamount: vendor.netbillamount || 0.0,
+                      tax: vendor.gst_tax || 0.0,
+                      remarks: vendor.description_warranty || "",
+                      shipping: vendor.shipping_handling_chrg || "",
+                      file: null,
+                      _id: vendor._id
+                    }
+                    if (vendor.fileName) {
+                      _vendor.file = {
+                        name: vendor.fileName
+                      }
+                    }
+
+                    this.vendors.push(_vendor)
+                  }
+                }
+              });
+          } else if (this.updateApproval.approval_type === 'Salary') {
+            this.getSalaryData()
+            this.approvalService.
+              getSalaryListener()
+              .subscribe((res: any) => {
+                console.log(res);
+                if (res && res.length) {
+                  this.salaries = [];
+                  for (const salary of res) {
+                    let _salary = {
+                      number: salary.salarynumber || "",
+                      amount: salary.salaryamount || "",
+                      employee: salary.employeename || "",
+                      itemDesc: salary.description || "",
+                      file: null,
+                      _id: salary._id
+                    };
+
+                    if (salary.fileName) {
+                      _salary.file = {
+                        name: salary.fileName
+                      }
+                    }
+
+                    this.salaries.push(_salary)
+                  }
+                }
+              });
           }
         });
     }
@@ -410,6 +476,14 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
 
   getBillData() {
     this.approvalService.getBillApproval(this.queryData.id);
+  }
+
+  getVendorData() {
+    this.approvalService.getAwardApproval(this.queryData.id);
+  }
+
+  getSalaryData() {
+    this.approvalService.getSalaryApproval(this.queryData.id);
   }
 
   filterApprovals(value) {

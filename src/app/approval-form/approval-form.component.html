@@ -75,17 +75,17 @@
               </mat-form-field> -->
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="number" placeholder="Award Value" name="awardValue" ngModel #awardValueInput="ngModel"
-              [ngModel]="updateApproval?.awardValue || ''" required>
+              [ngModel]="updateApproval?.awardvalue || ''" required>
             <mat-error *ngIf="awardValueInput.invalid"> Please provide award value</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="text" placeholder="Item Discription" name="itemDiscription" ngModel
-              #itemDiscriptionInput="ngModel" [ngModel]="updateApproval?.itemDiscription || ''" required>
+              #itemDiscriptionInput="ngModel" [ngModel]="updateApproval?.awardItemDesc || ''" required>
             <mat-error *ngIf="itemDiscriptionInput.invalid"> Please provide Item Discription</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 4">
             <input matInput type="number" placeholder="Quantity" name="itemQuantity" ngModel
-              #itemQuantityInput="ngModel" [ngModel]="updateApproval?.itemQuantity || ''" required>
+              #itemQuantityInput="ngModel" [ngModel]="updateApproval?.awardquantity || ''" required>
             <mat-error *ngIf="itemQuantityInput.invalid"> Please provide Item Quantity</mat-error>
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value == 2">
@@ -105,7 +105,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="approvalInput.value != 0 && approvalInput.value == 4 ">
             <input matInput type="text" placeholder="shipping address" name="shippingAddress" ngModel
-              #shippingAddressInput="ngModel" [ngModel]="updateApproval?.shippingAddress || ''" required>
+              #shippingAddressInput="ngModel" [ngModel]="updateApproval?.shipping_addr || ''" required>
             <mat-error *ngIf="shippingAddressInput.invalid"> Please enter a vendors <address></address>
             </mat-error>
           </mat-form-field>

@@ -12,6 +12,7 @@ export class ApprovalFormService {
   private allApprovalSubject = new Subject();
   private awardSubject = new Subject();
   private billSubject = new Subject();
+  private salarySubject = new Subject();
   private unutilizedamtSubject = new Subject();
   private approvalStatusSubject = new Subject();
   private otpVerificationSubject = new Subject();
@@ -51,7 +52,7 @@ export class ApprovalFormService {
     );
   }
 
-  updateBills(approvalId, claimid, billId, data, file) {
+  updateBills(approvalId, claimid, billId, data) {
     const postData = new FormData();
     //claimId
     postData.append('approvalId', approvalId);
@@ -64,7 +65,7 @@ export class ApprovalFormService {
     postData.append('assetvalue', data.assetValue);
     postData.append('assetcodes', data.assetCodes);
     if (data.file instanceof File) {
-      postData.append('file', file, data.file.name);
+      postData.append('file', data.file, data.file.name);
     }
     this.http.put(this.url + `/bill/${billId}`, postData).subscribe((res: any) => {
       //console.log(res.message)
@@ -72,6 +73,57 @@ export class ApprovalFormService {
       (err) => {
         console.log(err);
         console.log(err.message)
+      }
+    );
+  }
+
+
+  updateAward(approvalId, id, data) {
+    const postData = new FormData();
+    postData.append('approvalId', approvalId);
+    postData.append('billnumber', data.number);
+    postData.append('billamount', data.amount);
+    postData.append('vendorname', data.vendorname);
+    postData.append('deliveryschedule', data.deliveryschedule);
+    postData.append('payterms', data.paymentterms);
+    postData.append('vendor_preference', data.preferance);
+    postData.append('unitprice', data.unitprice);
+    postData.append('netbillamount', data.netamount);
+    postData.append('remarksAndWarranty', data.remarks);
+    postData.append('otherAndshipping', data.shipping);
+    postData.append('tax', data.tax);
+    postData.append('vendorAdd', data.vendorAdd);
+
+    if (data.file instanceof File) {
+      postData.append('file', data.file, data.file.name);
+    }
+    this.http.put(this.url + `/awardtable/${id}`, postData).subscribe((res: any) => {
+      //console.log(res.message)
+    },
+      (err) => {
+        console.log(err.message);
+
+      }
+    );
+  }
+
+  updateSalary(approvalId, id, data) {
+    const postData = new FormData();
+    postData.append('approvalId', approvalId);
+    postData.append('salarynumber', data.number);
+    postData.append('salaryamount', data.amount);
+    postData.append('employeename', data.employee);
+    postData.append('description', data.itemDesc);
+
+    if (data.file instanceof File) {
+      postData.append('file', data.file, data.file.name);
+    }
+    this.http.put(this.url + `/salary/${id}`, postData).subscribe((res: any) => {
+      //console.log(res.message)
+    },
+      (err) => {
+        console.log(err.message);
+
       }
     );
   }
@@ -178,7 +230,7 @@ export class ApprovalFormService {
     }
 
     if (queryData !== undefined) {
-      this.http.put(this.url + `/create/` + data.advanceId, postData1).subscribe((res: any) => {
+      this.http.put(this.url + `/update/` + data.advanceId, postData1).subscribe((res: any) => {
 
         let claimId = res.claimId;
         let approvalId = res.approvalId;
@@ -187,7 +239,7 @@ export class ApprovalFormService {
           data.bills.forEach(bill => {
             console.log("inside bills");
             if (bill._id) {
-              this.updateBills(data.advanceId, claimId, bill._id, bill, bill.file);
+              this.updateBills(data.advanceId, claimId, bill._id, bill);
             } else {
               this.submitBills(data.advanceId, claimId, bill, bill.file);
             }
@@ -200,25 +252,35 @@ export class ApprovalFormService {
           data.bills.forEach(bill => {
             console.log("inside bills");
             if (bill._id) {
-              this.updateBills(approvalId, null, bill._id, bill, bill.file);
+              this.updateBills(approvalId, null, bill._id, bill);
             } else {
               this.submitBills(approvalId, null, bill, bill.file);
             }
           });
           this.formSubmitSubject.next(res);
         }
-        /*         if (data.approval == 4) {
-                  data.vendors.forEach(vendor => {
-                    this.submitAward(approvalId, vendor, vendor.file);
-                  });
-                  this.formSubmitSubject.next(res);
-                }
-                if (data.approval == 5) {
-                  data.salaries.forEach(salary => {
-                    this.submitSalary(approvalId, salary, salary.file);
-                  });
-                  this.formSubmitSubject.next(res);
-                } */
+
+        if (data.approval == 4) {
+          data.vendors.forEach(vendor => {
+            if (vendor._id) {
+              this.updateAward(approvalId, vendor._id, vendor);
+            } else {
+              this.submitAward(approvalId, vendor, vendor.file);
+            }
+          });
+          this.formSubmitSubject.next(res);
+        }
+
+        if (data.approval == 5) {
+          data.salaries.forEach(salary => {
+            if (salary._id) {
+              this.updateSalary(approvalId, salary._id, salary);
+            } else {
+              this.submitSalary(approvalId, salary, salary.file);
+            }
+          });
+          this.formSubmitSubject.next(res);
+        }
 
       },
         (err) => {
@@ -365,6 +427,14 @@ export class ApprovalFormService {
       this.billSubject.next(res);
     },
       (err) => { this.billSubject.next(err.error); }
+    );
+  }
+
+  getSalaryApproval(id) {
+    this.http.get(this.url + `/salary/${id}`).subscribe((res) => {
+      this.salarySubject.next(res);
+    },
+      (err) => { this.salarySubject.next(err.error); }
     );
   }
 
@@ -612,6 +682,10 @@ export class ApprovalFormService {
 
   getBillListener() {
     return this.billSubject.asObservable();
+  }
+
+  getSalaryListener() {
+    return this.salarySubject.asObservable()
   }
 
   getUnutilizedamtListner() {
