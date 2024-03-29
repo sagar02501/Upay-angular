@@ -181,6 +181,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.sortApproval(e.searchText, e.sortBy, e.status, e.zones, e.approvaltype, this.pageSize, e.start, e.end, e.sortDateAsc);
       console.log(e.start, e.end);
 
+    } else if (e.sendToUpdate) {
+      this.sendToUpdate(e);
     }
   }
 
@@ -217,6 +219,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     } else {
       this.approvalFormService.sendApproval(e);
     }
+  }
+
+  sendToUpdate(e) {
+    this.approvalFormService.sendToUpdate(e)
   }
 
   sendForAudit(e) {

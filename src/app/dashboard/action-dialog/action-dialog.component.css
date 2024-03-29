@@ -1,12 +1,15 @@
 mat-form-field {
   width: 50%;
 }
+
 .fund mat-form-field {
   width: 90vw;
 }
+
 ::ng-deep .mat-dialog-container {
   position: relative;
 }
+
 .switch {
   position: absolute;
   top: 25px;
@@ -22,9 +25,20 @@ mat-form-field {
 .mat-dialog-actions {
   justify-content: space-around !important;
 }
+
 .mat-dialog-title {
   font-size: 1.6rem;
 }
+
 ::ng-deep .mat-form-field-infix {
   font-size: 1.4rem;
+}
+
+
+.send-to-update-remark {
+  width: 100%;
+}
+
+.send-to-update {
+  width: 42vw;
 }

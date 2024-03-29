@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>{{title}}</h2>
 <button mat-raised-button color="primary" class="switch" *ngIf="isFundTransfer" (click)="isNew = !isNew">{{ isNew ?
   'Manual' : 'Auto' }}</button>
-<div *ngIf="!isFundTransfer">
+<div *ngIf="!isFundTransfer && !isSendToUpdate">
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>{{to}}</mat-label>
@@ -226,4 +226,17 @@
   </div>
 
 
+</div>
+<div *ngIf="isSendToUpdate">
+  <div mat-dialog-content class="send-to-update">
+    <mat-form-field class="send-to-update-remark">
+      <input matInput type="text" [placeholder]="placeholder" name="remarks" ngModel #remarksInput="ngModel">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="0">Cancel</button>
+    <button mat-button
+      [mat-dialog-close]="{email: approval.email, remarks: remarksInput.value,approvalId:approval.approvalId}"
+      cdkFocusInitial>Send</button>
+  </div>
 </div>

@@ -14,6 +14,7 @@ export class ActionDialogComponent implements OnInit {
   title;
   to;
   isFundTransfer;
+  isSendToUpdate;
   approval
   isNew = true;
   isManualFundHide;
@@ -199,17 +200,18 @@ export class ActionDialogComponent implements OnInit {
     this.title = this.data.title || '';
     this.to = this.data.to || 'Approver';
     this.isFundTransfer = this.data.isFundTransfer || false;
-    if (this.data.to) {
+    this.isSendToUpdate = this.data.isSendToUpdate || false;
+    if (this.data.to || this.data.isSendToUpdate) {
       this.placeholder = 'Remarks';
     } else {
       this.placeholder = 'Remarks/DOP Clause';
     }
-    console.log("app type:" + this.data.approval.approval_type);
+
     // if (this.approval.approval_type == "In Principle or Admin Approval") {
     //   this.isManualFundHide = true;
     // }
     this.isManualFundHide = false;
-    if (this.data.approval.approval_type == "Claim against advance/PO" || this.data.approval.approval_type == "Claim") {
+    if (this.data.approval && (this.data.approval.approval_type == "Claim against advance/PO" || this.data.approval.approval_type == "Claim")) {
       this.isManualFundHide = true;
     }
 

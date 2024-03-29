@@ -63,7 +63,8 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
   public queryData: {
     id: string;
     claimId: string;
-    trackflag: string
+    trackflag: string;
+    token: string;
   };
   constructor(public approvalFormService: ApprovalFormService, private approvalService: ApprovalFormService, public settingsService: SettingsService, private snackBar: MatSnackBar, private route: ActivatedRoute) {
     if (
@@ -73,6 +74,7 @@ export class ApprovalFormComponent implements OnInit, OnDestroy {
         id: this.route.snapshot.queryParams.approvalId,
         claimId: this.route.snapshot.queryParams.claimid || 'undefined',
         trackflag: this.route.snapshot.queryParams.claimid || 'true',
+        token: this.route.snapshot.queryParams.token || ''
       };
     }
 

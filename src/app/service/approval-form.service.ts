@@ -230,6 +230,10 @@ export class ApprovalFormService {
     }
 
     if (queryData !== undefined) {
+      if (queryData.token) {
+        postData1.append('token', queryData.token);
+      }
+
       this.http.put(this.url + `/update/` + data.advanceId, postData1).subscribe((res: any) => {
 
         let claimId = res.claimId;
@@ -366,6 +370,9 @@ export class ApprovalFormService {
     }
 
     if (queryData !== undefined) {
+      if (queryData.token) {
+        postData.append('token', queryData.token);
+      }
       this.http.put(this.url, postData).subscribe((res) => {
         this.formSubmitSubject.next(res);
       },
@@ -490,6 +497,18 @@ export class ApprovalFormService {
     postData2.append('zone', data.approvalData.zone);
     console.log("data:  ", data.approvalData);
     this.http.post(this.url + link, postData2).subscribe((res) => {
+      this.approvalSubject.next(res);
+
+    },
+      (err) => {
+        console.log(err);
+        this.approvalSubject.next(err.error);
+      }
+    );
+  }
+
+  sendToUpdate(data) {
+    this.http.post(this.url + "/sendToUpdate", { email: data.email, remarks: data.remarks, approvalId: data.approvalId }).subscribe((res) => {
       this.approvalSubject.next(res);
 
     },

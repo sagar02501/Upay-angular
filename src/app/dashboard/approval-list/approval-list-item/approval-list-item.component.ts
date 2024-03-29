@@ -37,7 +37,7 @@ export class ApprovalListItemComponent implements OnInit {
     }
     const userZone = this.authService.getUserZone();
     this.reviewdasboard = this.authService.getReviewUserZone();
-    
+
     if (userZone === 'central') {
       this.zone = 'Zonal';
     } else {
@@ -207,8 +207,8 @@ export class ApprovalListItemComponent implements OnInit {
           transactionId: result.transactionId, transferredAmount: result.transferredAmount,
           notes: {
             budget_head: result.budgetHeadInput || 'N\A',
-            budget_subhead: result.budgetSubHeadInput  || 'N\A',
-            expenditure_code: result.expCodeInput  || 'N\A'
+            budget_subhead: result.budgetSubHeadInput || 'N\A',
+            expenditure_code: result.expCodeInput || 'N\A'
           }
         });
       }
@@ -249,8 +249,25 @@ export class ApprovalListItemComponent implements OnInit {
     });
   }
 
+  sendToUpdate() {
+    const dialogRef = this.dialog.open(ActionDialogComponent,
+      {
+        data: {
+          title: 'Send to Update',
+          isSendToUpdate: true,
+          approval: this.approval
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.actionOccured.emit({ sendToUpdate: true, email: result.email, remarks: result.remarks, approvalId: result.approvalId });
+      }
+    });
+  }
+
   printApproval() {
-    
+
     const approvalData =
       `<h3>Approval Data</h3>
       <div class="print-approval">
