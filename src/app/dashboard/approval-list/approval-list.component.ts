@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
@@ -20,7 +20,7 @@ export class ApprovalListComponent implements OnInit {
   public fullYear: number = new Date().getFullYear();
   public start: Date = new Date(this.fullYear, this.month - 1, 7);
   public end: Date = new Date(this.fullYear, this.month, 25);
- 
+
   constructor() {
   }
   selectedStatus;
@@ -38,6 +38,9 @@ export class ApprovalListComponent implements OnInit {
   approvalSearchSubject = new Subject();
   @Output() actionOccured: EventEmitter<any> = new EventEmitter()
   @Output() exportExcelFired: EventEmitter<any> = new EventEmitter()
+  @ViewChild('table1') table1: ElementRef;
+  @ViewChild('table2') table2: ElementRef;
+
 
   status = '';
   zones = '';
@@ -254,6 +257,14 @@ export class ApprovalListComponent implements OnInit {
 
   createExcelReport() {
     this.exportExcelFired.emit(true);
+  }
+
+  onTable1Scroll() {
+    this.table2.nativeElement.scrollTop = this.table1.nativeElement.scrollTop;
+  }
+
+  onTable2Scroll() {
+    this.table1.nativeElement.scrollTop = this.table2.nativeElement.scrollTop;
   }
 
 }

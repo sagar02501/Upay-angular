@@ -17,7 +17,7 @@
 </section>
 
 <div class="table-container">
-  <div class="a-table table-1">
+  <div class="a-table table-1" (scroll)="onTable1Scroll()" #table1>
     <section class="approvals-table">
       <div class="approvals-table__header">
         <div class="approval-id">
@@ -42,7 +42,7 @@
 
   </div>
 
-  <div class="a-table table-2">
+  <div class="a-table table-2" (scroll)="onTable2Scroll()" #table2>
     <section class="approvals-table">
       <div class="approvals-table__header">
         <div class="approval-email">

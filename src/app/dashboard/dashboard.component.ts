@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   emailId;
   sortOrder = -1;
   count;
+  totalCount;
   total = 0;
   searchText;
   sortBy;
@@ -63,6 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           let count = res as any;
           count = JSON.parse(JSON.stringify(count.count));
           this.total = count.new + count.pending + count.transferred + count.rejected + count.approved;
+          this.totalCount = count;
         }
       });
     this.zoneSub = this.settingsService.getZoneSubjectListener().subscribe((res) => {

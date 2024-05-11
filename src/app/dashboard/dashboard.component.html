@@ -2,24 +2,27 @@
 <div class="approval-overview">
     <div class="new">
         <label for="">New</label>
-        <span>{{count?.new}}</span>
+        <span>{{count?.new}} <span *ngIf="this.totalCount?.new">({{this.totalCount?.new}})</span> </span>
     </div>
     <div class="pending">
         <label for="">Pending</label>
-        <span>{{count?.pending}}</span>
+        <span>{{count?.pending}} <span *ngIf="this.totalCount?.pending">({{this.totalCount?.pending}})</span> </span>
     </div>
     <div class="rejected">
         <label for="">Rejected</label>
-        <span>{{count?.rejected}}</span>
+        <span>{{count?.rejected}} <span *ngIf="this.totalCount?.rejected">({{this.totalCount?.rejected}})</span> </span>
     </div>
     <div class="approved">
         <label for="">Approved</label>
-        <span>{{count?.approved}}</span>
+        <span>{{count?.approved}} <span *ngIf="this.totalCount?.approved">({{this.totalCount?.approved}})</span> </span>
     </div>
     <div class="transferred">
         <label for="">Transferred</label>
-        <span>{{count?.transferred}}</span>
+        <span>{{count?.transferred}}<span *ngIf="this.totalCount?.transferred">({{this.totalCount?.transferred}})</span>
+        </span>
     </div>
 </div>
-<app-approval-list [approvalList]="approvalList" [zonesList] = "zonesList" [approverList]="approverList" (actionOccured)="handleEvent($event)" (exportExcelFired)="loadExcelData()"></app-approval-list>
-<mat-paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]" (page)="pageChanged($event)"></mat-paginator>
+<app-approval-list [approvalList]="approvalList" [zonesList]="zonesList" [approverList]="approverList"
+    (actionOccured)="handleEvent($event)" (exportExcelFired)="loadExcelData()"></app-approval-list>
+<mat-paginator [length]="total" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50]"
+    (page)="pageChanged($event)"></mat-paginator>
