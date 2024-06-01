@@ -253,7 +253,7 @@ export class ApprovalListItemComponent implements OnInit {
     const dialogRef = this.dialog.open(ActionDialogComponent,
       {
         data: {
-          title: 'Send to Update',
+          title: 'Send to Resubmit',
           isSendToUpdate: true,
           approval: this.approval
         }

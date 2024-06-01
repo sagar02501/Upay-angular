@@ -84,7 +84,7 @@
 <mat-menu #actionMenu="matMenu">
   <button mat-menu-item
     [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"
-    (click)="sendToUpdate()">Send to Update</button>
+    (click)="sendToUpdate()">Send to Resubmit</button>
 
   <button mat-menu-item
     [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"
