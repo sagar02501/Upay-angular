@@ -82,12 +82,12 @@
   <div><label>IFSC code </label><span>{{approval?.ifsc_code}}</span></div>
 </div>
 <mat-menu #actionMenu="matMenu">
-  <button mat-menu-item
-    [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"
-    (click)="sendToUpdate()">Send to Resubmit</button>
+  <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending' 
+    && approval.status != 'pending for resubmission' && approval.status != 'resubmitted'" (click)="sendToUpdate()">Send
+    to Resubmit</button>
 
-  <button mat-menu-item
-    [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending'"
+  <button mat-menu-item [disabled]="approval.status != 'new' && approval.status != 'to Central' && approval.status != 'pending' 
+    && approval.status != 'pending for resubmission' && approval.status != 'resubmitted'"
     (click)="sendToApprover()">Send to Approver</button>
   <button mat-menu-item (click)="confirmSend()">Send to {{zone}}</button>
   <button mat-menu-item (click)="notifyInitiator()">
