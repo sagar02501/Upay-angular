@@ -30,15 +30,16 @@ export class ApprovalListItemComponent implements OnInit {
   fundTransferDateDashboard = null;
   zone;
   reviewdasboard;
+  userZone;
   ngOnInit() {
     this.approvalCreatedDate = new Date(this.approval.date).toLocaleString();
     if (this.approval.fundTransferDate) {
       this.fundTransferDateDashboard = new Date(this.approval.fundTransferDate).toLocaleString();
     }
-    const userZone = this.authService.getUserZone();
+    this.userZone = this.authService.getUserZone();
     this.reviewdasboard = this.authService.getReviewUserZone();
 
-    if (userZone === 'central') {
+    if (this.userZone === 'central') {
       this.zone = 'Zonal';
     } else {
       this.zone = 'Central';

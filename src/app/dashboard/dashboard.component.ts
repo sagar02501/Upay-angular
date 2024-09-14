@@ -121,6 +121,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } else if (res === 'editableFalse') {
             this.success = false;
             this.openSnackBar('approval could not be Return to User and Please attach file with remark');
+          } else if (res === 'deleteTrue') {
+            this.success = true;
+            this.openSnackBar('Deleted successfully');
+          } else if (res === 'deleteFalse') {
+            this.success = false;
+            this.openSnackBar('Error, could not delete');
           } else {
             this.success = (res as any).isSuccess;
             this.openSnackBar((res as any).message);

@@ -99,7 +99,8 @@
     (click)="printPo()">Generate P.O.</button>
   <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="withoutfundTransfer()">Settle Without Fund
     Transfer</button>
-  <button mat-menu-item [disabled]="approval.status != 'approved'" (click)="fundTransfer()">Fund Transfer</button>
+  <button mat-menu-item [disabled]="approval.status != 'approved' || reviewdasboard == 'true'"
+    (click)="fundTransfer()">Fund Transfer</button>
   <button mat-menu-item (click)="printApproval()">Print</button>
-  <button mat-menu-item [disabled]="reviewdasboard != 'false'" (click)="deleteApproval()">Delete</button>
+  <button mat-menu-item [disabled]="userZone != 'admin'" (click)="deleteApproval()">Delete</button>
 </mat-menu>
