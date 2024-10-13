@@ -236,7 +236,7 @@
   <div mat-dialog-actions>
     <button mat-button [mat-dialog-close]="0">Cancel</button>
     <button mat-button
-      [mat-dialog-close]="{email: approval.email, remarks: remarksInput.value,approvalId:approval.approvalId}"
+      [mat-dialog-close]="{email: approval.email, remarks: remarksInput.value,approvalId:approval.claimId || approval.approvalId}"
       cdkFocusInitial>Send</button>
   </div>
 </div>
